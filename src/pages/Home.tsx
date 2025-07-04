@@ -1,4 +1,3 @@
-
 import { Bell, Download, RefreshCw, Calendar as CalendarIcon, User, LogOut, Settings as SettingsIcon } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useDashboardOverview, useDashboardAnalytics } from '@/hooks/useDashboard';
@@ -149,10 +148,6 @@ const Home = () => {
                         <DropdownMenuItem className="cursor-pointer hover:bg-gray-50" onClick={() => navigate('/settings')}>
                           <SettingsIcon className="mr-2 h-4 w-4 text-gray-500" />
                           <span className="text-gray-700">Billing</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer hover:bg-gray-50">
-                          <SettingsIcon className="mr-2 h-4 w-4 text-gray-500" />
-                          <span className="text-gray-700">My bots</span>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator className="bg-gray-200" />
                         <DropdownMenuItem className="cursor-pointer hover:bg-gray-50 text-red-600" onClick={handleLogout}>
