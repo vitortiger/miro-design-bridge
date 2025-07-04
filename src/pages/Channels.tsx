@@ -75,10 +75,10 @@ const Channels = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen">
       <Sidebar />
       
-      <div className="flex-1 lg:ml-64 min-w-0">
+      <div className="flex-1 lg:ml-64">
         <header className="bg-white shadow-sm border-b border-gray-200">
           <div className="px-4 sm:px-6 py-4">
             <div className="flex items-center justify-between">
@@ -94,7 +94,7 @@ const Channels = () => {
           </div>
         </header>
 
-        <main className="p-4 sm:p-6 max-w-full">
+        <main className="p-4 sm:p-6 bg-gray-50">
           {/* Search */}
           <div className="mb-6">
             <div className="relative">
