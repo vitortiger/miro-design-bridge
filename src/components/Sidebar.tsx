@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { 
@@ -16,7 +15,7 @@ import { cn } from '@/lib/utils';
 const navigation = [
   { name: 'Dashboard', href: '/', icon: BarChart3 },
   { name: 'Campanhas', href: '/campaigns', icon: Zap },
-  { name: 'Bots Telegram', href: '/telegram-bots', icon: Bot },
+  { name: 'Canais Telegram', href: '/channels', icon: Bot },
   { name: 'Relatórios', href: '/reports', icon: FileText },
   { name: 'Base de Leads', href: '/leads', icon: Database },
   { name: 'Configurações', href: '/settings', icon: Settings },

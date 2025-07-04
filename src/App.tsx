@@ -11,7 +11,7 @@ import Leads from "./pages/Leads";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Campaigns from "./pages/Campaigns";
-import TelegramBots from "./pages/TelegramBots";
+import Channels from "./pages/Channels";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
@@ -31,7 +31,7 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/campaigns" element={<Campaigns />} />
-            <Route path="/telegram-bots" element={<TelegramBots />} />
+            <Route path="/channels" element={<Channels />} />
             <Route path="/settings" element={<Settings />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
