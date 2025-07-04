@@ -1,7 +1,13 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { apiService } from '@/services/api';
-import { User } from '@/types/api';
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  plan: string;
+  created_at: string;
+}
 
 interface AuthContextType {
   user: User | null;
@@ -14,6 +20,15 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Mock user data
+const mockUser: User = {
+  id: '1',
+  name: 'João Silva',
+  email: 'joao@exemplo.com',
+  plan: 'Pro',
+  created_at: '2024-01-01T00:00:00Z'
+};
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -21,53 +36,56 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const isAuthenticated = !!user;
 
   useEffect(() => {
+    // Simulate checking auth status
     const token = localStorage.getItem('auth_token');
-    if (token) {
-      checkAuthStatus();
-    } else {
+    setTimeout(() => {
+      if (token) {
+        setUser(mockUser);
+      }
       setIsLoading(false);
-    }
+    }, 500);
   }, []);
-
-  const checkAuthStatus = async () => {
-    try {
-      const userData = await apiService.getCurrentUser();
-      setUser(userData);
-    } catch (error) {
-      console.error('Auth check failed:', error);
-      localStorage.removeItem('auth_token');
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const login = async (email: string, password: string) => {
     setIsLoading(true);
-    try {
-      const { user: userData } = await apiService.login(email, password);
-      setUser(userData);
-    } catch (error) {
-      setIsLoading(false);
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
+    
+    // Simulate API call
+    return new Promise<void>((resolve, reject) => {
+      setTimeout(() => {
+        if (email && password) {
+          localStorage.setItem('auth_token', 'mock-jwt-token');
+          setUser(mockUser);
+          setIsLoading(false);
+          resolve();
+        } else {
+          setIsLoading(false);
+          reject(new Error('Credenciais inválidas'));
+        }
+      }, 1000);
+    });
   };
 
   const register = async (email: string, password: string, name: string) => {
     setIsLoading(true);
-    try {
-      await apiService.register(email, password, name);
-      // After registration, login automatically
-      await login(email, password);
-    } catch (error) {
-      setIsLoading(false);
-      throw error;
-    }
+    
+    // Simulate API call
+    return new Promise<void>((resolve, reject) => {
+      setTimeout(() => {
+        if (email && password && name) {
+          localStorage.setItem('auth_token', 'mock-jwt-token');
+          setUser({ ...mockUser, name, email });
+          setIsLoading(false);
+          resolve();
+        } else {
+          setIsLoading(false);
+          reject(new Error('Dados inválidos'));
+        }
+      }, 1000);
+    });
   };
 
   const logout = async () => {
-    await apiService.logout();
+    localStorage.removeItem('auth_token');
     setUser(null);
   };
 

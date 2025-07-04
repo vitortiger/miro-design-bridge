@@ -5,9 +5,8 @@ import {
   BarChart3, 
   FileText, 
   Database, 
-  CreditCard, 
-  Crown, 
-  HelpCircle, 
+  Bot,
+  Zap,
   Settings,
   Menu,
   X
@@ -16,12 +15,11 @@ import { cn } from '@/lib/utils';
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: BarChart3 },
+  { name: 'Campanhas', href: '/campaigns', icon: Zap },
+  { name: 'Bots Telegram', href: '/telegram-bots', icon: Bot },
   { name: 'Relatórios', href: '/reports', icon: FileText },
   { name: 'Base de Leads', href: '/leads', icon: Database },
-  { name: 'Credenciais', href: '/credentials', icon: CreditCard },
-  { name: 'Assinatura', href: '/subscription', icon: Crown },
-  { name: 'FAQ', href: '/faq', icon: HelpCircle },
-  { name: 'Suporte', href: '/support', icon: Settings },
+  { name: 'Configurações', href: '/settings', icon: Settings },
 ];
 
 export default function Sidebar() {
@@ -55,7 +53,7 @@ export default function Sidebar() {
         <div className="flex flex-col h-full">
           {/* Logo */}
           <div className="flex items-center justify-center h-16 px-4 border-b border-gray-800">
-            <span className="text-2xl font-bold">LOGO</span>
+            <span className="text-2xl font-bold">UTM Tracker</span>
           </div>
 
           {/* Navigation */}
