@@ -43,7 +43,7 @@ const Home = () => {
             <div className="flex items-center justify-between">
               <div className="pl-12 lg:pl-0">
                 <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">
-                  Welcome, {user?.name || 'Vitor'}
+                  Dashboard - Bem-vindo, {user?.name || 'Usuário'}
                 </h1>
               </div>
               <div className="flex items-center gap-2 sm:gap-4">
@@ -64,31 +64,15 @@ const Home = () => {
           <div className="flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:gap-4 items-start lg:items-center justify-between">
             <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:gap-4">
               <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-700">Date Range</label>
-                <Select defaultValue="jan-jul-2023">
+                <label className="text-sm font-medium text-gray-700">Período</label>
+                <Select defaultValue="last-30-days">
                   <SelectTrigger className="w-full sm:w-64">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="jan-jul-2023">Jan 1, 2023 -- Jul 1, 2023</SelectItem>
+                    <SelectItem value="last-7-days">Últimos 7 dias</SelectItem>
                     <SelectItem value="last-30-days">Últimos 30 dias</SelectItem>
                     <SelectItem value="last-90-days">Últimos 90 dias</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-700">Compare Campaigns</label>
-                <Select>
-                  <SelectTrigger className="w-full sm:w-64">
-                    <SelectValue placeholder="Compare Campaigns" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {overview?.top_campaigns?.map((campaign) => (
-                      <SelectItem key={campaign.id} value={campaign.id}>
-                        {campaign.name}
-                      </SelectItem>
-                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -96,29 +80,29 @@ const Home = () => {
             
             <Button variant="outline" className="w-full sm:w-auto">
               <Download className="h-4 w-4 mr-2" />
-              Export Data
+              Exportar Dados
             </Button>
           </div>
 
           {/* Metrics Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             <MetricCard
-              title="Entrances in Group"
+              title="Entradas no Grupo"
               value="1285"
               dark={true}
             />
             <MetricCard
-              title="Exits from Group"
+              title="Saídas do Grupo"
               value="1285"
               dark={true}
             />
             <MetricCard
-              title="Clicks on Link"
+              title="Cliques no Link"
               value="105"
               dark={true}
             />
             <MetricCard
-              title="Clinkseof Users"
+              title="Número de canais ativos"
               value="105"
             />
           </div>
@@ -127,11 +111,11 @@ const Home = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             <AnalyticsChart 
               type="single" 
-              dateRange="Jan 15, 2023 -- Jul 1, 2023"
+              dateRange="15 Jan, 2023 -- 1 Jul, 2023"
             />
             <AnalyticsChart 
               type="multi" 
-              dateRange="Jan 15, 2023 -- Jul 1, 2023"
+              dateRange="15 Jan, 2023 -- 1 Jul, 2023"
             />
           </div>
 
