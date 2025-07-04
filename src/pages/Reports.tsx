@@ -85,210 +85,223 @@ const Reports = () => {
   const [sourceFilter, setSourceFilter] = useState('');
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      <Sidebar />
-      
-      <div className="flex-1 lg:ml-64">
-        <header className="bg-white shadow-sm border-b border-gray-200">
-          <div className="px-6 py-4 flex justify-between items-center">
-            <h1 className="text-2xl font-semibold text-gray-900">Relatórios</h1>
-            <div className="flex gap-2">
-              <Select value={periodFilter} onValueChange={setPeriodFilter}>
-                <SelectTrigger className="w-40">
-                  <SelectValue placeholder="Período" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="7d">Últimos 7 dias</SelectItem>
-                  <SelectItem value="30d">Últimos 30 dias</SelectItem>
-                  <SelectItem value="90d">Últimos 90 dias</SelectItem>
-                  <SelectItem value="1y">Último ano</SelectItem>
-                </SelectContent>
-              </Select>
-              <Button>
-                <Download className="h-4 w-4 mr-2" />
-                Exportar
-              </Button>
-            </div>
-          </div>
-        </header>
-
-        <main className="p-6">
-          {/* Stats Overview */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Total de Leads</CardTitle>
-                <Users className="h-4 w-4 text-blue-600" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">1,234</div>
-                <p className="text-xs text-green-600 flex items-center mt-1">
-                  <TrendingUp className="h-3 w-3 mr-1" />
-                  +12.5% vs mês anterior
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Total de Cliques</CardTitle>
-                <MousePointer className="h-4 w-4 text-green-600" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">8,945</div>
-                <p className="text-xs text-green-600 flex items-center mt-1">
-                  <TrendingUp className="h-3 w-3 mr-1" />
-                  +8.2% vs mês anterior
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Visualizações</CardTitle>
-                <Eye className="h-4 w-4 text-purple-600" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">15,678</div>
-                <p className="text-xs text-green-600 flex items-center mt-1">
-                  <TrendingUp className="h-3 w-3 mr-1" />
-                  +15.3% vs mês anterior
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Taxa de Conversão</CardTitle>
-                <TrendingUp className="h-4 w-4 text-orange-600" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">13.8%</div>
-                <p className="text-xs text-green-600 flex items-center mt-1">
-                  <TrendingUp className="h-3 w-3 mr-1" />
-                  +2.1% vs mês anterior
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Charts Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-            {/* Monthly Performance Chart */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Desempenho Mensal</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={monthlyData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="leads" fill="#3B82F6" name="Leads" />
-                    <Bar dataKey="clicks" fill="#10B981" name="Cliques" />
-                  </BarChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
-
-            {/* Traffic Sources Pie Chart */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Fontes de Tráfego</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ResponsiveContainer width="100%" height={300}>
-                  <PieChart>
-                    <Pie
-                      data={sourceData}
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={100}
-                      fill="#8884d8"
-                      dataKey="value"
-                      label={({ name, value }) => `${name}: ${value}%`}
-                    >
-                      {sourceData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                  </PieChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Trend Line Chart */}
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>Tendência de Leads</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={monthlyData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line type="monotone" dataKey="leads" stroke="#3B82F6" strokeWidth={3} />
-                  <Line type="monotone" dataKey="clicks" stroke="#10B981" strokeWidth={2} />
-                </LineChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-
-          {/* Campaign Performance Table */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Desempenho por Campanha</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Campanha</TableHead>
-                      <TableHead>Fonte</TableHead>
-                      <TableHead>Medium</TableHead>
-                      <TableHead>Leads</TableHead>
-                      <TableHead>Cliques</TableHead>
-                      <TableHead>Conversão</TableHead>
-                      <TableHead>Custo</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {campaignPerformance.map((campaign) => (
-                      <TableRow key={campaign.id}>
-                        <TableCell className="font-medium">{campaign.campaign}</TableCell>
-                        <TableCell>
-                          <Badge variant="outline">{campaign.source}</Badge>
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant="secondary">{campaign.medium}</Badge>
-                        </TableCell>
-                        <TableCell className="font-semibold">{campaign.leads}</TableCell>
-                        <TableCell>{campaign.clicks}</TableCell>
-                        <TableCell>
-                          <Badge 
-                            variant={parseFloat(campaign.conversion) > 14 ? "default" : "secondary"}
-                          >
-                            {campaign.conversion}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="text-green-600 font-medium">{campaign.cost}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+    <div className="min-h-screen bg-gray-50">
+      <div className="flex w-full">
+        <Sidebar />
+        
+        <div className="flex-1 w-full lg:ml-0">
+          <header className="bg-white shadow-sm border-b border-gray-200">
+            <div className="px-4 lg:px-6 py-4">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+                <h1 className="text-xl lg:text-2xl font-semibold text-gray-900 ml-12 lg:ml-0">Relatórios</h1>
+                <div className="flex flex-col sm:flex-row gap-2 ml-12 lg:ml-0">
+                  <Select value={periodFilter} onValueChange={setPeriodFilter}>
+                    <SelectTrigger className="w-full sm:w-40">
+                      <SelectValue placeholder="Período" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="7d">Últimos 7 dias</SelectItem>
+                      <SelectItem value="30d">Últimos 30 dias</SelectItem>
+                      <SelectItem value="90d">Últimos 90 dias</SelectItem>
+                      <SelectItem value="1y">Último ano</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Button className="w-full sm:w-auto">
+                    <Download className="h-4 w-4 mr-2" />
+                    Exportar
+                  </Button>
+                </div>
               </div>
-            </CardContent>
-          </Card>
-        </main>
+            </div>
+          </header>
+
+          <main className="p-4 lg:p-6">
+            {/* Stats Overview */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Total de Leads</CardTitle>
+                  <Users className="h-4 w-4 text-blue-600" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">1,234</div>
+                  <p className="text-xs text-green-600 flex items-center mt-1">
+                    <TrendingUp className="h-3 w-3 mr-1" />
+                    +12.5% vs mês anterior
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Total de Cliques</CardTitle>
+                  <MousePointer className="h-4 w-4 text-green-600" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">8,945</div>
+                  <p className="text-xs text-green-600 flex items-center mt-1">
+                    <TrendingUp className="h-3 w-3 mr-1" />
+                    +8.2% vs mês anterior
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Visualizações</CardTitle>
+                  <Eye className="h-4 w-4 text-purple-600" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">15,678</div>
+                  <p className="text-xs text-green-600 flex items-center mt-1">
+                    <TrendingUp className="h-3 w-3 mr-1" />
+                    +15.3% vs mês anterior
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Taxa de Conversão</CardTitle>
+                  <TrendingUp className="h-4 w-4 text-orange-600" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">13.8%</div>
+                  <p className="text-xs text-green-600 flex items-center mt-1">
+                    <TrendingUp className="h-3 w-3 mr-1" />
+                    +2.1% vs mês anterior
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Charts Section */}
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6 mb-6 lg:mb-8">
+              {/* Monthly Performance Chart */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-base lg:text-lg">Desempenho Mensal</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="w-full h-[300px]">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={monthlyData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey="leads" fill="#3B82F6" name="Leads" />
+                        <Bar dataKey="clicks" fill="#10B981" name="Cliques" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Traffic Sources Pie Chart */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-base lg:text-lg">Fontes de Tráfego</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="w-full h-[300px]">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart>
+                        <Pie
+                          data={sourceData}
+                          cx="50%"
+                          cy="50%"
+                          outerRadius={100}
+                          fill="#8884d8"
+                          dataKey="value"
+                          label={({ name, value }) => `${name}: ${value}%`}
+                        >
+                          {sourceData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={entry.color} />
+                          ))}
+                        </Pie>
+                        <Tooltip />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Trend Line Chart */}
+            <Card className="mb-6 lg:mb-8">
+              <CardHeader>
+                <CardTitle className="text-base lg:text-lg">Tendência de Leads</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="w-full h-[300px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={monthlyData}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="name" />
+                      <YAxis />
+                      <Tooltip />
+                      <Legend />
+                      <Line type="monotone" dataKey="leads" stroke="#3B82F6" strokeWidth={3} />
+                      <Line type="monotone" dataKey="clicks" stroke="#10B981" strokeWidth={2} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Campaign Performance Table */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-base lg:text-lg">Desempenho por Campanha</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto -mx-4 sm:mx-0">
+                  <div className="min-w-full inline-block align-middle">
+                    <Table className="min-w-[700px]">
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="min-w-[150px]">Campanha</TableHead>
+                          <TableHead className="min-w-[100px]">Fonte</TableHead>
+                          <TableHead className="min-w-[100px]">Medium</TableHead>
+                          <TableHead className="min-w-[80px]">Leads</TableHead>
+                          <TableHead className="min-w-[80px]">Cliques</TableHead>
+                          <TableHead className="min-w-[100px]">Conversão</TableHead>
+                          <TableHead className="min-w-[120px]">Custo</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {campaignPerformance.map((campaign) => (
+                          <TableRow key={campaign.id}>
+                            <TableCell className="font-medium">{campaign.campaign}</TableCell>
+                            <TableCell>
+                              <Badge variant="outline" className="text-xs">{campaign.source}</Badge>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="secondary" className="text-xs">{campaign.medium}</Badge>
+                            </TableCell>
+                            <TableCell className="font-semibold">{campaign.leads}</TableCell>
+                            <TableCell>{campaign.clicks}</TableCell>
+                            <TableCell>
+                              <Badge 
+                                variant={parseFloat(campaign.conversion) > 14 ? "default" : "secondary"}
+                                className="text-xs"
+                              >
+                                {campaign.conversion}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="text-green-600 font-medium">{campaign.cost}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </main>
+        </div>
       </div>
     </div>
   );
