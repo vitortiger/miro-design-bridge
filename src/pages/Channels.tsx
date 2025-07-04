@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Plus, Search, Edit, Trash2, TestTube, Bot, Users } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, TestTube, Bot, Users, MessageCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import CreateBotDialog from '@/components/CreateBotDialog';
 
@@ -228,6 +228,15 @@ const Channels = () => {
           )}
         </main>
       </div>
+
+      {/* Fixed Telegram Button */}
+      <button 
+        className="btn-telegram fixed bottom-6 right-6 z-50 bg-blue-500 hover:bg-blue-600 text-white p-4 rounded-full shadow-lg transition-colors duration-200 flex items-center justify-center"
+        onClick={() => window.open('https://t.me/', '_blank')}
+        title="Abrir Telegram"
+      >
+        <MessageCircle className="h-6 w-6" />
+      </button>
 
       <CreateBotDialog
         open={isCreateDialogOpen}
