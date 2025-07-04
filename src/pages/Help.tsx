@@ -1,11 +1,8 @@
-
 import Sidebar from '@/components/Sidebar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { HelpCircle, MessageCircle, Mail, FileText } from 'lucide-react';
-
 const Help = () => {
-  return (
-    <div className="min-h-screen bg-gray-50">
+  return <div className="min-h-screen bg-gray-50">
       <div className="flex w-full">
         <Sidebar />
         
@@ -20,7 +17,7 @@ const Help = () => {
 
           <main className="p-4 lg:p-6">
             <div className="max-w-4xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-0 my-[50px] mx-[50px]">
                 <Card>
                   <CardHeader className="flex flex-row items-center space-y-0 pb-2">
                     <HelpCircle className="h-5 w-5 text-blue-500 mr-3" />
@@ -93,8 +90,6 @@ const Help = () => {
           </main>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Help;
