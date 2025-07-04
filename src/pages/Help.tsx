@@ -1,8 +1,11 @@
+
 import Sidebar from '@/components/Sidebar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { HelpCircle, MessageCircle, Mail, FileText } from 'lucide-react';
+
 const Help = () => {
-  return <div className="min-h-screen bg-gray-50">
+  return (
+    <div className="min-h-screen bg-gray-50">
       <div className="flex w-full">
         <Sidebar />
         
@@ -15,10 +18,10 @@ const Help = () => {
             </div>
           </header>
 
-          <main className="p-4 lg:p-6">
-            <div className="max-w-4xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-0 my-[50px] mx-[50px]">
-                <Card>
+          <main className="p-4 lg:p-6 h-full">
+            <div className="w-full max-w-none">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
+                <Card className="h-fit">
                   <CardHeader className="flex flex-row items-center space-y-0 pb-2">
                     <HelpCircle className="h-5 w-5 text-blue-500 mr-3" />
                     <div>
@@ -35,7 +38,7 @@ const Help = () => {
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="h-fit">
                   <CardHeader className="flex flex-row items-center space-y-0 pb-2">
                     <MessageCircle className="h-5 w-5 text-green-500 mr-3" />
                     <div>
@@ -52,7 +55,7 @@ const Help = () => {
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="h-fit">
                   <CardHeader className="flex flex-row items-center space-y-0 pb-2">
                     <Mail className="h-5 w-5 text-purple-500 mr-3" />
                     <div>
@@ -69,7 +72,7 @@ const Help = () => {
                   </CardContent>
                 </Card>
 
-                <Card>
+                <Card className="h-fit">
                   <CardHeader className="flex flex-row items-center space-y-0 pb-2">
                     <FileText className="h-5 w-5 text-orange-500 mr-3" />
                     <div>
@@ -90,6 +93,8 @@ const Help = () => {
           </main>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default Help;
