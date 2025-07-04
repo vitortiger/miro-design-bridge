@@ -1,10 +1,11 @@
+
 import { useState } from 'react';
 import Sidebar from '@/components/Sidebar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Plus, Search, Edit, Trash2, TestTube, Bot, Users, MessageCircle } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, TestTube, Bot, Users, MessageCircle, Copy } from 'lucide-react';
 import { toast } from 'sonner';
 import CreateBotDialog from '@/components/CreateBotDialog';
 
@@ -66,6 +67,11 @@ const Channels = () => {
 
   const handleTestChannel = (name: string) => {
     toast.success(`Teste realizado com sucesso para ${name}!`);
+  };
+
+  const handleCopyCode = () => {
+    navigator.clipboard.writeText('btn-telegram');
+    toast.success('Código copiado para a área de transferência!');
   };
 
   return (
@@ -182,6 +188,26 @@ const Channels = () => {
                       <div>
                         <p className="text-sm font-medium text-gray-600">ID do Canal</p>
                         <p className="text-sm font-mono break-all">{channel.channel_id}</p>
+                      </div>
+
+                      <div>
+                        <p className="text-sm font-medium text-gray-600">Código para página</p>
+                        <div className="flex items-center gap-2 mt-1">
+                          <p className="text-sm font-mono bg-blue-50 px-2 py-1 rounded border flex-1">
+                            btn-telegram
+                          </p>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={handleCopyCode}
+                            className="px-2"
+                          >
+                            <Copy className="h-3 w-3" />
+                          </Button>
+                        </div>
+                        <p className="text-xs text-blue-600 mt-1">
+                          💡 Copie este código e cole no botão da sua landing page
+                        </p>
                       </div>
                       
                       <div>
