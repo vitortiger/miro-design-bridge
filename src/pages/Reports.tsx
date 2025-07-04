@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
-import { TrendingUp, Users, MousePointer, Eye, Download } from 'lucide-react';
+import { TrendingUp, Users, MousePointer, Eye, Download, BarChart3 } from 'lucide-react';
 import { useState } from 'react';
 
 // Mock data for charts
@@ -164,29 +164,49 @@ const Reports = () => {
 
             {/* UTM Analytics Section */}
             <div className="mb-6 lg:mb-8">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">Análise UTM</h2>
+              <div className="flex items-center gap-3 mb-6">
+                <BarChart3 className="h-6 w-6 text-blue-600" />
+                <h2 className="text-xl font-semibold text-gray-900">Análise UTM</h2>
+              </div>
               
               {/* UTM Source and Medium Tables */}
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6 mb-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-base lg:text-lg">Leads por UTM Source</CardTitle>
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
+                <Card className="shadow-sm hover:shadow-md transition-shadow">
+                  <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b">
+                    <CardTitle className="text-lg flex items-center gap-2 text-gray-800">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                      Leads por UTM Source
+                    </CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="p-0">
                     <Table>
                       <TableHeader>
-                        <TableRow>
-                          <TableHead>Fonte</TableHead>
-                          <TableHead className="text-right">Leads</TableHead>
-                          <TableHead className="text-right">Porcentagem</TableHead>
+                        <TableRow className="bg-gray-50/50">
+                          <TableHead className="font-semibold text-gray-700">Fonte</TableHead>
+                          <TableHead className="text-right font-semibold text-gray-700">Leads</TableHead>
+                          <TableHead className="text-right font-semibold text-gray-700">Porcentagem</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {utmSourceData.map((item) => (
-                          <TableRow key={item.name}>
-                            <TableCell className="font-medium">{item.name}</TableCell>
-                            <TableCell className="text-right">{item.leads}</TableCell>
-                            <TableCell className="text-right">{item.percentage}</TableCell>
+                        {utmSourceData.map((item, index) => (
+                          <TableRow key={item.name} className="hover:bg-blue-50/30 transition-colors">
+                            <TableCell className="font-medium text-gray-900 py-3">
+                              <div className="flex items-center gap-2">
+                                <div className={`w-3 h-3 rounded-full ${
+                                  index === 0 ? 'bg-blue-500' : 
+                                  index === 1 ? 'bg-green-500' : 
+                                  index === 2 ? 'bg-purple-500' : 
+                                  index === 3 ? 'bg-orange-500' : 'bg-gray-500'
+                                }`}></div>
+                                {item.name}
+                              </div>
+                            </TableCell>
+                            <TableCell className="text-right font-semibold text-gray-900 py-3">{item.leads}</TableCell>
+                            <TableCell className="text-right py-3">
+                              <Badge variant="secondary" className="bg-blue-100 text-blue-700 hover:bg-blue-200">
+                                {item.percentage}
+                              </Badge>
+                            </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
@@ -194,25 +214,41 @@ const Reports = () => {
                   </CardContent>
                 </Card>
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-base lg:text-lg">Leads por UTM Medium</CardTitle>
+                <Card className="shadow-sm hover:shadow-md transition-shadow">
+                  <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-50 border-b">
+                    <CardTitle className="text-lg flex items-center gap-2 text-gray-800">
+                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      Leads por UTM Medium
+                    </CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="p-0">
                     <Table>
                       <TableHeader>
-                        <TableRow>
-                          <TableHead>Mídia</TableHead>
-                          <TableHead className="text-right">Leads</TableHead>
-                          <TableHead className="text-right">Porcentagem</TableHead>
+                        <TableRow className="bg-gray-50/50">
+                          <TableHead className="font-semibold text-gray-700">Mídia</TableHead>
+                          <TableHead className="text-right font-semibold text-gray-700">Leads</TableHead>
+                          <TableHead className="text-right font-semibold text-gray-700">Porcentagem</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {utmMediumData.map((item) => (
-                          <TableRow key={item.name}>
-                            <TableCell className="font-medium">{item.name}</TableCell>
-                            <TableCell className="text-right">{item.leads}</TableCell>
-                            <TableCell className="text-right">{item.percentage}</TableCell>
+                        {utmMediumData.map((item, index) => (
+                          <TableRow key={item.name} className="hover:bg-green-50/30 transition-colors">
+                            <TableCell className="font-medium text-gray-900 py-3">
+                              <div className="flex items-center gap-2">
+                                <div className={`w-3 h-3 rounded-full ${
+                                  index === 0 ? 'bg-green-500' : 
+                                  index === 1 ? 'bg-blue-500' : 
+                                  index === 2 ? 'bg-purple-500' : 'bg-orange-500'
+                                }`}></div>
+                                {item.name}
+                              </div>
+                            </TableCell>
+                            <TableCell className="text-right font-semibold text-gray-900 py-3">{item.leads}</TableCell>
+                            <TableCell className="text-right py-3">
+                              <Badge variant="secondary" className="bg-green-100 text-green-700 hover:bg-green-200">
+                                {item.percentage}
+                              </Badge>
+                            </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
@@ -222,26 +258,43 @@ const Reports = () => {
               </div>
 
               {/* UTM Campaign and Content Tables */}
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6 mb-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-base lg:text-lg">Leads por UTM Campaign</CardTitle>
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
+                <Card className="shadow-sm hover:shadow-md transition-shadow">
+                  <CardHeader className="bg-gradient-to-r from-purple-50 to-violet-50 border-b">
+                    <CardTitle className="text-lg flex items-center gap-2 text-gray-800">
+                      <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                      Leads por UTM Campaign
+                    </CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="p-0">
                     <Table>
                       <TableHeader>
-                        <TableRow>
-                          <TableHead>Campanha</TableHead>
-                          <TableHead className="text-right">Leads</TableHead>
-                          <TableHead className="text-right">Porcentagem</TableHead>
+                        <TableRow className="bg-gray-50/50">
+                          <TableHead className="font-semibold text-gray-700">Campanha</TableHead>
+                          <TableHead className="text-right font-semibold text-gray-700">Leads</TableHead>
+                          <TableHead className="text-right font-semibold text-gray-700">Porcentagem</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {utmCampaignData.map((item) => (
-                          <TableRow key={item.name}>
-                            <TableCell className="font-medium">{item.name}</TableCell>
-                            <TableCell className="text-right">{item.leads}</TableCell>
-                            <TableCell className="text-right">{item.percentage}</TableCell>
+                        {utmCampaignData.map((item, index) => (
+                          <TableRow key={item.name} className="hover:bg-purple-50/30 transition-colors">
+                            <TableCell className="font-medium text-gray-900 py-3">
+                              <div className="flex items-center gap-2">
+                                <div className={`w-3 h-3 rounded-full ${
+                                  index === 0 ? 'bg-purple-500' : 
+                                  index === 1 ? 'bg-pink-500' : 
+                                  index === 2 ? 'bg-indigo-500' : 
+                                  index === 3 ? 'bg-cyan-500' : 'bg-teal-500'
+                                }`}></div>
+                                {item.name}
+                              </div>
+                            </TableCell>
+                            <TableCell className="text-right font-semibold text-gray-900 py-3">{item.leads}</TableCell>
+                            <TableCell className="text-right py-3">
+                              <Badge variant="secondary" className="bg-purple-100 text-purple-700 hover:bg-purple-200">
+                                {item.percentage}
+                              </Badge>
+                            </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
@@ -249,25 +302,42 @@ const Reports = () => {
                   </CardContent>
                 </Card>
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="text-base lg:text-lg">Leads por UTM Content</CardTitle>
+                <Card className="shadow-sm hover:shadow-md transition-shadow">
+                  <CardHeader className="bg-gradient-to-r from-orange-50 to-amber-50 border-b">
+                    <CardTitle className="text-lg flex items-center gap-2 text-gray-800">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                      Leads por UTM Content
+                    </CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="p-0">
                     <Table>
                       <TableHeader>
-                        <TableRow>
-                          <TableHead>Conteúdo</TableHead>
-                          <TableHead className="text-right">Leads</TableHead>
-                          <TableHead className="text-right">Porcentagem</TableHead>
+                        <TableRow className="bg-gray-50/50">
+                          <TableHead className="font-semibold text-gray-700">Conteúdo</TableHead>
+                          <TableHead className="text-right font-semibold text-gray-700">Leads</TableHead>
+                          <TableHead className="text-right font-semibold text-gray-700">Porcentagem</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {utmContentData.map((item) => (
-                          <TableRow key={item.name}>
-                            <TableCell className="font-medium">{item.name}</TableCell>
-                            <TableCell className="text-right">{item.leads}</TableCell>
-                            <TableCell className="text-right">{item.percentage}</TableCell>
+                        {utmContentData.map((item, index) => (
+                          <TableRow key={item.name} className="hover:bg-orange-50/30 transition-colors">
+                            <TableCell className="font-medium text-gray-900 py-3">
+                              <div className="flex items-center gap-2">
+                                <div className={`w-3 h-3 rounded-full ${
+                                  index === 0 ? 'bg-orange-500' : 
+                                  index === 1 ? 'bg-amber-500' : 
+                                  index === 2 ? 'bg-yellow-500' : 
+                                  index === 3 ? 'bg-red-500' : 'bg-pink-500'
+                                }`}></div>
+                                {item.name}
+                              </div>
+                            </TableCell>
+                            <TableCell className="text-right font-semibold text-gray-900 py-3">{item.leads}</TableCell>
+                            <TableCell className="text-right py-3">
+                              <Badge variant="secondary" className="bg-orange-100 text-orange-700 hover:bg-orange-200">
+                                {item.percentage}
+                              </Badge>
+                            </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
@@ -277,25 +347,42 @@ const Reports = () => {
               </div>
 
               {/* UTM Term Table */}
-              <Card className="mb-6">
-                <CardHeader>
-                  <CardTitle className="text-base lg:text-lg">Leads por UTM Term</CardTitle>
+              <Card className="mb-6 shadow-sm hover:shadow-md transition-shadow">
+                <CardHeader className="bg-gradient-to-r from-teal-50 to-cyan-50 border-b">
+                  <CardTitle className="text-lg flex items-center gap-2 text-gray-800">
+                    <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
+                    Leads por UTM Term
+                  </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="p-0">
                   <Table>
                     <TableHeader>
-                      <TableRow>
-                        <TableHead>Termo</TableHead>
-                        <TableHead className="text-right">Leads</TableHead>
-                        <TableHead className="text-right">Porcentagem</TableHead>
+                      <TableRow className="bg-gray-50/50">
+                        <TableHead className="font-semibold text-gray-700">Termo</TableHead>
+                        <TableHead className="text-right font-semibold text-gray-700">Leads</TableHead>
+                        <TableHead className="text-right font-semibold text-gray-700">Porcentagem</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {utmTermData.map((item) => (
-                        <TableRow key={item.name}>
-                          <TableCell className="font-medium">{item.name}</TableCell>
-                          <TableCell className="text-right">{item.leads}</TableCell>
-                          <TableCell className="text-right">{item.percentage}</TableCell>
+                      {utmTermData.map((item, index) => (
+                        <TableRow key={item.name} className="hover:bg-teal-50/30 transition-colors">
+                          <TableCell className="font-medium text-gray-900 py-3">
+                            <div className="flex items-center gap-2">
+                              <div className={`w-3 h-3 rounded-full ${
+                                index === 0 ? 'bg-teal-500' : 
+                                index === 1 ? 'bg-cyan-500' : 
+                                index === 2 ? 'bg-sky-500' : 
+                                index === 3 ? 'bg-blue-500' : 'bg-indigo-500'
+                              }`}></div>
+                              {item.name}
+                            </div>
+                          </TableCell>
+                          <TableCell className="text-right font-semibold text-gray-900 py-3">{item.leads}</TableCell>
+                          <TableCell className="text-right py-3">
+                            <Badge variant="secondary" className="bg-teal-100 text-teal-700 hover:bg-teal-200">
+                              {item.percentage}
+                            </Badge>
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
