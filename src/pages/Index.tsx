@@ -33,16 +33,19 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
       
       <div className="flex-1 lg:ml-64">
-        <header className="bg-white shadow-sm border-b border-gray-200 lg:pl-0 pl-16">
-          <div className="px-4 lg:px-6 py-4">
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-              <h1 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-900">
-                Bem-vindo, {user?.name || 'Usuário'}
-              </h1>
+        {/* Header */}
+        <header className="bg-white shadow-sm border-b border-gray-200">
+          <div className="px-6 py-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-2xl font-semibold text-gray-900">
+                  Bem-vindo, {user?.name || 'Usuário'}
+                </h1>
+              </div>
               <div className="flex items-center gap-4">
                 <Button variant="outline" size="sm" onClick={handleRefresh}>
                   <RefreshCw className="h-4 w-4" />
@@ -55,14 +58,15 @@ const Index = () => {
           </div>
         </header>
 
-        <main className="p-4 lg:p-6 space-y-6">
+        {/* Main Content */}
+        <main className="p-6 space-y-6">
           {/* Controls */}
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-700">Período</label>
                 <Select defaultValue="last-30-days">
-                  <SelectTrigger className="w-full sm:w-64">
+                  <SelectTrigger className="w-64">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -76,7 +80,7 @@ const Index = () => {
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-700">Comparar Campanhas</label>
                 <Select>
-                  <SelectTrigger className="w-full sm:w-64">
+                  <SelectTrigger className="w-64">
                     <SelectValue placeholder="Selecionar Campanha" />
                   </SelectTrigger>
                   <SelectContent>
@@ -90,7 +94,7 @@ const Index = () => {
               </div>
             </div>
             
-            <Button variant="outline" className="w-full sm:w-auto">
+            <Button variant="outline">
               <Download className="h-4 w-4 mr-2" />
               Exportar Dados
             </Button>
