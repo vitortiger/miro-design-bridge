@@ -61,6 +61,56 @@ const mockLeads = [
     utm_medium: 'video',
     utm_content: 'descricao',
     utm_term: 'marketing digital'
+  },
+  {
+    id: '6',
+    user_id: 'lead_006',
+    entry_date: '2024-01-15T16:30:00Z',
+    utm_source: 'google',
+    utm_campaign: 'search_ads',
+    utm_medium: 'cpc',
+    utm_content: 'text_ad',
+    utm_term: 'crm telegram'
+  },
+  {
+    id: '7',
+    user_id: 'lead_007',
+    entry_date: '2024-01-14T08:45:00Z',
+    utm_source: 'linkedin',
+    utm_campaign: 'professional',
+    utm_medium: 'social',
+    utm_content: 'article_link',
+    utm_term: 'business automation'
+  },
+  {
+    id: '8',
+    user_id: 'lead_008',
+    entry_date: '2024-01-13T12:15:00Z',
+    utm_source: 'twitter',
+    utm_campaign: 'viral_tweet',
+    utm_medium: 'social',
+    utm_content: 'thread',
+    utm_term: 'lead generation'
+  },
+  {
+    id: '9',
+    user_id: 'lead_009',
+    entry_date: '2024-01-12T19:30:00Z',
+    utm_source: 'pinterest',
+    utm_campaign: 'visual_content',
+    utm_medium: 'social',
+    utm_content: 'pin_image',
+    utm_term: 'marketing tools'
+  },
+  {
+    id: '10',
+    user_id: 'lead_010',
+    entry_date: '2024-01-11T13:45:00Z',
+    utm_source: 'whatsapp',
+    utm_campaign: 'direct_message',
+    utm_medium: 'messaging',
+    utm_content: 'broadcast',
+    utm_term: 'telegram integration'
   }
 ];
 
