@@ -19,6 +19,7 @@ const Home = () => {
   const navigate = useNavigate();
   const [dateFrom, setDateFrom] = useState<Date>();
   const [dateTo, setDateTo] = useState<Date>();
+  const [selectedQuickFilter, setSelectedQuickFilter] = useState<string>("");
   
   const { data: overview, isLoading: overviewLoading, refetch: refetchOverview } = useDashboardOverview();
   const { data: analytics, isLoading: analyticsLoading } = useDashboardAnalytics();
@@ -39,6 +40,7 @@ const Home = () => {
         todayStart.setHours(0, 0, 0, 0);
         setDateFrom(todayStart);
         setDateTo(today);
+        setSelectedQuickFilter('today');
         break;
       case 'yesterday':
         const yesterday = subDays(today, 1);
@@ -47,26 +49,35 @@ const Home = () => {
         yesterday.setHours(23, 59, 59, 999);
         setDateFrom(yesterdayStart);
         setDateTo(yesterday);
+        setSelectedQuickFilter('yesterday');
         break;
       case 'thisMonth':
         setDateFrom(startOfMonth(today));
         setDateTo(today);
+        setSelectedQuickFilter('thisMonth');
         break;
       case 'thisYear':
         setDateFrom(startOfYear(today));
         setDateTo(today);
+        setSelectedQuickFilter('thisYear');
         break;
       case 365:
         setDateFrom(subYears(today, 1));
         setDateTo(today);
+        setSelectedQuickFilter('365');
         break;
       default:
         if (typeof days === 'number') {
           setDateFrom(subDays(today, days - 1));
           setDateTo(today);
+          setSelectedQuickFilter(days.toString());
         }
         break;
     }
+  };
+
+  const clearQuickFilter = () => {
+    setSelectedQuickFilter("");
   };
 
   if (isLoading || !isAuthenticated) {
@@ -108,32 +119,23 @@ const Home = () => {
           {/* Controls */}
           <div className="flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:gap-4 items-start lg:items-center justify-between">
             <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:gap-4">
-              {/* Quick Filters */}
+              {/* Quick Filters Dropdown */}
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-700">Filtros Rápidos</label>
-                <div className="flex flex-wrap gap-2">
-                  <Button variant="outline" size="sm" onClick={() => handleQuickFilter('today')}>
-                    Hoje
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={() => handleQuickFilter('yesterday')}>
-                    Ontem
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={() => handleQuickFilter(7)}>
-                    Últimos 7 dias
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={() => handleQuickFilter(30)}>
-                    Últimos 30 dias
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={() => handleQuickFilter('thisMonth')}>
-                    Este mês
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={() => handleQuickFilter('thisYear')}>
-                    Este ano
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={() => handleQuickFilter(365)}>
-                    Últimos 365 dias
-                  </Button>
-                </div>
+                <Select value={selectedQuickFilter} onValueChange={handleQuickFilter}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Selecionar período" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="today">Hoje</SelectItem>
+                    <SelectItem value="yesterday">Ontem</SelectItem>
+                    <SelectItem value="7">Últimos 7 dias</SelectItem>
+                    <SelectItem value="30">Últimos 30 dias</SelectItem>
+                    <SelectItem value="thisMonth">Este mês</SelectItem>
+                    <SelectItem value="thisYear">Este ano</SelectItem>
+                    <SelectItem value="365">Últimos 365 dias</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               {/* Date Range Picker */}
@@ -148,6 +150,7 @@ const Home = () => {
                           "w-[140px] justify-start text-left font-normal",
                           !dateFrom && "text-muted-foreground"
                         )}
+                        onClick={clearQuickFilter}
                       >
                         <CalendarIcon className="mr-2 h-4 w-4" />
                         {dateFrom ? format(dateFrom, "dd/MM/yyyy") : "Data inicial"}
@@ -157,7 +160,10 @@ const Home = () => {
                       <Calendar
                         mode="single"
                         selected={dateFrom}
-                        onSelect={setDateFrom}
+                        onSelect={(date) => {
+                          setDateFrom(date);
+                          clearQuickFilter();
+                        }}
                         initialFocus
                         className={cn("p-3 pointer-events-auto")}
                       />
@@ -172,6 +178,7 @@ const Home = () => {
                           "w-[140px] justify-start text-left font-normal",
                           !dateTo && "text-muted-foreground"
                         )}
+                        onClick={clearQuickFilter}
                       >
                         <CalendarIcon className="mr-2 h-4 w-4" />
                         {dateTo ? format(dateTo, "dd/MM/yyyy") : "Data final"}
@@ -181,7 +188,10 @@ const Home = () => {
                       <Calendar
                         mode="single"
                         selected={dateTo}
-                        onSelect={setDateTo}
+                        onSelect={(date) => {
+                          setDateTo(date);
+                          clearQuickFilter();
+                        }}
                         initialFocus
                         className={cn("p-3 pointer-events-auto")}
                       />
