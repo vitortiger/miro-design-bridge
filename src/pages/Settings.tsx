@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import { User, Shield, Bell, Zap, Crown } from 'lucide-react';
+import { User, Shield, Bell, Crown } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -16,9 +16,7 @@ const Settings = () => {
     name: 'João Silva',
     email: 'joao@exemplo.com',
     notifications_email: true,
-    notifications_telegram: true,
-    auto_capture: true,
-    data_retention: '365'
+    notifications_telegram: true
   });
 
   const handleSave = () => {
@@ -147,48 +145,6 @@ const Settings = () => {
                   checked={settings.notifications_telegram}
                   onCheckedChange={(checked) => handleInputChange('notifications_telegram', checked)}
                 />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Advanced Settings */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center space-x-2">
-                <Zap className="h-5 w-5" />
-                <CardTitle>Configurações Avançadas</CardTitle>
-              </div>
-              <CardDescription>
-                Opções avançadas para rastreamento e captura de dados.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <Label htmlFor="auto-capture">Captura Automática</Label>
-                  <p className="text-sm text-gray-500">Capturar automaticamente parâmetros UTM</p>
-                </div>
-                <Switch
-                  id="auto-capture"
-                  checked={settings.auto_capture}
-                  onCheckedChange={(checked) => handleInputChange('auto_capture', checked)}
-                />
-              </div>
-              
-              <Separator />
-              
-              <div className="space-y-2">
-                <Label htmlFor="data-retention">Retenção de Dados (dias)</Label>
-                <Input
-                  id="data-retention"
-                  type="number"
-                  value={settings.data_retention}
-                  onChange={(e) => handleInputChange('data_retention', e.target.value)}
-                  className="w-32"
-                />
-                <p className="text-sm text-gray-500">
-                  Dados serão automaticamente removidos após este período
-                </p>
               </div>
             </CardContent>
           </Card>
