@@ -137,16 +137,16 @@ const LeadsDatabase = () => {
     <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
       
-      <div className="flex-1 lg:ml-64">
+      <div className="flex-1 w-full">
         <header className="bg-white shadow-sm border-b border-gray-200">
-          <div className="px-6 py-4">
-            <h1 className="text-2xl font-semibold text-gray-900">Base de Leads</h1>
+          <div className="px-4 lg:px-6 py-4">
+            <h1 className="text-xl lg:text-2xl font-semibold text-gray-900">Base de Leads</h1>
           </div>
         </header>
 
-        <main className="p-6">
+        <main className="p-4 lg:p-6">
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Total de Leads</CardTitle>
@@ -167,7 +167,7 @@ const LeadsDatabase = () => {
               </CardContent>
             </Card>
             
-            <Card>
+            <Card className="sm:col-span-2 lg:col-span-1">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Fontes Ativas</CardTitle>
                 <Filter className="h-4 w-4 text-blue-600" />
@@ -181,10 +181,10 @@ const LeadsDatabase = () => {
           {/* Filters and Actions */}
           <Card className="mb-6">
             <CardHeader>
-              <CardTitle className="text-lg">Filtros e Exportação</CardTitle>
+              <CardTitle className="text-base lg:text-lg">Filtros e Exportação</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 gap-4">
                 <div className="relative">
                   <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                   <Input
@@ -195,53 +195,55 @@ const LeadsDatabase = () => {
                   />
                 </div>
                 
-                <Select value={sourceFilter} onValueChange={setSourceFilter}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Filtrar por fonte" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Todas as fontes</SelectItem>
-                    {uniqueSources.map(source => (
-                      <SelectItem key={source} value={source}>{source}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                
-                <Select value={campaignFilter} onValueChange={setCampaignFilter}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Filtrar por campanha" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Todas as campanhas</SelectItem>
-                    {uniqueCampaigns.map(campaign => (
-                      <SelectItem key={campaign} value={campaign}>{campaign}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                
-                <Select value={mediumFilter} onValueChange={setMediumFilter}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Filtrar por medium" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Todos os mediums</SelectItem>
-                    {uniqueMediums.map(medium => (
-                      <SelectItem key={medium} value={medium}>{medium}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <Select value={sourceFilter} onValueChange={setSourceFilter}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Filtrar por fonte" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Todas as fontes</SelectItem>
+                      {uniqueSources.map(source => (
+                        <SelectItem key={source} value={source}>{source}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  
+                  <Select value={campaignFilter} onValueChange={setCampaignFilter}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Filtrar por campanha" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Todas as campanhas</SelectItem>
+                      {uniqueCampaigns.map(campaign => (
+                        <SelectItem key={campaign} value={campaign}>{campaign}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  
+                  <Select value={mediumFilter} onValueChange={setMediumFilter}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Filtrar por medium" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Todos os mediums</SelectItem>
+                      {uniqueMediums.map(medium => (
+                        <SelectItem key={medium} value={medium}>{medium}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
-              <div className="flex flex-wrap gap-2">
-                <Button variant="outline" onClick={clearFilters}>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <Button variant="outline" onClick={clearFilters} className="w-full sm:w-auto">
                   <Filter className="h-4 w-4 mr-2" />
                   Limpar Filtros
                 </Button>
-                <Button onClick={handleExportSpreadsheet}>
+                <Button onClick={handleExportSpreadsheet} className="w-full sm:w-auto">
                   <Download className="h-4 w-4 mr-2" />
                   Exportar Planilha
                 </Button>
-                <Button variant="outline" onClick={handleExportWebhook}>
+                <Button variant="outline" onClick={handleExportWebhook} className="w-full sm:w-auto">
                   <Webhook className="h-4 w-4 mr-2" />
                   Exportar via Webhook
                 </Button>
@@ -252,7 +254,7 @@ const LeadsDatabase = () => {
           {/* Leads Table */}
           <Card>
             <CardHeader>
-              <CardTitle>Base de Leads ({filteredLeads.length})</CardTitle>
+              <CardTitle className="text-base lg:text-lg">Base de Leads ({filteredLeads.length})</CardTitle>
             </CardHeader>
             <CardContent>
               {filteredLeads.length === 0 ? (
@@ -266,49 +268,55 @@ const LeadsDatabase = () => {
                   </p>
                 </div>
               ) : (
-                <div className="overflow-x-auto">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>User ID Lead</TableHead>
-                        <TableHead>Data de Entrada</TableHead>
-                        <TableHead>UTM Source</TableHead>
-                        <TableHead>UTM Campaign</TableHead>
-                        <TableHead>UTM Medium</TableHead>
-                        <TableHead>UTM Content</TableHead>
-                        <TableHead>UTM Term</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {filteredLeads.map((lead) => (
-                        <TableRow key={lead.id}>
-                          <TableCell className="font-mono text-sm">{lead.user_id}</TableCell>
-                          <TableCell>
-                            {new Date(lead.entry_date).toLocaleDateString('pt-BR')} {' '}
-                            {new Date(lead.entry_date).toLocaleTimeString('pt-BR', { 
-                              hour: '2-digit', 
-                              minute: '2-digit' 
-                            })}
-                          </TableCell>
-                          <TableCell>
-                            <Badge variant="outline">{lead.utm_source}</Badge>
-                          </TableCell>
-                          <TableCell>
-                            <Badge variant="secondary">{lead.utm_campaign}</Badge>
-                          </TableCell>
-                          <TableCell>
-                            <Badge variant="default">{lead.utm_medium}</Badge>
-                          </TableCell>
-                          <TableCell className="text-sm text-gray-600">
-                            {lead.utm_content}
-                          </TableCell>
-                          <TableCell className="text-sm text-gray-600">
-                            {lead.utm_term}
-                          </TableCell>
+                <div className="overflow-x-auto -mx-4 sm:mx-0">
+                  <div className="min-w-full inline-block align-middle">
+                    <Table className="min-w-[800px]">
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="min-w-[120px]">User ID Lead</TableHead>
+                          <TableHead className="min-w-[140px]">Data de Entrada</TableHead>
+                          <TableHead className="min-w-[100px]">UTM Source</TableHead>
+                          <TableHead className="min-w-[120px]">UTM Campaign</TableHead>
+                          <TableHead className="min-w-[100px]">UTM Medium</TableHead>
+                          <TableHead className="min-w-[120px]">UTM Content</TableHead>
+                          <TableHead className="min-w-[120px]">UTM Term</TableHead>
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+                      </TableHeader>
+                      <TableBody>
+                        {filteredLeads.map((lead) => (
+                          <TableRow key={lead.id}>
+                            <TableCell className="font-mono text-sm">{lead.user_id}</TableCell>
+                            <TableCell className="text-sm">
+                              <div className="flex flex-col">
+                                <span>{new Date(lead.entry_date).toLocaleDateString('pt-BR')}</span>
+                                <span className="text-xs text-gray-500">
+                                  {new Date(lead.entry_date).toLocaleTimeString('pt-BR', { 
+                                    hour: '2-digit', 
+                                    minute: '2-digit' 
+                                  })}
+                                </span>
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="outline" className="text-xs">{lead.utm_source}</Badge>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="secondary" className="text-xs">{lead.utm_campaign}</Badge>
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="default" className="text-xs">{lead.utm_medium}</Badge>
+                            </TableCell>
+                            <TableCell className="text-xs text-gray-600 max-w-[120px] truncate">
+                              {lead.utm_content}
+                            </TableCell>
+                            <TableCell className="text-xs text-gray-600 max-w-[120px] truncate">
+                              {lead.utm_term}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
                 </div>
               )}
             </CardContent>
