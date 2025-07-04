@@ -104,71 +104,108 @@ const Home = () => {
         
         <div className="flex-1 w-full lg:ml-0">
           <header className="bg-white shadow-sm border-b border-gray-200">
-            <div className="px-4 lg:px-6 py-4">
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-                <h1 className="text-xl lg:text-2xl font-semibold text-gray-900 ml-12 lg:ml-0">
-                  Bem-vindo, {user?.name || 'Usuário'}
-                </h1>
-                <div className="flex flex-col sm:flex-row gap-2 ml-12 lg:ml-0">
-                  {/* Preset Filters */}
-                  <div className="flex flex-wrap gap-2 mb-2 sm:mb-0">
-                    <Select value={selectedQuickFilter} onValueChange={handleQuickFilter}>
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Selecionar período" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="today">Hoje</SelectItem>
-                        <SelectItem value="yesterday">Ontem</SelectItem>
-                        <SelectItem value="7">Últimos 7 dias</SelectItem>
-                        <SelectItem value="30">Últimos 30 dias</SelectItem>
-                        <SelectItem value="thisMonth">Este mês</SelectItem>
-                        <SelectItem value="thisYear">Este ano</SelectItem>
-                        <SelectItem value="365">Últimos 365 dias</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+            <div className="px-4 lg:px-6 py-6">
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                {/* Welcome Section */}
+                <div className="ml-12 lg:ml-0">
+                  <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-1">
+                    Bem-vindo, {user?.name || 'João Silva'}
+                  </h1>
+                  <p className="text-gray-600 text-sm">
+                    Acompanhe suas métricas e performance em tempo real
+                  </p>
+                </div>
 
-                  {/* Date Range Pickers */}
-                  <div className="flex gap-2">
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button variant="outline" className={cn("w-[140px] justify-start text-left font-normal", !dateFrom && "text-muted-foreground")} onClick={clearQuickFilter}>
-                          <CalendarIcon className="mr-2 h-4 w-4" />
-                          {dateFrom ? format(dateFrom, "dd/MM/yyyy") : "Data inicial"}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar mode="single" selected={dateFrom} onSelect={date => {
-                        setDateFrom(date);
-                        clearQuickFilter();
-                      }} initialFocus className={cn("p-3 pointer-events-auto")} />
-                      </PopoverContent>
-                    </Popover>
+                {/* Controls Section */}
+                <div className="flex flex-col xl:flex-row gap-4 ml-12 lg:ml-0 min-w-0">
+                  {/* Date Filters Row */}
+                  <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+                    {/* Preset Filters */}
+                    <div className="w-full sm:w-auto">
+                      <Select value={selectedQuickFilter} onValueChange={handleQuickFilter}>
+                        <SelectTrigger className="w-full sm:w-[180px] bg-white border-gray-300 hover:border-gray-400 transition-colors">
+                          <SelectValue placeholder="Selecionar período" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-white border border-gray-200 shadow-lg">
+                          <SelectItem value="today">Hoje</SelectItem>
+                          <SelectItem value="yesterday">Ontem</SelectItem>
+                          <SelectItem value="7">Últimos 7 dias</SelectItem>
+                          <SelectItem value="30">Últimos 30 dias</SelectItem>
+                          <SelectItem value="thisMonth">Este mês</SelectItem>
+                          <SelectItem value="thisYear">Este ano</SelectItem>
+                          <SelectItem value="365">Últimos 365 dias</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
 
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button variant="outline" className={cn("w-[140px] justify-start text-left font-normal", !dateTo && "text-muted-foreground")} onClick={clearQuickFilter}>
-                          <CalendarIcon className="mr-2 h-4 w-4" />
-                          {dateTo ? format(dateTo, "dd/MM/yyyy") : "Data final"}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar mode="single" selected={dateTo} onSelect={date => {
-                        setDateTo(date);
-                        clearQuickFilter();
-                      }} initialFocus className={cn("p-3 pointer-events-auto")} />
-                      </PopoverContent>
-                    </Popover>
+                    {/* Date Range Pickers */}
+                    <div className="flex gap-2 w-full sm:w-auto">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button 
+                            variant="outline" 
+                            className={cn(
+                              "flex-1 sm:w-[140px] justify-start text-left font-normal bg-white border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-colors", 
+                              !dateFrom && "text-muted-foreground"
+                            )} 
+                            onClick={clearQuickFilter}
+                          >
+                            <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
+                            {dateFrom ? format(dateFrom, "dd/MM/yyyy") : "Data inicial"}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0 bg-white border border-gray-200 shadow-lg" align="start">
+                          <Calendar mode="single" selected={dateFrom} onSelect={date => {
+                            setDateFrom(date);
+                            clearQuickFilter();
+                          }} initialFocus className={cn("p-3 pointer-events-auto")} />
+                        </PopoverContent>
+                      </Popover>
+
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button 
+                            variant="outline" 
+                            className={cn(
+                              "flex-1 sm:w-[140px] justify-start text-left font-normal bg-white border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-colors", 
+                              !dateTo && "text-muted-foreground"
+                            )} 
+                            onClick={clearQuickFilter}
+                          >
+                            <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
+                            {dateTo ? format(dateTo, "dd/MM/yyyy") : "Data final"}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0 bg-white border border-gray-200 shadow-lg" align="start">
+                          <Calendar mode="single" selected={dateTo} onSelect={date => {
+                            setDateTo(date);
+                            clearQuickFilter();
+                          }} initialFocus className={cn("p-3 pointer-events-auto")} />
+                        </PopoverContent>
+                      </Popover>
+                    </div>
                   </div>
                   
+                  {/* Action Buttons */}
                   <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" onClick={handleRefresh}>
-                      <RefreshCw className="h-4 w-4" />
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={handleRefresh}
+                      className="bg-white border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-colors"
+                    >
+                      <RefreshCw className="h-4 w-4 text-gray-600" />
                     </Button>
-                    <Button variant="outline" size="sm">
-                      <Bell className="h-4 w-4" />
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      className="bg-white border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-colors"
+                    >
+                      <Bell className="h-4 w-4 text-gray-600" />
                     </Button>
-                    <Button variant="outline" className="w-full sm:w-auto">
+                    <Button 
+                      className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-colors w-full sm:w-auto"
+                    >
                       <Download className="h-4 w-4 mr-2" />
                       Exportar Dados
                     </Button>
