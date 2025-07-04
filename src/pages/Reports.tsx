@@ -27,56 +27,56 @@ const sourceData = [
   { name: 'Email', value: 8, color: '#34A853' },
 ];
 
-const campaignPerformance = [
+const channelPerformance = [
   {
     id: '1',
-    campaign: 'Marketing Digital 2024',
-    source: 'Google',
-    medium: 'CPC',
+    canal: 'Marketing Digital',
+    fonte: 'Google',
+    tipo: 'CPC',
     leads: 85,
-    clicks: 650,
-    conversion: '13.1%',
-    cost: 'R$ 1.250,00'
+    cliques: 650,
+    conversao: '13.1%',
+    custo: 'R$ 1.250,00'
   },
   {
     id: '2',
-    campaign: 'Social Media Push',
-    source: 'Facebook',
-    medium: 'Social',
+    canal: 'Social Media',
+    fonte: 'Facebook',
+    tipo: 'Social',
     leads: 62,
-    clicks: 480,
-    conversion: '12.9%',
-    cost: 'R$ 890,00'
+    cliques: 480,
+    conversao: '12.9%',
+    custo: 'R$ 890,00'
   },
   {
     id: '3',
-    campaign: 'Influencer Partnership',
-    source: 'Instagram',
-    medium: 'Social',
+    canal: 'Influencer',
+    fonte: 'Instagram',
+    tipo: 'Social',
     leads: 45,
-    clicks: 320,
-    conversion: '14.1%',
-    cost: 'R$ 1.500,00'
+    cliques: 320,
+    conversao: '14.1%',
+    custo: 'R$ 1.500,00'
   },
   {
     id: '4',
-    campaign: 'Video Tutorial Series',
-    source: 'YouTube',
-    medium: 'Video',
+    canal: 'Video Tutorial',
+    fonte: 'YouTube',
+    tipo: 'Video',
     leads: 38,
-    clicks: 290,
-    conversion: '13.1%',
-    cost: 'R$ 750,00'
+    cliques: 290,
+    conversao: '13.1%',
+    custo: 'R$ 750,00'
   },
   {
     id: '5',
-    campaign: 'Newsletter Campaign',
-    source: 'Email',
-    medium: 'Email',
+    canal: 'Newsletter',
+    fonte: 'Email',
+    tipo: 'Email',
     leads: 28,
-    clicks: 180,
-    conversion: '15.6%',
-    cost: 'R$ 320,00'
+    cliques: 180,
+    conversao: '15.6%',
+    custo: 'R$ 320,00'
   }
 ];
 
@@ -251,10 +251,10 @@ const Reports = () => {
               </CardContent>
             </Card>
 
-            {/* Campaign Performance Table */}
+            {/* Channel Performance Table */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-base lg:text-lg">Desempenho por Campanha</CardTitle>
+                <CardTitle className="text-base lg:text-lg">Desempenho por Canal</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="overflow-x-auto -mx-4 sm:mx-0">
@@ -262,9 +262,9 @@ const Reports = () => {
                     <Table className="min-w-[700px]">
                       <TableHeader>
                         <TableRow>
-                          <TableHead className="min-w-[150px]">Campanha</TableHead>
+                          <TableHead className="min-w-[120px]">Canal</TableHead>
                           <TableHead className="min-w-[100px]">Fonte</TableHead>
-                          <TableHead className="min-w-[100px]">Medium</TableHead>
+                          <TableHead className="min-w-[80px]">Tipo</TableHead>
                           <TableHead className="min-w-[80px]">Leads</TableHead>
                           <TableHead className="min-w-[80px]">Cliques</TableHead>
                           <TableHead className="min-w-[100px]">Conversão</TableHead>
@@ -272,26 +272,26 @@ const Reports = () => {
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {campaignPerformance.map((campaign) => (
-                          <TableRow key={campaign.id}>
-                            <TableCell className="font-medium">{campaign.campaign}</TableCell>
+                        {channelPerformance.map((channel) => (
+                          <TableRow key={channel.id}>
+                            <TableCell className="font-medium">{channel.canal}</TableCell>
                             <TableCell>
-                              <Badge variant="outline" className="text-xs">{campaign.source}</Badge>
+                              <Badge variant="outline" className="text-xs">{channel.fonte}</Badge>
                             </TableCell>
                             <TableCell>
-                              <Badge variant="secondary" className="text-xs">{campaign.medium}</Badge>
+                              <Badge variant="secondary" className="text-xs">{channel.tipo}</Badge>
                             </TableCell>
-                            <TableCell className="font-semibold">{campaign.leads}</TableCell>
-                            <TableCell>{campaign.clicks}</TableCell>
+                            <TableCell className="font-semibold">{channel.leads}</TableCell>
+                            <TableCell>{channel.cliques}</TableCell>
                             <TableCell>
                               <Badge 
-                                variant={parseFloat(campaign.conversion) > 14 ? "default" : "secondary"}
+                                variant={parseFloat(channel.conversao) > 14 ? "default" : "secondary"}
                                 className="text-xs"
                               >
-                                {campaign.conversion}
+                                {channel.conversao}
                               </Badge>
                             </TableCell>
-                            <TableCell className="text-green-600 font-medium">{campaign.cost}</TableCell>
+                            <TableCell className="text-green-600 font-medium">{channel.custo}</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
