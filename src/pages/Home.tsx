@@ -92,7 +92,7 @@ const Home = () => {
   return <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
       
-      <div className="flex-1 w-full lg:pl-64 mx-0 px-[20px]">
+      <div className="flex-1 w-full lg:pl-64 mx-0 px-0">
         {/* Header */}
         <header className="bg-white shadow-sm border-b border-gray-200">
           <div className="px-4 sm:px-6 py-4">
