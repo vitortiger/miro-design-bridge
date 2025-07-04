@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import Sidebar from '@/components/Sidebar';
 import { Button } from '@/components/ui/button';
@@ -191,7 +190,7 @@ const Channels = () => {
                       </div>
 
                       <div>
-                        <p className="text-sm font-medium text-gray-600">Código para página</p>
+                        <p className="text-sm font-medium text-gray-600">ID do Botão</p>
                         <div className="flex items-center gap-2 mt-1">
                           <p className="text-sm font-mono bg-blue-50 px-2 py-1 rounded border flex-1">
                             btn-telegram
