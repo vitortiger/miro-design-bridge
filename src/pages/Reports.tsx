@@ -1,8 +1,10 @@
+
 import Sidebar from '@/components/Sidebar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
 import { TrendingUp, Users, MousePointer, Eye, Download } from 'lucide-react';
 import { useState } from 'react';
@@ -25,107 +27,44 @@ const sourceData = [
   { name: 'Email', value: 8, color: '#34A853' },
 ];
 
-const channelPerformance = [
-  {
-    id: '1',
-    canal: 'Marketing Digital',
-    fonte: 'Google',
-    tipo: 'CPC',
-    leads: 85,
-    cliques: 650,
-    conversao: '13.1%',
-    custo: 'R$ 1.250,00'
-  },
-  {
-    id: '2',
-    canal: 'Social Media',
-    fonte: 'Facebook',
-    tipo: 'Social',
-    leads: 62,
-    cliques: 480,
-    conversao: '12.9%',
-    custo: 'R$ 890,00'
-  },
-  {
-    id: '3',
-    canal: 'Influencer',
-    fonte: 'Instagram',
-    tipo: 'Social',
-    leads: 45,
-    cliques: 320,
-    conversao: '14.1%',
-    custo: 'R$ 1.500,00'
-  },
-  {
-    id: '4',
-    canal: 'Video Tutorial',
-    fonte: 'YouTube',
-    tipo: 'Video',
-    leads: 38,
-    cliques: 290,
-    conversao: '13.1%',
-    custo: 'R$ 750,00'
-  },
-  {
-    id: '5',
-    canal: 'Newsletter',
-    fonte: 'Email',
-    tipo: 'Email',
-    leads: 28,
-    cliques: 180,
-    conversao: '15.6%',
-    custo: 'R$ 320,00'
-  }
-];
-
-// UTM Data
+// UTM Data converted to table format
 const utmSourceData = [
-  { name: 'Google', leads: 145, color: '#4285F4' },
-  { name: 'Facebook', leads: 89, color: '#1877F2' },
-  { name: 'Instagram', leads: 67, color: '#E4405F' },
-  { name: 'YouTube', leads: 42, color: '#FF0000' },
-  { name: 'Email', leads: 28, color: '#34A853' },
+  { name: 'Google', leads: 145, percentage: '39.2%' },
+  { name: 'Facebook', leads: 89, percentage: '24.1%' },
+  { name: 'Instagram', leads: 67, percentage: '18.1%' },
+  { name: 'YouTube', leads: 42, percentage: '11.4%' },
+  { name: 'Email', leads: 28, percentage: '7.6%' },
 ];
 
 const utmCampaignData = [
-  { name: 'Black Friday', leads: 120 },
-  { name: 'Natal Premium', leads: 89 },
-  { name: 'Ano Novo VIP', leads: 67 },
-  { name: 'Verão 2024', leads: 45 },
-  { name: 'Promoção Especial', leads: 32 },
+  { name: 'Black Friday', leads: 120, percentage: '34.4%' },
+  { name: 'Natal Premium', leads: 89, percentage: '25.5%' },
+  { name: 'Ano Novo VIP', leads: 67, percentage: '19.2%' },
+  { name: 'Verão 2024', leads: 45, percentage: '12.9%' },
+  { name: 'Promoção Especial', leads: 32, percentage: '9.2%' },
 ];
 
 const utmMediumData = [
-  { name: 'CPC', leads: 156, color: '#8B5CF6' },
-  { name: 'Social', leads: 89, color: '#10B981' },
-  { name: 'Email', leads: 67, color: '#F59E0B' },
-  { name: 'Organic', leads: 45, color: '#EF4444' },
+  { name: 'CPC', leads: 156, percentage: '43.5%' },
+  { name: 'Social', leads: 89, percentage: '24.9%' },
+  { name: 'Email', leads: 67, percentage: '18.7%' },
+  { name: 'Organic', leads: 45, percentage: '12.6%' },
 ];
 
 const utmContentData = [
-  { name: 'Banner Principal', leads: 78 },
-  { name: 'Texto Promocional', leads: 65 },
-  { name: 'Vídeo Demonstrativo', leads: 52 },
-  { name: 'Carousel de Imagens', leads: 43 },
-  { name: 'Story Interativo', leads: 35 },
+  { name: 'Banner Principal', leads: 78, percentage: '28.5%' },
+  { name: 'Texto Promocional', leads: 65, percentage: '23.7%' },
+  { name: 'Vídeo Demonstrativo', leads: 52, percentage: '19.0%' },
+  { name: 'Carousel de Imagens', leads: 43, percentage: '15.7%' },
+  { name: 'Story Interativo', leads: 35, percentage: '12.8%' },
 ];
 
 const utmTermData = [
-  { name: 'Comprar Online', leads: 45 },
-  { name: 'Melhor Preço', leads: 38 },
-  { name: 'Desconto Especial', leads: 32 },
-  { name: 'Oferta Limitada', leads: 28 },
-  { name: 'Grátis Hoje', leads: 25 },
-];
-
-const dailyUtmData = [
-  { date: '15/01', google: 12, facebook: 8, instagram: 6, youtube: 4 },
-  { date: '16/01', google: 15, facebook: 12, instagram: 9, youtube: 5 },
-  { date: '17/01', google: 18, facebook: 14, instagram: 11, youtube: 7 },
-  { date: '18/01', google: 22, facebook: 16, instagram: 13, youtube: 8 },
-  { date: '19/01', google: 25, facebook: 18, instagram: 15, youtube: 10 },
-  { date: '20/01', google: 28, facebook: 20, instagram: 17, youtube: 12 },
-  { date: '21/01', google: 32, facebook: 24, instagram: 19, youtube: 14 },
+  { name: 'Comprar Online', leads: 45, percentage: '26.8%' },
+  { name: 'Melhor Preço', leads: 38, percentage: '22.6%' },
+  { name: 'Desconto Especial', leads: 32, percentage: '19.0%' },
+  { name: 'Oferta Limitada', leads: 28, percentage: '16.7%' },
+  { name: 'Grátis Hoje', leads: 25, percentage: '14.9%' },
 ];
 
 const Reports = () => {
@@ -227,57 +166,31 @@ const Reports = () => {
             <div className="mb-6 lg:mb-8">
               <h2 className="text-xl font-semibold text-gray-900 mb-6">Análise UTM</h2>
               
-              {/* Daily UTM Trends */}
-              <Card className="mb-6">
-                <CardHeader>
-                  <CardTitle className="text-base lg:text-lg">Tendência Diária por UTM Source</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="w-full h-[300px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={dailyUtmData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="date" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Line type="monotone" dataKey="google" stroke="#4285F4" strokeWidth={2} name="Google" />
-                        <Line type="monotone" dataKey="facebook" stroke="#1877F2" strokeWidth={2} name="Facebook" />
-                        <Line type="monotone" dataKey="instagram" stroke="#E4405F" strokeWidth={2} name="Instagram" />
-                        <Line type="monotone" dataKey="youtube" stroke="#FF0000" strokeWidth={2} name="YouTube" />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* UTM Source and Medium */}
+              {/* UTM Source and Medium Tables */}
               <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6 mb-6">
                 <Card>
                   <CardHeader>
                     <CardTitle className="text-base lg:text-lg">Leads por UTM Source</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="w-full h-[300px]">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <PieChart>
-                          <Pie
-                            data={utmSourceData}
-                            cx="50%"
-                            cy="50%"
-                            outerRadius={100}
-                            fill="#8884d8"
-                            dataKey="leads"
-                            label={({ name, leads }) => `${name}: ${leads}`}
-                          >
-                            {utmSourceData.map((entry, index) => (
-                              <Cell key={`cell-${index}`} fill={entry.color} />
-                            ))}
-                          </Pie>
-                          <Tooltip />
-                        </PieChart>
-                      </ResponsiveContainer>
-                    </div>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Fonte</TableHead>
+                          <TableHead className="text-right">Leads</TableHead>
+                          <TableHead className="text-right">Porcentagem</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {utmSourceData.map((item) => (
+                          <TableRow key={item.name}>
+                            <TableCell className="font-medium">{item.name}</TableCell>
+                            <TableCell className="text-right">{item.leads}</TableCell>
+                            <TableCell className="text-right">{item.percentage}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
                   </CardContent>
                 </Card>
 
@@ -286,39 +199,53 @@ const Reports = () => {
                     <CardTitle className="text-base lg:text-lg">Leads por UTM Medium</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="w-full h-[300px]">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={utmMediumData}>
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="name" />
-                          <YAxis />
-                          <Tooltip />
-                          <Bar dataKey="leads" fill="#8B5CF6" />
-                        </BarChart>
-                      </ResponsiveContainer>
-                    </div>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Mídia</TableHead>
+                          <TableHead className="text-right">Leads</TableHead>
+                          <TableHead className="text-right">Porcentagem</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {utmMediumData.map((item) => (
+                          <TableRow key={item.name}>
+                            <TableCell className="font-medium">{item.name}</TableCell>
+                            <TableCell className="text-right">{item.leads}</TableCell>
+                            <TableCell className="text-right">{item.percentage}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
                   </CardContent>
                 </Card>
               </div>
 
-              {/* UTM Campaign and Content */}
+              {/* UTM Campaign and Content Tables */}
               <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6 mb-6">
                 <Card>
                   <CardHeader>
                     <CardTitle className="text-base lg:text-lg">Leads por UTM Campaign</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="w-full h-[300px]">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={utmCampaignData}>
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="name" />
-                          <YAxis />
-                          <Tooltip />
-                          <Bar dataKey="leads" fill="#10B981" />
-                        </BarChart>
-                      </ResponsiveContainer>
-                    </div>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Campanha</TableHead>
+                          <TableHead className="text-right">Leads</TableHead>
+                          <TableHead className="text-right">Porcentagem</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {utmCampaignData.map((item) => (
+                          <TableRow key={item.name}>
+                            <TableCell className="font-medium">{item.name}</TableCell>
+                            <TableCell className="text-right">{item.leads}</TableCell>
+                            <TableCell className="text-right">{item.percentage}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
                   </CardContent>
                 </Card>
 
@@ -327,38 +254,52 @@ const Reports = () => {
                     <CardTitle className="text-base lg:text-lg">Leads por UTM Content</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="w-full h-[300px]">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={utmContentData}>
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="name" />
-                          <YAxis />
-                          <Tooltip />
-                          <Bar dataKey="leads" fill="#F59E0B" />
-                        </BarChart>
-                      </ResponsiveContainer>
-                    </div>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Conteúdo</TableHead>
+                          <TableHead className="text-right">Leads</TableHead>
+                          <TableHead className="text-right">Porcentagem</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {utmContentData.map((item) => (
+                          <TableRow key={item.name}>
+                            <TableCell className="font-medium">{item.name}</TableCell>
+                            <TableCell className="text-right">{item.leads}</TableCell>
+                            <TableCell className="text-right">{item.percentage}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
                   </CardContent>
                 </Card>
               </div>
 
-              {/* UTM Term */}
+              {/* UTM Term Table */}
               <Card className="mb-6">
                 <CardHeader>
                   <CardTitle className="text-base lg:text-lg">Leads por UTM Term</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="w-full h-[300px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={utmTermData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Bar dataKey="leads" fill="#EF4444" />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Termo</TableHead>
+                        <TableHead className="text-right">Leads</TableHead>
+                        <TableHead className="text-right">Porcentagem</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {utmTermData.map((item) => (
+                        <TableRow key={item.name}>
+                          <TableCell className="font-medium">{item.name}</TableCell>
+                          <TableCell className="text-right">{item.leads}</TableCell>
+                          <TableCell className="text-right">{item.percentage}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
                 </CardContent>
               </Card>
             </div>
