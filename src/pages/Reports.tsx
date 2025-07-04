@@ -19,14 +19,6 @@ const monthlyData = [
   { name: 'Jun', leads: 250, clicks: 1900, views: 2800 },
 ];
 
-const sourceData = [
-  { name: 'Google', value: 35, color: '#4285F4' },
-  { name: 'Facebook', value: 25, color: '#1877F2' },
-  { name: 'Instagram', value: 20, color: '#E4405F' },
-  { name: 'YouTube', value: 12, color: '#FF0000' },
-  { name: 'Email', value: 8, color: '#34A853' },
-];
-
 // UTM Data converted to table format
 const utmSourceData = [
   { name: 'Google', leads: 145, percentage: '39.2%' },
@@ -387,60 +379,6 @@ const Reports = () => {
                       ))}
                     </TableBody>
                   </Table>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Original Charts Section */}
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6 mb-6 lg:mb-8">
-              {/* Monthly Performance Chart */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base lg:text-lg">Desempenho Mensal</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="w-full h-[300px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={monthlyData}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="leads" fill="#3B82F6" name="Leads" />
-                        <Bar dataKey="clicks" fill="#10B981" name="Cliques" />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Traffic Sources Pie Chart */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base lg:text-lg">Fontes de Tráfego</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="w-full h-[300px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <PieChart>
-                        <Pie
-                          data={sourceData}
-                          cx="50%"
-                          cy="50%"
-                          outerRadius={100}
-                          fill="#8884d8"
-                          dataKey="value"
-                          label={({ name, value }) => `${name}: ${value}%`}
-                        >
-                          {sourceData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.color} />
-                          ))}
-                        </Pie>
-                        <Tooltip />
-                      </PieChart>
-                    </ResponsiveContainer>
-                  </div>
                 </CardContent>
               </Card>
             </div>
