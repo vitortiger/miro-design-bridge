@@ -75,26 +75,25 @@ const Channels = () => {
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
       
       <div className="flex-1 lg:ml-64">
         <header className="bg-white shadow-sm border-b border-gray-200">
-          <div className="px-4 sm:px-6 py-4">
+          <div className="px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="pl-12 lg:pl-0">
-                <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">Canais Telegram</h1>
+                <h1 className="text-2xl font-semibold text-gray-900">Canais Telegram</h1>
               </div>
-              <Button onClick={() => setIsCreateDialogOpen(true)} className="whitespace-nowrap">
+              <Button onClick={() => setIsCreateDialogOpen(true)}>
                 <Plus className="h-4 w-4 mr-2" />
-                <span className="hidden sm:inline">Novo Canal</span>
-                <span className="sm:hidden">Novo</span>
+                Novo Canal
               </Button>
             </div>
           </div>
         </header>
 
-        <main className="p-4 sm:p-6 bg-gray-50">
+        <main className="p-6">
           {/* Search */}
           <div className="mb-6">
             <div className="relative">
@@ -109,7 +108,7 @@ const Channels = () => {
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Total de Canais</CardTitle>
@@ -143,9 +142,9 @@ const Channels = () => {
               </Button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4 sm:gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-6">
               {filteredChannels.map((channel) => (
-                <Card key={channel.id} className="relative w-full">
+                <Card key={channel.id} className="relative">
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-2 min-w-0 flex-1">
