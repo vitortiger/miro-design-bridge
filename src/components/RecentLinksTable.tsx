@@ -71,7 +71,7 @@ export default function RecentLinksTable() {
                   <div className="flex items-center gap-2">
                     <Button variant="outline" size="sm" className="text-sm">
                       <ExternalLink className="h-4 w-4 mr-1" />
-                      View details
+                      View Details
                     </Button>
                     <Button variant="outline" size="sm">
                       <Copy className="h-4 w-4" />
