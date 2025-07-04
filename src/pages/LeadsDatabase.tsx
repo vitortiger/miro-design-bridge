@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import Sidebar from '@/components/Sidebar';
 import { Button } from '@/components/ui/button';
@@ -7,8 +6,12 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Search, Download, Webhook, Filter, Calendar, Users, TrendingUp } from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
+import { Search, Download, Webhook, Filter, Calendar as CalendarIcon, Users, TrendingUp } from 'lucide-react';
 import { toast } from 'sonner';
+import { format, subDays, startOfMonth, endOfMonth, startOfYear, endOfYear, startOfDay, endOfDay } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 // Mock data
 const mockLeads = [
@@ -99,7 +102,57 @@ const LeadsDatabase = () => {
   const [sourceFilter, setSourceFilter] = useState('');
   const [campaignFilter, setCampaignFilter] = useState('');
   const [mediumFilter, setMediumFilter] = useState('');
+  const [dateFrom, setDateFrom] = useState<Date>();
+  const [dateTo, setDateTo] = useState<Date>();
+  const [selectedPreset, setSelectedPreset] = useState<string>("");
   const [leads] = useState(mockLeads);
+
+  const handlePresetFilter = (preset: string) => {
+    const today = new Date();
+    let from: Date;
+    let to: Date = today;
+
+    switch (preset) {
+      case 'hoje':
+        from = startOfDay(today);
+        to = endOfDay(today);
+        break;
+      case 'ontem':
+        from = startOfDay(subDays(today, 1));
+        to = endOfDay(subDays(today, 1));
+        break;
+      case 'ultimos7':
+        from = subDays(today, 6);
+        to = today;
+        break;
+      case 'ultimos30':
+        from = subDays(today, 29);
+        to = today;
+        break;
+      case 'esseMs':
+        from = startOfMonth(today);
+        to = endOfMonth(today);
+        break;
+      case 'esseAno':
+        from = startOfYear(today);
+        to = endOfYear(today);
+        break;
+      case 'ultimos365':
+        from = subDays(today, 364);
+        to = today;
+        break;
+      default:
+        return;
+    }
+
+    setDateFrom(from);
+    setDateTo(to);
+    setSelectedPreset(preset);
+  };
+
+  const clearPreset = () => {
+    setSelectedPreset("");
+  };
 
   const filteredLeads = leads.filter(lead => {
     const matchesSearch = 
@@ -131,6 +184,9 @@ const LeadsDatabase = () => {
     setSourceFilter('');
     setCampaignFilter('');
     setMediumFilter('');
+    setDateFrom(undefined);
+    setDateTo(undefined);
+    setSelectedPreset('');
   };
 
   return (
@@ -231,6 +287,86 @@ const LeadsDatabase = () => {
                       ))}
                     </SelectContent>
                   </Select>
+                </div>
+
+                {/* Date Filters */}
+                <div className="flex flex-col sm:flex-row gap-2">
+                  {/* Preset Filters */}
+                  <div className="flex flex-wrap gap-2 mb-2 sm:mb-0">
+                    <Select value={selectedPreset} onValueChange={handlePresetFilter}>
+                      <SelectTrigger className="w-[160px]">
+                        <SelectValue placeholder="Filtros rápidos" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="hoje">Hoje</SelectItem>
+                        <SelectItem value="ontem">Ontem</SelectItem>
+                        <SelectItem value="ultimos7">Últimos 7 dias</SelectItem>
+                        <SelectItem value="ultimos30">Últimos 30 dias</SelectItem>
+                        <SelectItem value="esseMs">Este mês</SelectItem>
+                        <SelectItem value="esseAno">Este ano</SelectItem>
+                        <SelectItem value="ultimos365">Últimos 365 dias</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Date Range Pickers */}
+                  <div className="flex gap-2">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-[140px] justify-start text-left font-normal",
+                            !dateFrom && "text-muted-foreground"
+                          )}
+                          onClick={clearPreset}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {dateFrom ? format(dateFrom, "dd/MM/yyyy") : "Data início"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={dateFrom}
+                          onSelect={(date) => {
+                            setDateFrom(date);
+                            clearPreset();
+                          }}
+                          initialFocus
+                          className="pointer-events-auto"
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-[140px] justify-start text-left font-normal",
+                            !dateTo && "text-muted-foreground"
+                          )}
+                          onClick={clearPreset}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {dateTo ? format(dateTo, "dd/MM/yyyy") : "Data fim"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={dateTo}
+                          onSelect={(date) => {
+                            setDateTo(date);
+                            clearPreset();
+                          }}
+                          initialFocus
+                          className="pointer-events-auto"
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
                 </div>
               </div>
 
