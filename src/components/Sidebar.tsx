@@ -6,7 +6,7 @@ import {
   FileText, 
   Database, 
   CreditCard, 
-  Subscription, 
+  Crown, 
   HelpCircle, 
   Settings,
   Menu,
@@ -19,7 +19,7 @@ const navigation = [
   { name: 'Relatórios', href: '/reports', icon: FileText },
   { name: 'Base de Leads', href: '/leads', icon: Database },
   { name: 'Credenciais', href: '/credentials', icon: CreditCard },
-  { name: 'Assinatura', href: '/subscription', icon: Subscription },
+  { name: 'Assinatura', href: '/subscription', icon: Crown },
   { name: 'FAQ', href: '/faq', icon: HelpCircle },
   { name: 'Suporte', href: '/support', icon: Settings },
 ];
