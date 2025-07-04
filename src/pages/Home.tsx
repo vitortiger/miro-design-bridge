@@ -1,3 +1,4 @@
+
 import { Bell, Download, RefreshCw, Calendar as CalendarIcon, User, LogOut, Settings as SettingsIcon } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useDashboardOverview, useDashboardAnalytics } from '@/hooks/useDashboard';
@@ -109,60 +110,7 @@ const Home = () => {
   return (
     <ProtectedRoute>
       <div className="min-h-screen bg-gray-50">
-        {/* Top Header */}
-        <div className="fixed top-0 left-0 right-0 h-16 bg-white border-b border-gray-200 z-40 flex items-center justify-between px-6">
-          <div className="flex items-center space-x-4">
-            <span className="text-lg font-semibold text-gray-900">Home</span>
-          </div>
-          
-          <div className="flex items-center space-x-4">
-            {/* User Profile Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full p-0 hover:bg-gray-100">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src="" alt="Profile" />
-                    <AvatarFallback className="bg-blue-100 text-blue-600 text-sm font-medium">
-                      {getUserInitials()}
-                    </AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56 bg-white border border-gray-200 shadow-lg" align="end" forceMount>
-                <div className="flex items-center justify-start gap-2 p-2">
-                  <div className="flex flex-col space-y-1 leading-none">
-                    {profile?.name && (
-                      <p className="font-medium text-sm text-gray-900">{profile.name}</p>
-                    )}
-                    {user?.email && (
-                      <p className="w-[200px] truncate text-xs text-gray-500">{user.email}</p>
-                    )}
-                  </div>
-                </div>
-                <DropdownMenuSeparator className="bg-gray-200" />
-                <DropdownMenuItem className="cursor-pointer hover:bg-gray-50" onClick={() => navigate('/settings')}>
-                  <User className="mr-2 h-4 w-4 text-gray-500" />
-                  <span className="text-gray-700">Profile</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer hover:bg-gray-50" onClick={() => navigate('/settings')}>
-                  <SettingsIcon className="mr-2 h-4 w-4 text-gray-500" />
-                  <span className="text-gray-700">Billing</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer hover:bg-gray-50">
-                  <SettingsIcon className="mr-2 h-4 w-4 text-gray-500" />
-                  <span className="text-gray-700">My bots</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator className="bg-gray-200" />
-                <DropdownMenuItem className="cursor-pointer hover:bg-gray-50 text-red-600" onClick={handleLogout}>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  <span>Log out</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
-
-        <div className="flex w-full pt-16">
+        <div className="flex w-full">
           <Sidebar />
           
           <div className="flex-1 w-full lg:ml-0">
@@ -170,7 +118,7 @@ const Home = () => {
               <div className="px-4 lg:px-6 py-6">
                 <div className="flex flex-col xl:flex-row gap-4 ml-12 lg:ml-0 min-w-0">
                   {/* Date Filters Row */}
-                  <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+                  <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center flex-1">
                     {/* Preset Filters */}
                     <div className="w-full sm:w-auto">
                       <Select value={selectedQuickFilter} onValueChange={handleQuickFilter}>
@@ -237,7 +185,7 @@ const Home = () => {
                     </div>
                   </div>
                   
-                  {/* Action Buttons */}
+                  {/* Action Buttons and User Profile */}
                   <div className="flex items-center gap-2">
                     <Button 
                       variant="outline" 
@@ -260,6 +208,50 @@ const Home = () => {
                       <Download className="h-4 w-4 mr-2" />
                       Exportar Dados
                     </Button>
+
+                    {/* User Profile Dropdown */}
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="relative h-8 w-8 rounded-full p-0 hover:bg-gray-100 ml-2">
+                          <Avatar className="h-8 w-8">
+                            <AvatarImage src="" alt="Profile" />
+                            <AvatarFallback className="bg-blue-100 text-blue-600 text-sm font-medium">
+                              {getUserInitials()}
+                            </AvatarFallback>
+                          </Avatar>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-56 bg-white border border-gray-200 shadow-lg" align="end" forceMount>
+                        <div className="flex items-center justify-start gap-2 p-2">
+                          <div className="flex flex-col space-y-1 leading-none">
+                            {profile?.name && (
+                              <p className="font-medium text-sm text-gray-900">{profile.name}</p>
+                            )}
+                            {user?.email && (
+                              <p className="w-[200px] truncate text-xs text-gray-500">{user.email}</p>
+                            )}
+                          </div>
+                        </div>
+                        <DropdownMenuSeparator className="bg-gray-200" />
+                        <DropdownMenuItem className="cursor-pointer hover:bg-gray-50" onClick={() => navigate('/settings')}>
+                          <User className="mr-2 h-4 w-4 text-gray-500" />
+                          <span className="text-gray-700">Profile</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="cursor-pointer hover:bg-gray-50" onClick={() => navigate('/settings')}>
+                          <SettingsIcon className="mr-2 h-4 w-4 text-gray-500" />
+                          <span className="text-gray-700">Billing</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="cursor-pointer hover:bg-gray-50">
+                          <SettingsIcon className="mr-2 h-4 w-4 text-gray-500" />
+                          <span className="text-gray-700">My bots</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator className="bg-gray-200" />
+                        <DropdownMenuItem className="cursor-pointer hover:bg-gray-50 text-red-600" onClick={handleLogout}>
+                          <LogOut className="mr-2 h-4 w-4" />
+                          <span>Log out</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
                 </div>
               </div>
