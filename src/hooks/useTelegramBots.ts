@@ -1,18 +1,6 @@
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-
-interface TelegramBot {
-  id: string;
-  user_id: string;
-  bot_token: string;
-  bot_username: string;
-  chat_id: string;
-  chat_name: string;
-  chat_type: string;
-  is_active: boolean;
-  created_at: string;
-  last_message_at?: string;
-}
+import { TelegramBot } from '@/types/api';
 
 // Mock data
 const mockBots: TelegramBot[] = [
@@ -26,7 +14,7 @@ const mockBots: TelegramBot[] = [
     chat_type: 'channel',
     is_active: true,
     created_at: '2024-01-15T10:30:00Z',
-    last_message_at: '2024-01-20T15:45:00Z'
+    updated_at: '2024-01-20T15:45:00Z'
   },
   {
     id: '2',
@@ -38,7 +26,7 @@ const mockBots: TelegramBot[] = [
     chat_type: 'group',
     is_active: true,
     created_at: '2024-01-10T08:20:00Z',
-    last_message_at: '2024-01-19T12:30:00Z'
+    updated_at: '2024-01-19T12:30:00Z'
   }
 ];
 
