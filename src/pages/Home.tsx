@@ -5,7 +5,6 @@ import { useDashboardOverview, useDashboardAnalytics } from '@/hooks/useDashboar
 import Sidebar from '@/components/Sidebar';
 import MetricCard from '@/components/MetricCard';
 import AnalyticsChart from '@/components/AnalyticsChart';
-import RecentLinksTable from '@/components/RecentLinksTable';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEffect } from 'react';
@@ -118,9 +117,6 @@ const Home = () => {
               dateRange="Grupo - Entradas e Saídas"
             />
           </div>
-
-          {/* Recent Links Table */}
-          <RecentLinksTable />
         </main>
       </div>
     </div>
