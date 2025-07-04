@@ -10,12 +10,12 @@ interface MetricCardProps {
 
 export default function MetricCard({ title, value, className = '', dark = false }: MetricCardProps) {
   return (
-    <Card className={`p-6 ${dark ? 'bg-gray-800 text-white' : 'bg-white'} ${className}`}>
+    <Card className={`p-6 bg-white ${className}`}>
       <div className="space-y-2">
-        <p className={`text-sm font-medium ${dark ? 'text-gray-300' : 'text-gray-600'}`}>
+        <p className="text-sm font-medium text-gray-600">
           {title}
         </p>
-        <p className={`text-3xl font-bold ${dark ? 'text-blue-400' : 'text-blue-600'}`}>
+        <p className="text-3xl font-bold text-blue-600">
           {value}
         </p>
       </div>

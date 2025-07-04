@@ -1,5 +1,5 @@
 
-import { Bell, Download, RefreshCw } from 'lucide-react';
+import { Bell, Download, RefreshCw, Calendar as CalendarIcon } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useDashboardOverview, useDashboardAnalytics } from '@/hooks/useDashboard';
 import Sidebar from '@/components/Sidebar';
@@ -8,12 +8,18 @@ import AnalyticsChart from '@/components/AnalyticsChart';
 import RecentLinksTable from '@/components/RecentLinksTable';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useEffect } from 'react';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { format, subDays, startOfMonth, startOfYear, subYears } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 const Index = () => {
   const { user, isAuthenticated, isLoading } = useAuth();
   const navigate = useNavigate();
+  const [dateFrom, setDateFrom] = useState<Date>();
+  const [dateTo, setDateTo] = useState<Date>();
   
   const { data: overview, isLoading: overviewLoading, refetch: refetchOverview } = useDashboardOverview();
   const { data: analytics, isLoading: analyticsLoading } = useDashboardAnalytics();
@@ -23,6 +29,46 @@ const Index = () => {
       navigate('/login');
     }
   }, [isAuthenticated, isLoading, navigate]);
+
+  const handleQuickFilter = (days: number | string) => {
+    const today = new Date();
+    today.setHours(23, 59, 59, 999);
+    
+    switch (days) {
+      case 'today':
+        const todayStart = new Date();
+        todayStart.setHours(0, 0, 0, 0);
+        setDateFrom(todayStart);
+        setDateTo(today);
+        break;
+      case 'yesterday':
+        const yesterday = subDays(today, 1);
+        const yesterdayStart = new Date(yesterday);
+        yesterdayStart.setHours(0, 0, 0, 0);
+        yesterday.setHours(23, 59, 59, 999);
+        setDateFrom(yesterdayStart);
+        setDateTo(yesterday);
+        break;
+      case 'thisMonth':
+        setDateFrom(startOfMonth(today));
+        setDateTo(today);
+        break;
+      case 'thisYear':
+        setDateFrom(startOfYear(today));
+        setDateTo(today);
+        break;
+      case 365:
+        setDateFrom(subYears(today, 1));
+        setDateTo(today);
+        break;
+      default:
+        if (typeof days === 'number') {
+          setDateFrom(subDays(today, days - 1));
+          setDateTo(today);
+        }
+        break;
+    }
+  };
 
   if (isLoading || !isAuthenticated) {
     return <div className="flex items-center justify-center min-h-screen">Carregando...</div>;
@@ -63,18 +109,86 @@ const Index = () => {
           {/* Controls */}
           <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:gap-4 items-start sm:items-center justify-between">
             <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:gap-4 w-full sm:w-auto">
+              {/* Quick Filters */}
               <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-700">Período</label>
-                <Select defaultValue="last-30-days">
-                  <SelectTrigger className="w-full sm:w-64">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="last-7-days">Últimos 7 dias</SelectItem>
-                    <SelectItem value="last-30-days">Últimos 30 dias</SelectItem>
-                    <SelectItem value="last-90-days">Últimos 90 dias</SelectItem>
-                  </SelectContent>
-                </Select>
+                <label className="text-sm font-medium text-gray-700">Filtros Rápidos</label>
+                <div className="flex flex-wrap gap-2">
+                  <Button variant="outline" size="sm" onClick={() => handleQuickFilter('today')}>
+                    Hoje
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => handleQuickFilter('yesterday')}>
+                    Ontem
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => handleQuickFilter(7)}>
+                    Últimos 7 dias
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => handleQuickFilter(30)}>
+                    Últimos 30 dias
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => handleQuickFilter('thisMonth')}>
+                    Este mês
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => handleQuickFilter('thisYear')}>
+                    Este ano
+                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => handleQuickFilter(365)}>
+                    Últimos 365 dias
+                  </Button>
+                </div>
+              </div>
+
+              {/* Date Range Picker */}
+              <div className="space-y-1">
+                <label className="text-sm font-medium text-gray-700">Período Personalizado</label>
+                <div className="flex gap-2">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "w-[140px] justify-start text-left font-normal",
+                          !dateFrom && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {dateFrom ? format(dateFrom, "dd/MM/yyyy") : "Data inicial"}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={dateFrom}
+                        onSelect={setDateFrom}
+                        initialFocus
+                        className={cn("p-3 pointer-events-auto")}
+                      />
+                    </PopoverContent>
+                  </Popover>
+
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "w-[140px] justify-start text-left font-normal",
+                          !dateTo && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {dateTo ? format(dateTo, "dd/MM/yyyy") : "Data final"}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={dateTo}
+                        onSelect={setDateTo}
+                        initialFocus
+                        className={cn("p-3 pointer-events-auto")}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
               </div>
               
               <div className="space-y-1">
@@ -105,17 +219,14 @@ const Index = () => {
             <MetricCard
               title="Total de Campanhas"
               value={overviewLoading ? "..." : overview?.total_campaigns || 0}
-              dark={true}
             />
             <MetricCard
               title="Campanhas Ativas"
               value={overviewLoading ? "..." : overview?.active_campaigns || 0}
-              dark={true}
             />
             <MetricCard
               title="Total de Leads"
               value={overviewLoading ? "..." : overview?.total_leads || 0}
-              dark={true}
             />
             <MetricCard
               title="Bots Telegram"
