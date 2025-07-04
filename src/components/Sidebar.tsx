@@ -14,7 +14,7 @@ import {
 import { cn } from '@/lib/utils';
 
 const navigation = [
-  { name: 'Home', href: '/', icon: Home },
+  { name: 'Dashboard', href: '/', icon: Home },
   { name: 'Relatórios', href: '/reports', icon: FileText },
   { name: 'Leads', href: '/leads', icon: Database },
   { name: 'Canais Telegram', href: '/channels', icon: Bot },

@@ -43,7 +43,7 @@ const Home = () => {
             <div className="flex items-center justify-between">
               <div className="pl-12 lg:pl-0">
                 <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">
-                  Dashboard - Bem-vindo, {user?.name || 'Usuário'}
+                  Bem-vindo, {user?.name || 'Usuário'}
                 </h1>
               </div>
               <div className="flex items-center gap-2 sm:gap-4">
@@ -111,11 +111,11 @@ const Home = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             <AnalyticsChart 
               type="single" 
-              dateRange="15 Jan, 2023 -- 1 Jul, 2023"
+              dateRange="Quantidade total de pessoas no telegram"
             />
             <AnalyticsChart 
               type="multi" 
-              dateRange="15 Jan, 2023 -- 1 Jul, 2023"
+              dateRange="Telegram - entradas e saídas"
             />
           </div>
 
