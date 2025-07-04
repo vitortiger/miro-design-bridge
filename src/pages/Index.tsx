@@ -33,123 +33,121 @@ const Index = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      <Sidebar />
-      
-      <div className="flex-1 lg:ml-64">
-        {/* Header */}
-        <header className="bg-white shadow-sm border-b border-gray-200">
-          <div className="px-6 py-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-2xl font-semibold text-gray-900">
+    <div className="min-h-screen bg-gray-50">
+      <div className="flex w-full">
+        <Sidebar />
+        
+        <div className="flex-1 w-full lg:ml-0">
+          <header className="bg-white shadow-sm border-b border-gray-200">
+            <div className="px-4 lg:px-6 py-4">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+                <h1 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 ml-12 lg:ml-0">
                   Bem-vindo, {user?.name || 'Usuário'}
                 </h1>
-              </div>
-              <div className="flex items-center gap-4">
-                <Button variant="outline" size="sm" onClick={handleRefresh}>
-                  <RefreshCw className="h-4 w-4" />
-                </Button>
-                <Button variant="outline" size="sm">
-                  <Bell className="h-4 w-4" />
-                </Button>
+                <div className="flex items-center gap-4 ml-12 lg:ml-0">
+                  <Button variant="outline" size="sm" onClick={handleRefresh}>
+                    <RefreshCw className="h-4 w-4" />
+                  </Button>
+                  <Button variant="outline" size="sm">
+                    <Bell className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
-        </header>
+          </header>
 
-        {/* Main Content */}
-        <main className="p-6 space-y-6">
-          {/* Controls */}
-          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-700">Período</label>
-                <Select defaultValue="last-30-days">
-                  <SelectTrigger className="w-64">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="last-7-days">Últimos 7 dias</SelectItem>
-                    <SelectItem value="last-30-days">Últimos 30 dias</SelectItem>
-                    <SelectItem value="last-90-days">Últimos 90 dias</SelectItem>
-                  </SelectContent>
-                </Select>
+          <main className="p-4 lg:p-6 space-y-6">
+            {/* Controls */}
+            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className="space-y-1">
+                  <label className="text-sm font-medium text-gray-700">Período</label>
+                  <Select defaultValue="last-30-days">
+                    <SelectTrigger className="w-full sm:w-64">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="last-7-days">Últimos 7 dias</SelectItem>
+                      <SelectItem value="last-30-days">Últimos 30 dias</SelectItem>
+                      <SelectItem value="last-90-days">Últimos 90 dias</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className="space-y-1">
+                  <label className="text-sm font-medium text-gray-700">Comparar Campanhas</label>
+                  <Select>
+                    <SelectTrigger className="w-full sm:w-64">
+                      <SelectValue placeholder="Selecionar Campanha" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {overview?.top_campaigns?.map((campaign) => (
+                        <SelectItem key={campaign.id} value={campaign.id}>
+                          {campaign.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
               
-              <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-700">Comparar Campanhas</label>
-                <Select>
-                  <SelectTrigger className="w-64">
-                    <SelectValue placeholder="Selecionar Campanha" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {overview?.top_campaigns?.map((campaign) => (
-                      <SelectItem key={campaign.id} value={campaign.id}>
-                        {campaign.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <Button variant="outline" className="w-full sm:w-auto">
+                <Download className="h-4 w-4 mr-2" />
+                Exportar Dados
+              </Button>
             </div>
-            
-            <Button variant="outline">
-              <Download className="h-4 w-4 mr-2" />
-              Exportar Dados
-            </Button>
-          </div>
 
-          {/* Metrics Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <MetricCard
-              title="Total de Campanhas"
-              value={overviewLoading ? "..." : overview?.total_campaigns || 0}
-              dark={true}
-            />
-            <MetricCard
-              title="Campanhas Ativas"
-              value={overviewLoading ? "..." : overview?.active_campaigns || 0}
-              dark={true}
-            />
-            <MetricCard
-              title="Total de Leads"
-              value={overviewLoading ? "..." : overview?.total_leads || 0}
-              dark={true}
-            />
-            <MetricCard
-              title="Bots Telegram"
-              value={overviewLoading ? "..." : overview?.total_bots || 0}
-            />
-          </div>
+            {/* Metrics Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <MetricCard
+                title="Total de Campanhas"
+                value={overviewLoading ? "..." : overview?.total_campaigns || 0}
+                dark={true}
+              />
+              <MetricCard
+                title="Campanhas Ativas"
+                value={overviewLoading ? "..." : overview?.active_campaigns || 0}
+                dark={true}
+              />
+              <MetricCard
+                title="Total de Leads"
+                value={overviewLoading ? "..." : overview?.total_leads || 0}
+                dark={true}
+              />
+              <MetricCard
+                title="Bots Telegram"
+                value={overviewLoading ? "..." : overview?.total_bots || 0}
+              />
+            </div>
 
-          {/* Charts */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <AnalyticsChart type="single" />
-            <AnalyticsChart type="multi" />
-          </div>
+            {/* Charts */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <AnalyticsChart type="single" />
+              <AnalyticsChart type="multi" />
+            </div>
 
-          {/* Recent Activity */}
-          {overview?.recent_activity && (
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Atividade Recente</h3>
-              <div className="space-y-3">
-                {overview.recent_activity.map((activity, index) => (
-                  <div key={index} className="flex items-start space-x-3">
-                    <div className="flex-shrink-0 w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
-                    <div>
-                      <p className="text-sm text-gray-900">{activity.message}</p>
-                      <p className="text-xs text-gray-500">{new Date(activity.timestamp).toLocaleString()}</p>
+            {/* Recent Activity */}
+            {overview?.recent_activity && (
+              <div className="bg-white rounded-lg shadow-sm p-6">
+                <h3 className="text-lg font-medium text-gray-900 mb-4">Atividade Recente</h3>
+                <div className="space-y-3">
+                  {overview.recent_activity.map((activity, index) => (
+                    <div key={index} className="flex items-start space-x-3">
+                      <div className="flex-shrink-0 w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                      <div>
+                        <p className="text-sm text-gray-900">{activity.message}</p>
+                        <p className="text-xs text-gray-500">{new Date(activity.timestamp).toLocaleString()}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Recent Links Table */}
-          <RecentLinksTable />
-        </main>
+            {/* Recent Links Table */}
+            <RecentLinksTable />
+          </main>
+        </div>
       </div>
     </div>
   );
