@@ -111,11 +111,11 @@ const Home = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             <AnalyticsChart 
               type="single" 
-              dateRange="Quantidade total de pessoas no telegram"
+              dateRange="Quantidade Total de Usuários no Grupo"
             />
             <AnalyticsChart 
               type="multi" 
-              dateRange="Telegram - entradas e saídas"
+              dateRange="Grupo - Entradas e Saídas"
             />
           </div>
 
