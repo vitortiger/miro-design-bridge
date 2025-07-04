@@ -47,11 +47,25 @@ const Register = () => {
     
     try {
       await register(email, password, name);
-      toast.success('Conta criada com sucesso!');
-      navigate('/');
-    } catch (error) {
+      toast.success('Conta criada com sucesso! Verifique seu email para confirmar.');
+    } catch (error: any) {
       console.error('Registration error:', error);
-      toast.error(error instanceof Error ? error.message : 'Erro ao criar conta');
+      
+      // Handle specific Supabase auth errors
+      let errorMessage = 'Erro ao criar conta';
+      if (error?.message) {
+        if (error.message.includes('User already registered')) {
+          errorMessage = 'Este email já está cadastrado. Tente fazer login.';
+        } else if (error.message.includes('Password should be at least')) {
+          errorMessage = 'A senha deve ter pelo menos 6 caracteres';
+        } else if (error.message.includes('Invalid email')) {
+          errorMessage = 'Email inválido';
+        } else {
+          errorMessage = error.message;
+        }
+      }
+      
+      toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }

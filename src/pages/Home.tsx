@@ -17,6 +17,7 @@ import { cn } from '@/lib/utils';
 const Home = () => {
   const {
     user,
+    profile,
     isAuthenticated,
     isLoading
   } = useAuth();
@@ -109,7 +110,7 @@ const Home = () => {
                 {/* Welcome Section */}
                 <div className="ml-12 lg:ml-0">
                   <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-1">
-                    Bem-vindo, {user?.name || 'João Silva'}
+                    Bem-vindo, {profile?.name || user?.email || 'Usuário'}
                   </h1>
                   <p className="text-gray-600 text-sm">
                     Acompanhe suas métricas e performance em tempo real

@@ -37,9 +37,24 @@ const Login = () => {
       await login(email, password);
       toast.success('Login realizado com sucesso!');
       navigate('/');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Login error:', error);
-      toast.error(error instanceof Error ? error.message : 'Erro ao fazer login');
+      
+      // Handle specific Supabase auth errors
+      let errorMessage = 'Erro ao fazer login';
+      if (error?.message) {
+        if (error.message.includes('Invalid login credentials')) {
+          errorMessage = 'Email ou senha incorretos';
+        } else if (error.message.includes('Email not confirmed')) {
+          errorMessage = 'Por favor, confirme seu email antes de fazer login';
+        } else if (error.message.includes('Too many requests')) {
+          errorMessage = 'Muitas tentativas. Tente novamente em alguns minutos';
+        } else {
+          errorMessage = error.message;
+        }
+      }
+      
+      toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
