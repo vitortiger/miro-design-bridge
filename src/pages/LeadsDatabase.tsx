@@ -200,7 +200,7 @@ const LeadsDatabase = () => {
                     <SelectValue placeholder="Filtrar por fonte" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Todas as fontes</SelectItem>
+                    <SelectItem value="all">Todas as fontes</SelectItem>
                     {uniqueSources.map(source => (
                       <SelectItem key={source} value={source}>{source}</SelectItem>
                     ))}
@@ -212,7 +212,7 @@ const LeadsDatabase = () => {
                     <SelectValue placeholder="Filtrar por campanha" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Todas as campanhas</SelectItem>
+                    <SelectItem value="all">Todas as campanhas</SelectItem>
                     {uniqueCampaigns.map(campaign => (
                       <SelectItem key={campaign} value={campaign}>{campaign}</SelectItem>
                     ))}
@@ -224,7 +224,7 @@ const LeadsDatabase = () => {
                     <SelectValue placeholder="Filtrar por medium" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Todos os mediums</SelectItem>
+                    <SelectItem value="all">Todos os mediums</SelectItem>
                     {uniqueMediums.map(medium => (
                       <SelectItem key={medium} value={medium}>{medium}</SelectItem>
                     ))}
