@@ -28,7 +28,7 @@ export function LoginForm() {
     try {
       await login(email, password);
       toast.success('Login realizado com sucesso!');
-      navigate('/');
+      navigate('/home');
     } catch (error: any) {
       console.error('Login error:', error);
       

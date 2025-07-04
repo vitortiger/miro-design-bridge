@@ -11,7 +11,7 @@ const Register = () => {
 
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
-      navigate('/');
+      navigate('/home');
     }
   }, [isAuthenticated, isLoading, navigate]);
 

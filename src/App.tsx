@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/components/AuthProvider";
 import Home from "./pages/Home";
+import Index from "./pages/Index";
 import Reports from "./pages/Reports";
 import ReportsDuplicate from "./pages/ReportsDuplicate";
 import LeadsDatabase from "./pages/LeadsDatabase";
@@ -27,7 +28,8 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Index />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/reports-duplicate" element={<ReportsDuplicate />} />
             <Route path="/leads" element={<LeadsDatabase />} />
