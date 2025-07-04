@@ -116,7 +116,53 @@ const Home = () => {
           <div className="flex-1 w-full lg:ml-0">
             <header className="bg-white shadow-sm border-b border-gray-200">
               <div className="px-4 lg:px-6 py-6">
-                <div className="flex flex-col xl:flex-row gap-4 ml-12 lg:ml-0 min-w-0">
+                <div className="flex flex-col xl:flex-row gap-4 ml-12 lg:ml-0 min-w-0 relative">
+                  {/* User Profile Dropdown - Top Right */}
+                  <div className="absolute top-0 right-0">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" className="relative h-8 w-8 rounded-full p-0 hover:bg-gray-100">
+                          <Avatar className="h-8 w-8">
+                            <AvatarImage src="" alt="Profile" />
+                            <AvatarFallback className="bg-blue-100 text-blue-600 text-sm font-medium">
+                              {getUserInitials()}
+                            </AvatarFallback>
+                          </Avatar>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-56 bg-white border border-gray-200 shadow-lg" align="end" forceMount>
+                        <div className="flex items-center justify-start gap-2 p-2">
+                          <div className="flex flex-col space-y-1 leading-none">
+                            {profile?.name && (
+                              <p className="font-medium text-sm text-gray-900">{profile.name}</p>
+                            )}
+                            {user?.email && (
+                              <p className="w-[200px] truncate text-xs text-gray-500">{user.email}</p>
+                            )}
+                          </div>
+                        </div>
+                        <DropdownMenuSeparator className="bg-gray-200" />
+                        <DropdownMenuItem className="cursor-pointer hover:bg-gray-50" onClick={() => navigate('/settings')}>
+                          <User className="mr-2 h-4 w-4 text-gray-500" />
+                          <span className="text-gray-700">Profile</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="cursor-pointer hover:bg-gray-50" onClick={() => navigate('/settings')}>
+                          <SettingsIcon className="mr-2 h-4 w-4 text-gray-500" />
+                          <span className="text-gray-700">Billing</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="cursor-pointer hover:bg-gray-50">
+                          <SettingsIcon className="mr-2 h-4 w-4 text-gray-500" />
+                          <span className="text-gray-700">My bots</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator className="bg-gray-200" />
+                        <DropdownMenuItem className="cursor-pointer hover:bg-gray-50 text-red-600" onClick={handleLogout}>
+                          <LogOut className="mr-2 h-4 w-4" />
+                          <span>Log out</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+
                   {/* Date Filters Row */}
                   <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center flex-1">
                     {/* Preset Filters */}
@@ -185,7 +231,7 @@ const Home = () => {
                     </div>
                   </div>
                   
-                  {/* Action Buttons and User Profile */}
+                  {/* Action Buttons */}
                   <div className="flex items-center gap-2">
                     <Button 
                       variant="outline" 
@@ -208,50 +254,6 @@ const Home = () => {
                       <Download className="h-4 w-4 mr-2" />
                       Exportar Dados
                     </Button>
-
-                    {/* User Profile Dropdown */}
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="relative h-8 w-8 rounded-full p-0 hover:bg-gray-100 ml-2">
-                          <Avatar className="h-8 w-8">
-                            <AvatarImage src="" alt="Profile" />
-                            <AvatarFallback className="bg-blue-100 text-blue-600 text-sm font-medium">
-                              {getUserInitials()}
-                            </AvatarFallback>
-                          </Avatar>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className="w-56 bg-white border border-gray-200 shadow-lg" align="end" forceMount>
-                        <div className="flex items-center justify-start gap-2 p-2">
-                          <div className="flex flex-col space-y-1 leading-none">
-                            {profile?.name && (
-                              <p className="font-medium text-sm text-gray-900">{profile.name}</p>
-                            )}
-                            {user?.email && (
-                              <p className="w-[200px] truncate text-xs text-gray-500">{user.email}</p>
-                            )}
-                          </div>
-                        </div>
-                        <DropdownMenuSeparator className="bg-gray-200" />
-                        <DropdownMenuItem className="cursor-pointer hover:bg-gray-50" onClick={() => navigate('/settings')}>
-                          <User className="mr-2 h-4 w-4 text-gray-500" />
-                          <span className="text-gray-700">Profile</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer hover:bg-gray-50" onClick={() => navigate('/settings')}>
-                          <SettingsIcon className="mr-2 h-4 w-4 text-gray-500" />
-                          <span className="text-gray-700">Billing</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer hover:bg-gray-50">
-                          <SettingsIcon className="mr-2 h-4 w-4 text-gray-500" />
-                          <span className="text-gray-700">My bots</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator className="bg-gray-200" />
-                        <DropdownMenuItem className="cursor-pointer hover:bg-gray-50 text-red-600" onClick={handleLogout}>
-                          <LogOut className="mr-2 h-4 w-4" />
-                          <span>Log out</span>
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
                   </div>
                 </div>
               </div>
