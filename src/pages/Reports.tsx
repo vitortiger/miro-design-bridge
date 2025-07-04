@@ -80,6 +80,56 @@ const channelPerformance = [
   }
 ];
 
+// UTM Data
+const utmSourceData = [
+  { name: 'Google', leads: 145, color: '#4285F4' },
+  { name: 'Facebook', leads: 89, color: '#1877F2' },
+  { name: 'Instagram', leads: 67, color: '#E4405F' },
+  { name: 'YouTube', leads: 42, color: '#FF0000' },
+  { name: 'Email', leads: 28, color: '#34A853' },
+];
+
+const utmCampaignData = [
+  { name: 'Black Friday', leads: 120 },
+  { name: 'Natal Premium', leads: 89 },
+  { name: 'Ano Novo VIP', leads: 67 },
+  { name: 'Verão 2024', leads: 45 },
+  { name: 'Promoção Especial', leads: 32 },
+];
+
+const utmMediumData = [
+  { name: 'CPC', leads: 156, color: '#8B5CF6' },
+  { name: 'Social', leads: 89, color: '#10B981' },
+  { name: 'Email', leads: 67, color: '#F59E0B' },
+  { name: 'Organic', leads: 45, color: '#EF4444' },
+];
+
+const utmContentData = [
+  { name: 'Banner Principal', leads: 78 },
+  { name: 'Texto Promocional', leads: 65 },
+  { name: 'Vídeo Demonstrativo', leads: 52 },
+  { name: 'Carousel de Imagens', leads: 43 },
+  { name: 'Story Interativo', leads: 35 },
+];
+
+const utmTermData = [
+  { name: 'Comprar Online', leads: 45 },
+  { name: 'Melhor Preço', leads: 38 },
+  { name: 'Desconto Especial', leads: 32 },
+  { name: 'Oferta Limitada', leads: 28 },
+  { name: 'Grátis Hoje', leads: 25 },
+];
+
+const dailyUtmData = [
+  { date: '15/01', google: 12, facebook: 8, instagram: 6, youtube: 4 },
+  { date: '16/01', google: 15, facebook: 12, instagram: 9, youtube: 5 },
+  { date: '17/01', google: 18, facebook: 14, instagram: 11, youtube: 7 },
+  { date: '18/01', google: 22, facebook: 16, instagram: 13, youtube: 8 },
+  { date: '19/01', google: 25, facebook: 18, instagram: 15, youtube: 10 },
+  { date: '20/01', google: 28, facebook: 20, instagram: 17, youtube: 12 },
+  { date: '21/01', google: 32, facebook: 24, instagram: 19, youtube: 14 },
+];
+
 const Reports = () => {
   const [periodFilter, setPeriodFilter] = useState('30d');
   const [sourceFilter, setSourceFilter] = useState('');
@@ -175,7 +225,147 @@ const Reports = () => {
               </Card>
             </div>
 
-            {/* Charts Section */}
+            {/* UTM Analytics Section */}
+            <div className="mb-6 lg:mb-8">
+              <h2 className="text-xl font-semibold text-gray-900 mb-6">Análise UTM</h2>
+              
+              {/* Daily UTM Trends */}
+              <Card className="mb-6">
+                <CardHeader>
+                  <CardTitle className="text-base lg:text-lg">Tendência Diária por UTM Source</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="w-full h-[300px]">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart data={dailyUtmData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="date" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Line type="monotone" dataKey="google" stroke="#4285F4" strokeWidth={2} name="Google" />
+                        <Line type="monotone" dataKey="facebook" stroke="#1877F2" strokeWidth={2} name="Facebook" />
+                        <Line type="monotone" dataKey="instagram" stroke="#E4405F" strokeWidth={2} name="Instagram" />
+                        <Line type="monotone" dataKey="youtube" stroke="#FF0000" strokeWidth={2} name="YouTube" />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* UTM Source and Medium */}
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6 mb-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-base lg:text-lg">Leads por UTM Source</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="w-full h-[300px]">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                          <Pie
+                            data={utmSourceData}
+                            cx="50%"
+                            cy="50%"
+                            outerRadius={100}
+                            fill="#8884d8"
+                            dataKey="leads"
+                            label={({ name, leads }) => `${name}: ${leads}`}
+                          >
+                            {utmSourceData.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={entry.color} />
+                            ))}
+                          </Pie>
+                          <Tooltip />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-base lg:text-lg">Leads por UTM Medium</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="w-full h-[300px]">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={utmMediumData}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="name" />
+                          <YAxis />
+                          <Tooltip />
+                          <Bar dataKey="leads" fill="#8B5CF6" />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* UTM Campaign and Content */}
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6 mb-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-base lg:text-lg">Leads por UTM Campaign</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="w-full h-[300px]">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={utmCampaignData}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="name" />
+                          <YAxis />
+                          <Tooltip />
+                          <Bar dataKey="leads" fill="#10B981" />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-base lg:text-lg">Leads por UTM Content</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="w-full h-[300px]">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={utmContentData}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="name" />
+                          <YAxis />
+                          <Tooltip />
+                          <Bar dataKey="leads" fill="#F59E0B" />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* UTM Term */}
+              <Card className="mb-6">
+                <CardHeader>
+                  <CardTitle className="text-base lg:text-lg">Leads por UTM Term</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="w-full h-[300px]">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={utmTermData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Bar dataKey="leads" fill="#EF4444" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Original Charts Section */}
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-6 mb-6 lg:mb-8">
               {/* Monthly Performance Chart */}
               <Card>
