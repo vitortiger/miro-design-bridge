@@ -94,19 +94,19 @@ const Home = () => {
       
       <div className="flex-1 w-full lg:pl-64">
         {/* Header */}
-        <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-30">
-          <div className="px-4 sm:px-6 lg:px-8 py-4">
+        <header className="bg-white shadow-sm border-b border-gray-200">
+          <div className="px-4 sm:px-6 py-4">
             <div className="flex items-center justify-between">
               <div className="pl-12 lg:pl-0">
-                <h1 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-gray-900">
-                  Bem-vindo, {user?.name || 'João Silva'}
+                <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">
+                  Bem-vindo, {user?.name || 'Usuário'}
                 </h1>
               </div>
-              <div className="flex items-center gap-2 sm:gap-3">
-                <Button variant="outline" size="sm" onClick={handleRefresh} className="h-9 w-9 p-0">
+              <div className="flex items-center gap-2 sm:gap-4">
+                <Button variant="outline" size="sm" onClick={handleRefresh}>
                   <RefreshCw className="h-4 w-4" />
                 </Button>
-                <Button variant="outline" size="sm" className="h-9 w-9 p-0">
+                <Button variant="outline" size="sm">
                   <Bell className="h-4 w-4" />
                 </Button>
               </div>
@@ -115,142 +115,128 @@ const Home = () => {
         </header>
 
         {/* Main Content */}
-        <main className="p-4 sm:p-6 lg:p-8 space-y-8">
-          {/* Controls Section */}
-          <div className="bg-white rounded-lg shadow-sm border p-4 sm:p-6">
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-              {/* Left Side - Filters */}
-              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 flex-1">
-                {/* Quick Filters Dropdown */}
-                <div className="space-y-2 min-w-0 flex-1 sm:flex-none sm:w-auto">
-                  <label className="block text-sm font-medium text-gray-700">Filtros Rápidos</label>
-                  <Select value={selectedQuickFilter} onValueChange={handleQuickFilter}>
-                    <SelectTrigger className="w-full sm:w-[200px] bg-white">
-                      <SelectValue placeholder="Selecionar período" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-white border shadow-lg z-50">
-                      <SelectItem value="today">Hoje</SelectItem>
-                      <SelectItem value="yesterday">Ontem</SelectItem>
-                      <SelectItem value="7">Últimos 7 dias</SelectItem>
-                      <SelectItem value="30">Últimos 30 dias</SelectItem>
-                      <SelectItem value="thisMonth">Este mês</SelectItem>
-                      <SelectItem value="thisYear">Este ano</SelectItem>
-                      <SelectItem value="365">Últimos 365 dias</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Date Range Picker */}
-                <div className="space-y-2 flex-1">
-                  <label className="block text-sm font-medium text-gray-700">Período Personalizado</label>
-                  <div className="flex flex-col sm:flex-row gap-2">
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className={cn(
-                            "w-full sm:w-[160px] justify-start text-left font-normal bg-white",
-                            !dateFrom && "text-muted-foreground"
-                          )}
-                          onClick={clearQuickFilter}
-                        >
-                          <CalendarIcon className="mr-2 h-4 w-4" />
-                          {dateFrom ? format(dateFrom, "dd/MM/yyyy") : "Data inicial"}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0 bg-white border shadow-lg z-50" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={dateFrom}
-                          onSelect={(date) => {
-                            setDateFrom(date);
-                            clearQuickFilter();
-                          }}
-                          initialFocus
-                          className="p-3"
-                        />
-                      </PopoverContent>
-                    </Popover>
-
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className={cn(
-                            "w-full sm:w-[160px] justify-start text-left font-normal bg-white",
-                            !dateTo && "text-muted-foreground"
-                          )}
-                          onClick={clearQuickFilter}
-                        >
-                          <CalendarIcon className="mr-2 h-4 w-4" />
-                          {dateTo ? format(dateTo, "dd/MM/yyyy") : "Data final"}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0 bg-white border shadow-lg z-50" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={dateTo}
-                          onSelect={(date) => {
-                            setDateTo(date);
-                            clearQuickFilter();
-                          }}
-                          initialFocus
-                          className="p-3"
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                </div>
+        <main className="p-4 sm:p-6 space-y-6">
+          {/* Controls */}
+          <div className="flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:gap-4 items-start lg:items-center justify-between">
+            <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:gap-4">
+              {/* Quick Filters Dropdown */}
+              <div className="space-y-1">
+                <label className="text-sm font-medium text-gray-700">Filtros Rápidos</label>
+                <Select value={selectedQuickFilter} onValueChange={handleQuickFilter}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Selecionar período" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="today">Hoje</SelectItem>
+                    <SelectItem value="yesterday">Ontem</SelectItem>
+                    <SelectItem value="7">Últimos 7 dias</SelectItem>
+                    <SelectItem value="30">Últimos 30 dias</SelectItem>
+                    <SelectItem value="thisMonth">Este mês</SelectItem>
+                    <SelectItem value="thisYear">Este ano</SelectItem>
+                    <SelectItem value="365">Últimos 365 dias</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
-              
-              {/* Right Side - Export Button */}
-              <div className="flex-shrink-0">
-                <Button variant="outline" className="w-full sm:w-auto bg-white hover:bg-gray-50">
-                  <Download className="h-4 w-4 mr-2" />
-                  Exportar Dados
-                </Button>
+
+              {/* Date Range Picker */}
+              <div className="space-y-1">
+                <label className="text-sm font-medium text-gray-700">Período Personalizado</label>
+                <div className="flex gap-2">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "w-[140px] justify-start text-left font-normal",
+                          !dateFrom && "text-muted-foreground"
+                        )}
+                        onClick={clearQuickFilter}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {dateFrom ? format(dateFrom, "dd/MM/yyyy") : "Data inicial"}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={dateFrom}
+                        onSelect={(date) => {
+                          setDateFrom(date);
+                          clearQuickFilter();
+                        }}
+                        initialFocus
+                        className={cn("p-3 pointer-events-auto")}
+                      />
+                    </PopoverContent>
+                  </Popover>
+
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          "w-[140px] justify-start text-left font-normal",
+                          !dateTo && "text-muted-foreground"
+                        )}
+                        onClick={clearQuickFilter}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {dateTo ? format(dateTo, "dd/MM/yyyy") : "Data final"}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={dateTo}
+                        onSelect={(date) => {
+                          setDateTo(date);
+                          clearQuickFilter();
+                        }}
+                        initialFocus
+                        className={cn("p-3 pointer-events-auto")}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
               </div>
             </div>
+            
+            <Button variant="outline" className="w-full sm:w-auto">
+              <Download className="h-4 w-4 mr-2" />
+              Exportar Dados
+            </Button>
           </div>
 
           {/* Metrics Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 lg:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             <MetricCard
               title="Entradas no Grupo"
               value="1285"
-              className="transform transition-all duration-200 hover:scale-105 hover:shadow-lg"
             />
             <MetricCard
               title="Saídas do Grupo"
               value="1285"
-              className="transform transition-all duration-200 hover:scale-105 hover:shadow-lg"
             />
             <MetricCard
               title="Cliques no Link"
               value="105"
-              className="transform transition-all duration-200 hover:scale-105 hover:shadow-lg"
             />
             <MetricCard
               title="Número de canais ativos"
               value="105"
-              className="transform transition-all duration-200 hover:scale-105 hover:shadow-lg"
             />
           </div>
 
           {/* Charts */}
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-8">
-            <div className="bg-white rounded-lg shadow-sm border p-6 transform transition-all duration-200 hover:shadow-lg">
-              <AnalyticsChart 
-                type="single" 
-                dateRange="Quantidade Total de Usuários no Grupo"
-              />
-            </div>
-            <div className="bg-white rounded-lg shadow-sm border p-6 transform transition-all duration-200 hover:shadow-lg">
-              <AnalyticsChart 
-                type="multi" 
-                dateRange="Grupo - Entradas e Saídas"
-              />
-            </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+            <AnalyticsChart 
+              type="single" 
+              dateRange="Quantidade Total de Usuários no Grupo"
+            />
+            <AnalyticsChart 
+              type="multi" 
+              dateRange="Grupo - Entradas e Saídas"
+            />
           </div>
         </main>
       </div>
