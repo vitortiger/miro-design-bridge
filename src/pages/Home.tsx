@@ -36,17 +36,17 @@ const Home = () => {
     <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
       
-      <div className="flex-1 lg:ml-64">
+      <div className="flex-1 w-full lg:pl-64">
         {/* Header */}
         <header className="bg-white shadow-sm border-b border-gray-200">
-          <div className="px-6 py-4">
+          <div className="px-4 sm:px-6 py-4">
             <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-2xl font-semibold text-gray-900">
+              <div className="pl-12 lg:pl-0">
+                <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">
                   Welcome, {user?.name || 'Vitor'}
                 </h1>
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 sm:gap-4">
                 <Button variant="outline" size="sm" onClick={handleRefresh}>
                   <RefreshCw className="h-4 w-4" />
                 </Button>
@@ -59,14 +59,14 @@ const Home = () => {
         </header>
 
         {/* Main Content */}
-        <main className="p-6 space-y-6">
+        <main className="p-4 sm:p-6 space-y-6">
           {/* Controls */}
-          <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
-            <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:gap-4 items-start lg:items-center justify-between">
+            <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:gap-4">
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-700">Date Range</label>
                 <Select defaultValue="jan-jul-2023">
-                  <SelectTrigger className="w-64">
+                  <SelectTrigger className="w-full sm:w-64">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -80,7 +80,7 @@ const Home = () => {
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-700">Compare Campaigns</label>
                 <Select>
-                  <SelectTrigger className="w-64">
+                  <SelectTrigger className="w-full sm:w-64">
                     <SelectValue placeholder="Compare Campaigns" />
                   </SelectTrigger>
                   <SelectContent>
@@ -94,14 +94,14 @@ const Home = () => {
               </div>
             </div>
             
-            <Button variant="outline">
+            <Button variant="outline" className="w-full sm:w-auto">
               <Download className="h-4 w-4 mr-2" />
               Export Data
             </Button>
           </div>
 
           {/* Metrics Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             <MetricCard
               title="Entrances in Group"
               value="1285"
@@ -124,7 +124,7 @@ const Home = () => {
           </div>
 
           {/* Charts */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             <AnalyticsChart 
               type="single" 
               dateRange="Jan 15, 2023 -- Jul 1, 2023"

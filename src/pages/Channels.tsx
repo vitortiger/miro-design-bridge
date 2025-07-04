@@ -73,20 +73,23 @@ const Channels = () => {
     <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
       
-      <div className="flex-1 lg:ml-64">
+      <div className="flex-1 w-full lg:pl-64">
         <header className="bg-white shadow-sm border-b border-gray-200">
-          <div className="px-6 py-4">
+          <div className="px-4 sm:px-6 py-4">
             <div className="flex items-center justify-between">
-              <h1 className="text-2xl font-semibold text-gray-900">Canais Telegram</h1>
-              <Button onClick={() => setIsCreateDialogOpen(true)}>
+              <div className="pl-12 lg:pl-0">
+                <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">Canais Telegram</h1>
+              </div>
+              <Button onClick={() => setIsCreateDialogOpen(true)} className="whitespace-nowrap">
                 <Plus className="h-4 w-4 mr-2" />
-                Novo Canal
+                <span className="hidden sm:inline">Novo Canal</span>
+                <span className="sm:hidden">Novo</span>
               </Button>
             </div>
           </div>
         </header>
 
-        <main className="p-6">
+        <main className="p-4 sm:p-6">
           {/* Search */}
           <div className="mb-6">
             <div className="relative">
@@ -101,7 +104,7 @@ const Channels = () => {
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Total de Canais</CardTitle>
@@ -135,22 +138,22 @@ const Channels = () => {
               </Button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
               {filteredChannels.map((channel) => (
                 <Card key={channel.id} className="relative">
                   <CardHeader>
                     <div className="flex items-start justify-between">
-                      <div className="flex items-center space-x-2">
-                        <Bot className="h-5 w-5 text-blue-500" />
-                        <div>
-                          <CardTitle className="text-lg">{channel.channel_name}</CardTitle>
+                      <div className="flex items-center space-x-2 min-w-0 flex-1">
+                        <Bot className="h-5 w-5 text-blue-500 flex-shrink-0" />
+                        <div className="min-w-0 flex-1">
+                          <CardTitle className="text-lg truncate">{channel.channel_name}</CardTitle>
                           <div className="flex items-center mt-1 text-sm text-gray-500">
-                            <Users className="h-3 w-3 mr-1" />
-                            {channel.users_count} usuários
+                            <Users className="h-3 w-3 mr-1 flex-shrink-0" />
+                            <span className="truncate">{channel.users_count} usuários</span>
                           </div>
                         </div>
                       </div>
-                      <Badge variant={channel.is_active ? 'default' : 'secondary'}>
+                      <Badge variant={channel.is_active ? 'default' : 'secondary'} className="ml-2 flex-shrink-0">
                         {channel.is_active ? 'Ativo' : 'Inativo'}
                       </Badge>
                     </div>
@@ -164,7 +167,7 @@ const Channels = () => {
                       
                       <div>
                         <p className="text-sm font-medium text-gray-600">Nome do bot</p>
-                        <p className="text-sm font-mono">{channel.bot_username}</p>
+                        <p className="text-sm font-mono break-all">{channel.bot_username}</p>
                       </div>
                       
                       <div>
@@ -179,7 +182,7 @@ const Channels = () => {
                       
                       <div>
                         <p className="text-sm font-medium text-gray-600">ID do Canal</p>
-                        <p className="text-sm font-mono">{channel.channel_id}</p>
+                        <p className="text-sm font-mono break-all">{channel.channel_id}</p>
                       </div>
                       
                       <div>
@@ -199,9 +202,10 @@ const Channels = () => {
                           size="sm"
                           variant="outline"
                           onClick={() => handleTestChannel(channel.channel_name)}
+                          className="flex-1 sm:flex-none"
                         >
                           <TestTube className="h-3 w-3 mr-1" />
-                          Testar
+                          <span className="hidden sm:inline">Testar</span>
                         </Button>
                         
                         <Button size="sm" variant="outline">
