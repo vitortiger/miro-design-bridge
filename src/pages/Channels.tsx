@@ -78,7 +78,7 @@ const Channels = () => {
     <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
       
-      <div className="flex-1 lg:ml-64">
+      <div className="flex-1 lg:ml-64 min-w-0">
         <header className="bg-white shadow-sm border-b border-gray-200">
           <div className="px-4 sm:px-6 py-4">
             <div className="flex items-center justify-between">
@@ -94,7 +94,7 @@ const Channels = () => {
           </div>
         </header>
 
-        <main className="p-4 sm:p-6">
+        <main className="p-4 sm:p-6 max-w-full">
           {/* Search */}
           <div className="mb-6">
             <div className="relative">
@@ -143,16 +143,16 @@ const Channels = () => {
               </Button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4 sm:gap-6">
               {filteredChannels.map((channel) => (
-                <Card key={channel.id} className="relative">
-                  <CardHeader>
+                <Card key={channel.id} className="relative w-full">
+                  <CardHeader className="pb-3">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-2 min-w-0 flex-1">
                         <Bot className="h-5 w-5 text-blue-500 flex-shrink-0" />
                         <div className="min-w-0 flex-1">
-                          <CardTitle className="text-base lg:text-lg truncate">{channel.channel_name}</CardTitle>
-                          <div className="flex items-center mt-1 text-xs lg:text-sm text-gray-500">
+                          <CardTitle className="text-base font-semibold truncate">{channel.channel_name}</CardTitle>
+                          <div className="flex items-center mt-1 text-sm text-gray-500">
                             <Users className="h-3 w-3 mr-1 flex-shrink-0" />
                             <span className="truncate">{channel.users_count} usuários</span>
                           </div>
@@ -164,19 +164,19 @@ const Channels = () => {
                     </div>
                   </CardHeader>
                   
-                  <CardContent>
-                    <div className="space-y-3 lg:space-y-4">
-                      <div className="border-b pb-2 lg:pb-3">
-                        <h4 className="text-xs lg:text-sm font-semibold text-gray-700 mb-2">CREDENCIAIS:</h4>
+                  <CardContent className="pt-0">
+                    <div className="space-y-3">
+                      <div className="border-b pb-2">
+                        <h4 className="text-xs font-semibold text-gray-700 mb-2">CREDENCIAIS:</h4>
                       </div>
                       
                       <div>
-                        <p className="text-xs lg:text-sm font-medium text-gray-600">Nome do bot</p>
-                        <p className="text-xs lg:text-sm font-mono break-all">{channel.bot_username}</p>
+                        <p className="text-xs font-medium text-gray-600">Nome do bot</p>
+                        <p className="text-sm font-mono break-all">{channel.bot_username}</p>
                       </div>
                       
                       <div>
-                        <p className="text-xs lg:text-sm font-medium text-gray-600">TOKEN BOT</p>
+                        <p className="text-xs font-medium text-gray-600">TOKEN BOT</p>
                         <p className="text-xs font-mono bg-gray-100 p-2 rounded break-all">
                           {channel.bot_token}
                         </p>
@@ -186,14 +186,14 @@ const Channels = () => {
                       </div>
                       
                       <div>
-                        <p className="text-xs lg:text-sm font-medium text-gray-600">ID do Canal</p>
-                        <p className="text-xs lg:text-sm font-mono break-all">{channel.channel_id}</p>
+                        <p className="text-xs font-medium text-gray-600">ID do Canal</p>
+                        <p className="text-sm font-mono break-all">{channel.channel_id}</p>
                       </div>
 
                       <div>
-                        <p className="text-xs lg:text-sm font-medium text-gray-600">ID do Botão</p>
+                        <p className="text-xs font-medium text-gray-600">ID do Botão</p>
                         <div className="flex items-center gap-2 mt-1">
-                          <p className="text-xs lg:text-sm font-mono bg-blue-50 px-2 py-1 rounded border flex-1">
+                          <p className="text-sm font-mono bg-blue-50 px-2 py-1 rounded border flex-1">
                             btn-telegram
                           </p>
                           <Button
@@ -211,15 +211,15 @@ const Channels = () => {
                       </div>
                       
                       <div>
-                        <p className="text-xs lg:text-sm font-medium text-gray-600">Tipo</p>
+                        <p className="text-xs font-medium text-gray-600">Tipo</p>
                         <Badge variant={channel.is_public ? 'default' : 'outline'} className="text-xs">
                           {channel.is_public ? 'Canal Público' : 'Canal Privado'}
                         </Badge>
                       </div>
                       
                       <div>
-                        <p className="text-xs lg:text-sm font-medium text-gray-600">Criado em</p>
-                        <p className="text-xs lg:text-sm">{new Date(channel.created_at).toLocaleDateString()}</p>
+                        <p className="text-xs font-medium text-gray-600">Criado em</p>
+                        <p className="text-sm">{new Date(channel.created_at).toLocaleDateString()}</p>
                       </div>
                       
                       <div className="flex items-center gap-2 pt-2">
@@ -227,10 +227,10 @@ const Channels = () => {
                           size="sm"
                           variant="outline"
                           onClick={() => handleTestChannel(channel.channel_name)}
-                          className="flex-1 sm:flex-none text-xs"
+                          className="flex-1 text-xs"
                         >
                           <TestTube className="h-3 w-3 mr-1" />
-                          <span className="hidden sm:inline">Testar</span>
+                          Testar
                         </Button>
                         
                         <Button size="sm" variant="outline">
