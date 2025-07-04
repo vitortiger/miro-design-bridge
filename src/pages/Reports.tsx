@@ -19,44 +19,44 @@ const monthlyData = [
   { name: 'Jun', leads: 250, clicks: 1900, views: 2800 },
 ];
 
-// UTM Data converted to table format
+// UTM Data converted to table format with clicks data
 const utmSourceData = [
-  { name: 'Google', leads: 145, percentage: '39.2%' },
-  { name: 'Facebook', leads: 89, percentage: '24.1%' },
-  { name: 'Instagram', leads: 67, percentage: '18.1%' },
-  { name: 'YouTube', leads: 42, percentage: '11.4%' },
-  { name: 'Email', leads: 28, percentage: '7.6%' },
+  { name: 'Google', leads: 145, clicks: 890, percentage: '39.2%', conversionRate: '16.3%' },
+  { name: 'Facebook', leads: 89, clicks: 650, percentage: '24.1%', conversionRate: '13.7%' },
+  { name: 'Instagram', leads: 67, clicks: 520, percentage: '18.1%', conversionRate: '12.9%' },
+  { name: 'YouTube', leads: 42, clicks: 380, percentage: '11.4%', conversionRate: '11.1%' },
+  { name: 'Email', leads: 28, clicks: 180, percentage: '7.6%', conversionRate: '15.6%' },
 ];
 
 const utmCampaignData = [
-  { name: 'Black Friday', leads: 120, percentage: '34.4%' },
-  { name: 'Natal Premium', leads: 89, percentage: '25.5%' },
-  { name: 'Ano Novo VIP', leads: 67, percentage: '19.2%' },
-  { name: 'Verão 2024', leads: 45, percentage: '12.9%' },
-  { name: 'Promoção Especial', leads: 32, percentage: '9.2%' },
+  { name: 'Black Friday', leads: 120, clicks: 780, percentage: '34.4%', conversionRate: '15.4%' },
+  { name: 'Natal Premium', leads: 89, clicks: 620, percentage: '25.5%', conversionRate: '14.4%' },
+  { name: 'Ano Novo VIP', leads: 67, clicks: 490, percentage: '19.2%', conversionRate: '13.7%' },
+  { name: 'Verão 2024', leads: 45, clicks: 350, percentage: '12.9%', conversionRate: '12.9%' },
+  { name: 'Promoção Especial', leads: 32, clicks: 280, percentage: '9.2%', conversionRate: '11.4%' },
 ];
 
 const utmMediumData = [
-  { name: 'CPC', leads: 156, percentage: '43.5%' },
-  { name: 'Social', leads: 89, percentage: '24.9%' },
-  { name: 'Email', leads: 67, percentage: '18.7%' },
-  { name: 'Organic', leads: 45, percentage: '12.6%' },
+  { name: 'CPC', leads: 156, clicks: 1200, percentage: '43.5%', conversionRate: '13.0%' },
+  { name: 'Social', leads: 89, clicks: 720, percentage: '24.9%', conversionRate: '12.4%' },
+  { name: 'Email', leads: 67, clicks: 380, percentage: '18.7%', conversionRate: '17.6%' },
+  { name: 'Organic', leads: 45, clicks: 320, percentage: '12.6%', conversionRate: '14.1%' },
 ];
 
 const utmContentData = [
-  { name: 'Banner Principal', leads: 78, percentage: '28.5%' },
-  { name: 'Texto Promocional', leads: 65, percentage: '23.7%' },
-  { name: 'Vídeo Demonstrativo', leads: 52, percentage: '19.0%' },
-  { name: 'Carousel de Imagens', leads: 43, percentage: '15.7%' },
-  { name: 'Story Interativo', leads: 35, percentage: '12.8%' },
+  { name: 'Banner Principal', leads: 78, clicks: 580, percentage: '28.5%', conversionRate: '13.4%' },
+  { name: 'Texto Promocional', leads: 65, clicks: 520, percentage: '23.7%', conversionRate: '12.5%' },
+  { name: 'Vídeo Demonstrativo', leads: 52, clicks: 380, percentage: '19.0%', conversionRate: '13.7%' },
+  { name: 'Carousel de Imagens', leads: 43, clicks: 340, percentage: '15.7%', conversionRate: '12.6%' },
+  { name: 'Story Interativo', leads: 35, clicks: 290, percentage: '12.8%', conversionRate: '12.1%' },
 ];
 
 const utmTermData = [
-  { name: 'Comprar Online', leads: 45, percentage: '26.8%' },
-  { name: 'Melhor Preço', leads: 38, percentage: '22.6%' },
-  { name: 'Desconto Especial', leads: 32, percentage: '19.0%' },
-  { name: 'Oferta Limitada', leads: 28, percentage: '16.7%' },
-  { name: 'Grátis Hoje', leads: 25, percentage: '14.9%' },
+  { name: 'Comprar Online', leads: 45, clicks: 320, percentage: '26.8%', conversionRate: '14.1%' },
+  { name: 'Melhor Preço', leads: 38, clicks: 290, percentage: '22.6%', conversionRate: '13.1%' },
+  { name: 'Desconto Especial', leads: 32, clicks: 250, percentage: '19.0%', conversionRate: '12.8%' },
+  { name: 'Oferta Limitada', leads: 28, clicks: 230, percentage: '16.7%', conversionRate: '12.2%' },
+  { name: 'Grátis Hoje', leads: 25, clicks: 200, percentage: '14.9%', conversionRate: '12.5%' },
 ];
 
 const Reports = () => {
@@ -175,7 +175,9 @@ const Reports = () => {
                       <TableHeader>
                         <TableRow className="bg-gray-50/50">
                           <TableHead className="font-semibold text-gray-700">Fonte</TableHead>
+                          <TableHead className="text-right font-semibold text-gray-700">Cliques</TableHead>
                           <TableHead className="text-right font-semibold text-gray-700">Leads</TableHead>
+                          <TableHead className="text-right font-semibold text-gray-700">% Cliques/Leads</TableHead>
                           <TableHead className="text-right font-semibold text-gray-700">Porcentagem</TableHead>
                         </TableRow>
                       </TableHeader>
@@ -193,7 +195,13 @@ const Reports = () => {
                                 {item.name}
                               </div>
                             </TableCell>
+                            <TableCell className="text-right font-medium text-gray-700 py-3">{item.clicks}</TableCell>
                             <TableCell className="text-right font-semibold text-gray-900 py-3">{item.leads}</TableCell>
+                            <TableCell className="text-right py-3">
+                              <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 hover:bg-emerald-200">
+                                {item.conversionRate}
+                              </Badge>
+                            </TableCell>
                             <TableCell className="text-right py-3">
                               <Badge variant="secondary" className="bg-blue-100 text-blue-700 hover:bg-blue-200">
                                 {item.percentage}
@@ -218,7 +226,9 @@ const Reports = () => {
                       <TableHeader>
                         <TableRow className="bg-gray-50/50">
                           <TableHead className="font-semibold text-gray-700">Mídia</TableHead>
+                          <TableHead className="text-right font-semibold text-gray-700">Cliques</TableHead>
                           <TableHead className="text-right font-semibold text-gray-700">Leads</TableHead>
+                          <TableHead className="text-right font-semibold text-gray-700">% Cliques/Leads</TableHead>
                           <TableHead className="text-right font-semibold text-gray-700">Porcentagem</TableHead>
                         </TableRow>
                       </TableHeader>
@@ -235,7 +245,13 @@ const Reports = () => {
                                 {item.name}
                               </div>
                             </TableCell>
+                            <TableCell className="text-right font-medium text-gray-700 py-3">{item.clicks}</TableCell>
                             <TableCell className="text-right font-semibold text-gray-900 py-3">{item.leads}</TableCell>
+                            <TableCell className="text-right py-3">
+                              <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 hover:bg-emerald-200">
+                                {item.conversionRate}
+                              </Badge>
+                            </TableCell>
                             <TableCell className="text-right py-3">
                               <Badge variant="secondary" className="bg-green-100 text-green-700 hover:bg-green-200">
                                 {item.percentage}
@@ -263,7 +279,9 @@ const Reports = () => {
                       <TableHeader>
                         <TableRow className="bg-gray-50/50">
                           <TableHead className="font-semibold text-gray-700">Campanha</TableHead>
+                          <TableHead className="text-right font-semibold text-gray-700">Cliques</TableHead>
                           <TableHead className="text-right font-semibold text-gray-700">Leads</TableHead>
+                          <TableHead className="text-right font-semibold text-gray-700">% Cliques/Leads</TableHead>
                           <TableHead className="text-right font-semibold text-gray-700">Porcentagem</TableHead>
                         </TableRow>
                       </TableHeader>
@@ -281,7 +299,13 @@ const Reports = () => {
                                 {item.name}
                               </div>
                             </TableCell>
+                            <TableCell className="text-right font-medium text-gray-700 py-3">{item.clicks}</TableCell>
                             <TableCell className="text-right font-semibold text-gray-900 py-3">{item.leads}</TableCell>
+                            <TableCell className="text-right py-3">
+                              <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 hover:bg-emerald-200">
+                                {item.conversionRate}
+                              </Badge>
+                            </TableCell>
                             <TableCell className="text-right py-3">
                               <Badge variant="secondary" className="bg-purple-100 text-purple-700 hover:bg-purple-200">
                                 {item.percentage}
@@ -306,7 +330,9 @@ const Reports = () => {
                       <TableHeader>
                         <TableRow className="bg-gray-50/50">
                           <TableHead className="font-semibold text-gray-700">Conteúdo</TableHead>
+                          <TableHead className="text-right font-semibold text-gray-700">Cliques</TableHead>
                           <TableHead className="text-right font-semibold text-gray-700">Leads</TableHead>
+                          <TableHead className="text-right font-semibold text-gray-700">% Cliques/Leads</TableHead>
                           <TableHead className="text-right font-semibold text-gray-700">Porcentagem</TableHead>
                         </TableRow>
                       </TableHeader>
@@ -324,7 +350,13 @@ const Reports = () => {
                                 {item.name}
                               </div>
                             </TableCell>
+                            <TableCell className="text-right font-medium text-gray-700 py-3">{item.clicks}</TableCell>
                             <TableCell className="text-right font-semibold text-gray-900 py-3">{item.leads}</TableCell>
+                            <TableCell className="text-right py-3">
+                              <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 hover:bg-emerald-200">
+                                {item.conversionRate}
+                              </Badge>
+                            </TableCell>
                             <TableCell className="text-right py-3">
                               <Badge variant="secondary" className="bg-orange-100 text-orange-700 hover:bg-orange-200">
                                 {item.percentage}
@@ -351,7 +383,9 @@ const Reports = () => {
                     <TableHeader>
                       <TableRow className="bg-gray-50/50">
                         <TableHead className="font-semibold text-gray-700">Termo</TableHead>
+                        <TableHead className="text-right font-semibold text-gray-700">Cliques</TableHead>
                         <TableHead className="text-right font-semibold text-gray-700">Leads</TableHead>
+                        <TableHead className="text-right font-semibold text-gray-700">% Cliques/Leads</TableHead>
                         <TableHead className="text-right font-semibold text-gray-700">Porcentagem</TableHead>
                       </TableRow>
                     </TableHeader>
@@ -369,7 +403,13 @@ const Reports = () => {
                               {item.name}
                             </div>
                           </TableCell>
+                          <TableCell className="text-right font-medium text-gray-700 py-3">{item.clicks}</TableCell>
                           <TableCell className="text-right font-semibold text-gray-900 py-3">{item.leads}</TableCell>
+                          <TableCell className="text-right py-3">
+                            <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 hover:bg-emerald-200">
+                              {item.conversionRate}
+                            </Badge>
+                          </TableCell>
                           <TableCell className="text-right py-3">
                             <Badge variant="secondary" className="bg-teal-100 text-teal-700 hover:bg-teal-200">
                               {item.percentage}
