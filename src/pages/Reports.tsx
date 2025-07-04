@@ -1,4 +1,3 @@
-
 import Sidebar from '@/components/Sidebar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -178,33 +177,19 @@ const Reports = () => {
                           <TableHead className="text-right font-semibold text-gray-700">Cliques</TableHead>
                           <TableHead className="text-right font-semibold text-gray-700">Leads</TableHead>
                           <TableHead className="text-right font-semibold text-gray-700">% Cliques/Leads</TableHead>
-                          <TableHead className="text-right font-semibold text-gray-700">Porcentagem</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
                         {utmSourceData.map((item, index) => (
                           <TableRow key={item.name} className="hover:bg-blue-50/30 transition-colors">
                             <TableCell className="font-medium text-gray-900 py-3">
-                              <div className="flex items-center gap-2">
-                                <div className={`w-3 h-3 rounded-full ${
-                                  index === 0 ? 'bg-blue-500' : 
-                                  index === 1 ? 'bg-green-500' : 
-                                  index === 2 ? 'bg-purple-500' : 
-                                  index === 3 ? 'bg-orange-500' : 'bg-gray-500'
-                                }`}></div>
-                                {item.name}
-                              </div>
+                              {item.name}
                             </TableCell>
                             <TableCell className="text-right font-medium text-gray-700 py-3">{item.clicks}</TableCell>
                             <TableCell className="text-right font-semibold text-gray-900 py-3">{item.leads}</TableCell>
                             <TableCell className="text-right py-3">
                               <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 hover:bg-emerald-200">
                                 {item.conversionRate}
-                              </Badge>
-                            </TableCell>
-                            <TableCell className="text-right py-3">
-                              <Badge variant="secondary" className="bg-blue-100 text-blue-700 hover:bg-blue-200">
-                                {item.percentage}
                               </Badge>
                             </TableCell>
                           </TableRow>
@@ -229,32 +214,19 @@ const Reports = () => {
                           <TableHead className="text-right font-semibold text-gray-700">Cliques</TableHead>
                           <TableHead className="text-right font-semibold text-gray-700">Leads</TableHead>
                           <TableHead className="text-right font-semibold text-gray-700">% Cliques/Leads</TableHead>
-                          <TableHead className="text-right font-semibold text-gray-700">Porcentagem</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
                         {utmMediumData.map((item, index) => (
                           <TableRow key={item.name} className="hover:bg-green-50/30 transition-colors">
                             <TableCell className="font-medium text-gray-900 py-3">
-                              <div className="flex items-center gap-2">
-                                <div className={`w-3 h-3 rounded-full ${
-                                  index === 0 ? 'bg-green-500' : 
-                                  index === 1 ? 'bg-blue-500' : 
-                                  index === 2 ? 'bg-purple-500' : 'bg-orange-500'
-                                }`}></div>
-                                {item.name}
-                              </div>
+                              {item.name}
                             </TableCell>
                             <TableCell className="text-right font-medium text-gray-700 py-3">{item.clicks}</TableCell>
                             <TableCell className="text-right font-semibold text-gray-900 py-3">{item.leads}</TableCell>
                             <TableCell className="text-right py-3">
                               <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 hover:bg-emerald-200">
                                 {item.conversionRate}
-                              </Badge>
-                            </TableCell>
-                            <TableCell className="text-right py-3">
-                              <Badge variant="secondary" className="bg-green-100 text-green-700 hover:bg-green-200">
-                                {item.percentage}
                               </Badge>
                             </TableCell>
                           </TableRow>
@@ -282,33 +254,19 @@ const Reports = () => {
                           <TableHead className="text-right font-semibold text-gray-700">Cliques</TableHead>
                           <TableHead className="text-right font-semibold text-gray-700">Leads</TableHead>
                           <TableHead className="text-right font-semibold text-gray-700">% Cliques/Leads</TableHead>
-                          <TableHead className="text-right font-semibold text-gray-700">Porcentagem</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
                         {utmCampaignData.map((item, index) => (
                           <TableRow key={item.name} className="hover:bg-purple-50/30 transition-colors">
                             <TableCell className="font-medium text-gray-900 py-3">
-                              <div className="flex items-center gap-2">
-                                <div className={`w-3 h-3 rounded-full ${
-                                  index === 0 ? 'bg-purple-500' : 
-                                  index === 1 ? 'bg-pink-500' : 
-                                  index === 2 ? 'bg-indigo-500' : 
-                                  index === 3 ? 'bg-cyan-500' : 'bg-teal-500'
-                                }`}></div>
-                                {item.name}
-                              </div>
+                              {item.name}
                             </TableCell>
                             <TableCell className="text-right font-medium text-gray-700 py-3">{item.clicks}</TableCell>
                             <TableCell className="text-right font-semibold text-gray-900 py-3">{item.leads}</TableCell>
                             <TableCell className="text-right py-3">
                               <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 hover:bg-emerald-200">
                                 {item.conversionRate}
-                              </Badge>
-                            </TableCell>
-                            <TableCell className="text-right py-3">
-                              <Badge variant="secondary" className="bg-purple-100 text-purple-700 hover:bg-purple-200">
-                                {item.percentage}
                               </Badge>
                             </TableCell>
                           </TableRow>
@@ -333,33 +291,19 @@ const Reports = () => {
                           <TableHead className="text-right font-semibold text-gray-700">Cliques</TableHead>
                           <TableHead className="text-right font-semibold text-gray-700">Leads</TableHead>
                           <TableHead className="text-right font-semibold text-gray-700">% Cliques/Leads</TableHead>
-                          <TableHead className="text-right font-semibold text-gray-700">Porcentagem</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
                         {utmContentData.map((item, index) => (
                           <TableRow key={item.name} className="hover:bg-orange-50/30 transition-colors">
                             <TableCell className="font-medium text-gray-900 py-3">
-                              <div className="flex items-center gap-2">
-                                <div className={`w-3 h-3 rounded-full ${
-                                  index === 0 ? 'bg-orange-500' : 
-                                  index === 1 ? 'bg-amber-500' : 
-                                  index === 2 ? 'bg-yellow-500' : 
-                                  index === 3 ? 'bg-red-500' : 'bg-pink-500'
-                                }`}></div>
-                                {item.name}
-                              </div>
+                              {item.name}
                             </TableCell>
                             <TableCell className="text-right font-medium text-gray-700 py-3">{item.clicks}</TableCell>
                             <TableCell className="text-right font-semibold text-gray-900 py-3">{item.leads}</TableCell>
                             <TableCell className="text-right py-3">
                               <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 hover:bg-emerald-200">
                                 {item.conversionRate}
-                              </Badge>
-                            </TableCell>
-                            <TableCell className="text-right py-3">
-                              <Badge variant="secondary" className="bg-orange-100 text-orange-700 hover:bg-orange-200">
-                                {item.percentage}
                               </Badge>
                             </TableCell>
                           </TableRow>
@@ -386,33 +330,19 @@ const Reports = () => {
                         <TableHead className="text-right font-semibold text-gray-700">Cliques</TableHead>
                         <TableHead className="text-right font-semibold text-gray-700">Leads</TableHead>
                         <TableHead className="text-right font-semibold text-gray-700">% Cliques/Leads</TableHead>
-                        <TableHead className="text-right font-semibold text-gray-700">Porcentagem</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {utmTermData.map((item, index) => (
                         <TableRow key={item.name} className="hover:bg-teal-50/30 transition-colors">
                           <TableCell className="font-medium text-gray-900 py-3">
-                            <div className="flex items-center gap-2">
-                              <div className={`w-3 h-3 rounded-full ${
-                                index === 0 ? 'bg-teal-500' : 
-                                index === 1 ? 'bg-cyan-500' : 
-                                index === 2 ? 'bg-sky-500' : 
-                                index === 3 ? 'bg-blue-500' : 'bg-indigo-500'
-                              }`}></div>
-                              {item.name}
-                            </div>
+                            {item.name}
                           </TableCell>
                           <TableCell className="text-right font-medium text-gray-700 py-3">{item.clicks}</TableCell>
                           <TableCell className="text-right font-semibold text-gray-900 py-3">{item.leads}</TableCell>
                           <TableCell className="text-right py-3">
                             <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 hover:bg-emerald-200">
                               {item.conversionRate}
-                            </Badge>
-                          </TableCell>
-                          <TableCell className="text-right py-3">
-                            <Badge variant="secondary" className="bg-teal-100 text-teal-700 hover:bg-teal-200">
-                              {item.percentage}
                             </Badge>
                           </TableCell>
                         </TableRow>
