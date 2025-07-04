@@ -1,13 +1,37 @@
 
-import { Bell, Download, Calendar, RefreshCw } from 'lucide-react';
+import { Bell, Download, RefreshCw } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { useDashboardOverview, useDashboardAnalytics } from '@/hooks/useDashboard';
 import Sidebar from '@/components/Sidebar';
 import MetricCard from '@/components/MetricCard';
 import AnalyticsChart from '@/components/AnalyticsChart';
 import RecentLinksTable from '@/components/RecentLinksTable';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
+  const { user, isAuthenticated, isLoading } = useAuth();
+  const navigate = useNavigate();
+  
+  const { data: overview, isLoading: overviewLoading, refetch: refetchOverview } = useDashboardOverview();
+  const { data: analytics, isLoading: analyticsLoading } = useDashboardAnalytics();
+
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      navigate('/login');
+    }
+  }, [isAuthenticated, isLoading, navigate]);
+
+  if (isLoading || !isAuthenticated) {
+    return <div className="flex items-center justify-center min-h-screen">Carregando...</div>;
+  }
+
+  const handleRefresh = () => {
+    refetchOverview();
+  };
+
   return (
     <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
@@ -18,9 +42,14 @@ const Index = () => {
           <div className="px-6 py-4">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl font-semibold text-gray-900">Welcome, Vitor</h1>
+                <h1 className="text-2xl font-semibold text-gray-900">
+                  Bem-vindo, {user?.name || 'Usuário'}
+                </h1>
               </div>
               <div className="flex items-center gap-4">
+                <Button variant="outline" size="sm" onClick={handleRefresh}>
+                  <RefreshCw className="h-4 w-4" />
+                </Button>
                 <Button variant="outline" size="sm">
                   <Bell className="h-4 w-4" />
                 </Button>
@@ -35,28 +64,31 @@ const Index = () => {
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-700">Date Range</label>
-                <Select defaultValue="jan-jul-2023">
+                <label className="text-sm font-medium text-gray-700">Período</label>
+                <Select defaultValue="last-30-days">
                   <SelectTrigger className="w-64">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="jan-jul-2023">Jan 1, 2023 -- Jul 1, 2023</SelectItem>
-                    <SelectItem value="last-30-days">Last 30 days</SelectItem>
-                    <SelectItem value="last-90-days">Last 90 days</SelectItem>
+                    <SelectItem value="last-7-days">Últimos 7 dias</SelectItem>
+                    <SelectItem value="last-30-days">Últimos 30 dias</SelectItem>
+                    <SelectItem value="last-90-days">Últimos 90 dias</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               
               <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-700">Compare Campaigns</label>
+                <label className="text-sm font-medium text-gray-700">Comparar Campanhas</label>
                 <Select>
                   <SelectTrigger className="w-64">
-                    <SelectValue placeholder="Compare Campaigns" />
+                    <SelectValue placeholder="Selecionar Campanha" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="campaign-1">Campaign 1</SelectItem>
-                    <SelectItem value="campaign-2">Campaign 2</SelectItem>
+                    {overview?.top_campaigns?.map((campaign) => (
+                      <SelectItem key={campaign.id} value={campaign.id}>
+                        {campaign.name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -64,30 +96,30 @@ const Index = () => {
             
             <Button variant="outline">
               <Download className="h-4 w-4 mr-2" />
-              Export Data
+              Exportar Dados
             </Button>
           </div>
 
           {/* Metrics Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <MetricCard
-              title="Entrances in Group"
-              value="1285"
+              title="Total de Campanhas"
+              value={overviewLoading ? "..." : overview?.total_campaigns || 0}
               dark={true}
             />
             <MetricCard
-              title="Exits from Group"
-              value="1285"
+              title="Campanhas Ativas"
+              value={overviewLoading ? "..." : overview?.active_campaigns || 0}
               dark={true}
             />
             <MetricCard
-              title="Clicks on Link"
-              value="105"
+              title="Total de Leads"
+              value={overviewLoading ? "..." : overview?.total_leads || 0}
               dark={true}
             />
             <MetricCard
-              title="Clickseof Users"
-              value="105"
+              title="Bots Telegram"
+              value={overviewLoading ? "..." : overview?.total_bots || 0}
             />
           </div>
 
@@ -96,6 +128,24 @@ const Index = () => {
             <AnalyticsChart type="single" />
             <AnalyticsChart type="multi" />
           </div>
+
+          {/* Recent Activity */}
+          {overview?.recent_activity && (
+            <div className="bg-white rounded-lg shadow-sm p-6">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">Atividade Recente</h3>
+              <div className="space-y-3">
+                {overview.recent_activity.map((activity, index) => (
+                  <div key={index} className="flex items-start space-x-3">
+                    <div className="flex-shrink-0 w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                    <div>
+                      <p className="text-sm text-gray-900">{activity.message}</p>
+                      <p className="text-xs text-gray-500">{new Date(activity.timestamp).toLocaleString()}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Recent Links Table */}
           <RecentLinksTable />
