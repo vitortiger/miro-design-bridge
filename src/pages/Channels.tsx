@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Plus, Search, Edit, Trash2, TestTube, Bot } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, TestTube, Bot, Users } from 'lucide-react';
 import { toast } from 'sonner';
 import CreateBotDialog from '@/components/CreateBotDialog';
 
@@ -20,8 +20,8 @@ const mockChannels = [
     channel_id: '-1001234567890',
     is_public: true,
     is_active: true,
+    users_count: 1250,
     created_at: '2024-01-15T10:30:00Z',
-    last_message_at: '2024-01-20T15:45:00Z'
   },
   {
     id: '2',
@@ -32,8 +32,8 @@ const mockChannels = [
     channel_id: '-1001987654321',
     is_public: false,
     is_active: true,
+    users_count: 850,
     created_at: '2024-01-10T08:20:00Z',
-    last_message_at: '2024-01-19T12:30:00Z'
   },
   {
     id: '3',
@@ -44,8 +44,8 @@ const mockChannels = [
     channel_id: '123456789',
     is_public: false,
     is_active: false,
+    users_count: 45,
     created_at: '2024-01-05T14:15:00Z',
-    last_message_at: null
   }
 ];
 
@@ -101,7 +101,7 @@ const Channels = () => {
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Total de Canais</CardTitle>
@@ -119,16 +119,6 @@ const Channels = () => {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{channels.filter(c => c.is_active).length}</div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Canais Públicos</CardTitle>
-                <Bot className="h-4 w-4 text-blue-600" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{channels.filter(c => c.is_public).length}</div>
               </CardContent>
             </Card>
           </div>
@@ -154,9 +144,10 @@ const Channels = () => {
                         <Bot className="h-5 w-5 text-blue-500" />
                         <div>
                           <CardTitle className="text-lg">{channel.channel_name}</CardTitle>
-                          <CardDescription className="mt-1">
-                            {channel.channel_title}
-                          </CardDescription>
+                          <div className="flex items-center mt-1 text-sm text-gray-500">
+                            <Users className="h-3 w-3 mr-1" />
+                            {channel.users_count} usuários
+                          </div>
                         </div>
                       </div>
                       <Badge variant={channel.is_active ? 'default' : 'secondary'}>
@@ -196,16 +187,6 @@ const Channels = () => {
                         <Badge variant={channel.is_public ? 'default' : 'outline'}>
                           {channel.is_public ? 'Canal Público' : 'Canal Privado'}
                         </Badge>
-                      </div>
-                      
-                      <div>
-                        <p className="text-sm font-medium text-gray-600">Última Mensagem</p>
-                        <p className="text-sm">
-                          {channel.last_message_at 
-                            ? new Date(channel.last_message_at).toLocaleString()
-                            : 'Nunca'
-                          }
-                        </p>
                       </div>
                       
                       <div>

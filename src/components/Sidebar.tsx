@@ -1,11 +1,12 @@
+
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { 
-  BarChart3, 
+  Home,
   FileText, 
   Database, 
   Bot,
-  Zap,
+  HelpCircle,
   Settings,
   Menu,
   X
@@ -13,11 +14,11 @@ import {
 import { cn } from '@/lib/utils';
 
 const navigation = [
-  { name: 'Dashboard', href: '/', icon: BarChart3 },
-  { name: 'Campanhas', href: '/campaigns', icon: Zap },
-  { name: 'Canais Telegram', href: '/channels', icon: Bot },
+  { name: 'Home', href: '/', icon: Home },
   { name: 'Relatórios', href: '/reports', icon: FileText },
-  { name: 'Base de Leads', href: '/leads', icon: Database },
+  { name: 'Leads', href: '/leads', icon: Database },
+  { name: 'Canais Telegram', href: '/channels', icon: Bot },
+  { name: 'Ajuda', href: '/help', icon: HelpCircle },
   { name: 'Configurações', href: '/settings', icon: Settings },
 ];
 
