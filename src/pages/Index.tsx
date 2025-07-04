@@ -16,7 +16,7 @@ import { format, subDays, startOfMonth, startOfYear, subYears } from 'date-fns';
 import { cn } from '@/lib/utils';
 
 const Index = () => {
-  const { user, isAuthenticated, isLoading } = useAuth();
+  const { user, profile, isAuthenticated, isLoading } = useAuth();
   const navigate = useNavigate();
   const [dateFrom, setDateFrom] = useState<Date>();
   const [dateTo, setDateTo] = useState<Date>();
@@ -89,7 +89,7 @@ const Index = () => {
             <div className="flex items-center justify-between">
               <div className="pl-12 lg:pl-0">
                 <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">
-                  Bem-vindo, {user?.name || 'Usuário'}
+                  Bem-vindo, {profile?.name || 'Usuário'}
                 </h1>
               </div>
               <div className="flex items-center gap-2 sm:gap-4">
