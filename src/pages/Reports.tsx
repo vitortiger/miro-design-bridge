@@ -2,11 +2,14 @@ import Sidebar from '@/components/Sidebar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
-import { TrendingUp, Users, MousePointer, Eye, Download, BarChart3 } from 'lucide-react';
+import { TrendingUp, Users, MousePointer, Eye, Download, BarChart3, CalendarIcon } from 'lucide-react';
 import { useState } from 'react';
+import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 // Mock data for charts
 const monthlyData = [
@@ -59,8 +62,8 @@ const utmTermData = [
 ];
 
 const Reports = () => {
-  const [periodFilter, setPeriodFilter] = useState('30d');
-  const [sourceFilter, setSourceFilter] = useState('');
+  const [dateFrom, setDateFrom] = useState<Date>();
+  const [dateTo, setDateTo] = useState<Date>();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -73,17 +76,56 @@ const Reports = () => {
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                 <h1 className="text-xl lg:text-2xl font-semibold text-gray-900 ml-12 lg:ml-0">Relatórios</h1>
                 <div className="flex flex-col sm:flex-row gap-2 ml-12 lg:ml-0">
-                  <Select value={periodFilter} onValueChange={setPeriodFilter}>
-                    <SelectTrigger className="w-full sm:w-40">
-                      <SelectValue placeholder="Período" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="7d">Últimos 7 dias</SelectItem>
-                      <SelectItem value="30d">Últimos 30 dias</SelectItem>
-                      <SelectItem value="90d">Últimos 90 dias</SelectItem>
-                      <SelectItem value="1y">Último ano</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div className="flex gap-2">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-[140px] justify-start text-left font-normal",
+                            !dateFrom && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {dateFrom ? format(dateFrom, "dd/MM/yyyy") : "Data início"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={dateFrom}
+                          onSelect={setDateFrom}
+                          initialFocus
+                          className="pointer-events-auto"
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-[140px] justify-start text-left font-normal",
+                            !dateTo && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {dateTo ? format(dateTo, "dd/MM/yyyy") : "Data fim"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={dateTo}
+                          onSelect={setDateTo}
+                          initialFocus
+                          className="pointer-events-auto"
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                  
                   <Button className="w-full sm:w-auto">
                     <Download className="h-4 w-4 mr-2" />
                     Exportar
@@ -95,7 +137,7 @@ const Reports = () => {
 
           <main className="p-4 lg:p-6">
             {/* Stats Overview */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-6 lg:mb-8">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">Total de Leads</CardTitle>
@@ -126,21 +168,7 @@ const Reports = () => {
 
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Visualizações</CardTitle>
-                  <Eye className="h-4 w-4 text-purple-600" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">15,678</div>
-                  <p className="text-xs text-green-600 flex items-center mt-1">
-                    <TrendingUp className="h-3 w-3 mr-1" />
-                    +15.3% vs mês anterior
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Taxa de Conversão</CardTitle>
+                  <CardTitle className="text-sm font-medium">Taxa de Cliques/Leads</CardTitle>
                   <TrendingUp className="h-4 w-4 text-orange-600" />
                 </CardHeader>
                 <CardContent>
