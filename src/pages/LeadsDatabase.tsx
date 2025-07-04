@@ -83,190 +83,186 @@ const LeadsDatabase = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="flex w-full">
-        <Sidebar />
-        
-        <div className="flex-1 w-full lg:ml-0">
-          <header className="bg-white shadow-sm border-b border-gray-200">
-            <div className="px-4 lg:px-6 py-4">
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-                <h1 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 ml-12 lg:ml-0">
-                  Base de Leads
-                </h1>
-                <div className="flex flex-col sm:flex-row gap-2 ml-12 lg:ml-0">
-                  <Button className="w-full sm:w-auto">
-                    <Plus className="h-4 w-4 mr-2" />
-                    Adicionar Lead
-                  </Button>
-                  <Button variant="outline" className="w-full sm:w-auto">
-                    <Download className="h-4 w-4 mr-2" />
-                    Exportar
+    <div className="min-h-screen bg-gray-50 flex">
+      <Sidebar />
+      
+      <div className="flex-1 lg:ml-64">
+        <header className="bg-white shadow-sm border-b border-gray-200 lg:pl-0 pl-16">
+          <div className="px-4 lg:px-6 py-4">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+              <h1 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-900">
+                Base de Leads
+              </h1>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <Button className="w-full sm:w-auto text-sm">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Adicionar Lead
+                </Button>
+                <Button variant="outline" className="w-full sm:w-auto text-sm">
+                  <Download className="h-4 w-4 mr-2" />
+                  Exportar
+                </Button>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main className="p-4 lg:p-6">
+          {/* Stats Overview */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium text-gray-600">Total de Leads</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">1,234</div>
+                <p className="text-xs text-gray-500 mt-1">+12% este mês</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium text-gray-600">Leads Novos</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">156</div>
+                <p className="text-xs text-gray-500 mt-1">+8% esta semana</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium text-gray-600">Taxa de Conversão</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">18.5%</div>
+                <p className="text-xs text-gray-500 mt-1">+2.3% este mês</p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-sm font-medium text-gray-600">Leads Qualificados</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">89</div>
+                <p className="text-xs text-gray-500 mt-1">+15% esta semana</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Filters */}
+          <Card className="mb-6">
+            <CardContent className="p-4 lg:p-6">
+              <div className="flex flex-col lg:flex-row gap-4">
+                <div className="flex-1">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                    <Input
+                      placeholder="Buscar leads..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="pl-10"
+                    />
+                  </div>
+                </div>
+                
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <Select value={statusFilter} onValueChange={setStatusFilter}>
+                    <SelectTrigger className="w-full sm:w-40">
+                      <SelectValue placeholder="Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Todos</SelectItem>
+                      <SelectItem value="novo">Novo</SelectItem>
+                      <SelectItem value="qualificado">Qualificado</SelectItem>
+                      <SelectItem value="convertido">Convertido</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  <Select value={sourceFilter} onValueChange={setSourceFilter}>
+                    <SelectTrigger className="w-full sm:w-40">
+                      <SelectValue placeholder="Fonte" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Todas</SelectItem>
+                      <SelectItem value="google">Google</SelectItem>
+                      <SelectItem value="facebook">Facebook</SelectItem>
+                      <SelectItem value="instagram">Instagram</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  <Button variant="outline" size="sm" className="w-full sm:w-auto">
+                    <Filter className="h-4 w-4 mr-2" />
+                    Filtros
                   </Button>
                 </div>
               </div>
-            </div>
-          </header>
+            </CardContent>
+          </Card>
 
-          <main className="p-4 lg:p-6">
-            {/* Stats Overview */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">Total de Leads</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">1,234</div>
-                  <p className="text-xs text-gray-500 mt-1">+12% este mês</p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">Leads Novos</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">156</div>
-                  <p className="text-xs text-gray-500 mt-1">+8% esta semana</p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">Taxa de Conversão</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">18.5%</div>
-                  <p className="text-xs text-gray-500 mt-1">+2.3% este mês</p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">Leads Qualificados</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">89</div>
-                  <p className="text-xs text-gray-500 mt-1">+15% esta semana</p>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Filters */}
-            <Card className="mb-6">
-              <CardContent className="p-4 lg:p-6">
-                <div className="flex flex-col lg:flex-row gap-4">
-                  <div className="flex-1">
-                    <div className="relative">
-                      <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                      <Input
-                        placeholder="Buscar leads..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="pl-10"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="flex flex-col sm:flex-row gap-2">
-                    <Select value={statusFilter} onValueChange={setStatusFilter}>
-                      <SelectTrigger className="w-full sm:w-40">
-                        <SelectValue placeholder="Status" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="">Todos</SelectItem>
-                        <SelectItem value="novo">Novo</SelectItem>
-                        <SelectItem value="qualificado">Qualificado</SelectItem>
-                        <SelectItem value="convertido">Convertido</SelectItem>
-                      </SelectContent>
-                    </Select>
-
-                    <Select value={sourceFilter} onValueChange={setSourceFilter}>
-                      <SelectTrigger className="w-full sm:w-40">
-                        <SelectValue placeholder="Fonte" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="">Todas</SelectItem>
-                        <SelectItem value="google">Google</SelectItem>
-                        <SelectItem value="facebook">Facebook</SelectItem>
-                        <SelectItem value="instagram">Instagram</SelectItem>
-                      </SelectContent>
-                    </Select>
-
-                    <Button variant="outline" size="sm" className="w-full sm:w-auto">
-                      <Filter className="h-4 w-4 mr-2" />
-                      Filtros
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Leads Table */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base lg:text-lg">Lista de Leads</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="overflow-x-auto -mx-4 sm:mx-0">
-                  <div className="min-w-full inline-block align-middle">
-                    <Table className="min-w-[800px]">
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead className="min-w-[150px]">Nome</TableHead>
-                          <TableHead className="min-w-[180px]">Email</TableHead>
-                          <TableHead className="min-w-[120px]">Telefone</TableHead>
-                          <TableHead className="min-w-[100px]">Fonte</TableHead>
-                          <TableHead className="min-w-[120px]">Status</TableHead>
-                          <TableHead className="min-w-[100px]">Data</TableHead>
-                          <TableHead className="min-w-[100px]">Ações</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {mockLeads.map((lead) => (
-                          <TableRow key={lead.id}>
-                            <TableCell className="font-medium">{lead.name}</TableCell>
-                            <TableCell>{lead.email}</TableCell>
-                            <TableCell>{lead.phone}</TableCell>
-                            <TableCell>
-                              <Badge variant="outline" className="text-xs">
-                                {lead.source}
-                              </Badge>
-                            </TableCell>
-                            <TableCell>
-                              <Badge 
-                                className={`text-xs ${getStatusColor(lead.status)}`}
-                                variant="secondary"
-                              >
-                                {lead.status}
-                              </Badge>
-                            </TableCell>
-                            <TableCell className="text-sm text-gray-500">
-                              {new Date(lead.createdAt).toLocaleDateString('pt-BR')}
-                            </TableCell>
-                            <TableCell>
-                              <div className="flex gap-1">
-                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                                  <Eye className="h-4 w-4" />
-                                </Button>
-                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                                  <Edit className="h-4 w-4" />
-                                </Button>
-                                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                                  <Trash2 className="h-4 w-4" />
-                                </Button>
-                              </div>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </main>
-        </div>
+          {/* Leads Table */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base lg:text-lg">Lista de Leads</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="overflow-x-auto">
+                <Table className="min-w-[800px]">
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="min-w-[150px]">Nome</TableHead>
+                      <TableHead className="min-w-[180px]">Email</TableHead>
+                      <TableHead className="min-w-[120px]">Telefone</TableHead>
+                      <TableHead className="min-w-[100px]">Fonte</TableHead>
+                      <TableHead className="min-w-[120px]">Status</TableHead>
+                      <TableHead className="min-w-[100px]">Data</TableHead>
+                      <TableHead className="min-w-[100px]">Ações</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {mockLeads.map((lead) => (
+                      <TableRow key={lead.id}>
+                        <TableCell className="font-medium">{lead.name}</TableCell>
+                        <TableCell>{lead.email}</TableCell>
+                        <TableCell>{lead.phone}</TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="text-xs">
+                            {lead.source}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <Badge 
+                            className={`text-xs ${getStatusColor(lead.status)}`}
+                            variant="secondary"
+                          >
+                            {lead.status}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-sm text-gray-500">
+                          {new Date(lead.createdAt).toLocaleDateString('pt-BR')}
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex gap-1">
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                              <Eye className="h-4 w-4" />
+                            </Button>
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </CardContent>
+          </Card>
+        </main>
       </div>
     </div>
   );
