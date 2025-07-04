@@ -1,4 +1,3 @@
-
 import { Bell, Download, RefreshCw, Calendar as CalendarIcon } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useDashboardOverview, useDashboardAnalytics } from '@/hooks/useDashboard';
@@ -13,27 +12,33 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { format, subDays, startOfMonth, startOfYear, subYears } from 'date-fns';
 import { cn } from '@/lib/utils';
-
 const Home = () => {
-  const { user, isAuthenticated, isLoading } = useAuth();
+  const {
+    user,
+    isAuthenticated,
+    isLoading
+  } = useAuth();
   const navigate = useNavigate();
   const [dateFrom, setDateFrom] = useState<Date>();
   const [dateTo, setDateTo] = useState<Date>();
   const [selectedQuickFilter, setSelectedQuickFilter] = useState<string>("");
-  
-  const { data: overview, isLoading: overviewLoading, refetch: refetchOverview } = useDashboardOverview();
-  const { data: analytics, isLoading: analyticsLoading } = useDashboardAnalytics();
-
+  const {
+    data: overview,
+    isLoading: overviewLoading,
+    refetch: refetchOverview
+  } = useDashboardOverview();
+  const {
+    data: analytics,
+    isLoading: analyticsLoading
+  } = useDashboardAnalytics();
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
       navigate('/login');
     }
   }, [isAuthenticated, isLoading, navigate]);
-
   const handleQuickFilter = (days: number | string) => {
     const today = new Date();
     today.setHours(23, 59, 59, 999);
-    
     switch (days) {
       case 'today':
         const todayStart = new Date();
@@ -75,24 +80,19 @@ const Home = () => {
         break;
     }
   };
-
   const clearQuickFilter = () => {
     setSelectedQuickFilter("");
   };
-
   if (isLoading || !isAuthenticated) {
     return <div className="flex items-center justify-center min-h-screen">Carregando...</div>;
   }
-
   const handleRefresh = () => {
     refetchOverview();
   };
-
-  return (
-    <div className="flex min-h-screen bg-gray-50">
+  return <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
       
-      <div className="flex-1 w-full lg:pl-64">
+      <div className="flex-1 w-full lg:pl-64 mx-0 px-[20px]">
         {/* Header */}
         <header className="bg-white shadow-sm border-b border-gray-200">
           <div className="px-4 sm:px-6 py-4">
@@ -144,57 +144,31 @@ const Home = () => {
                 <div className="flex gap-2">
                   <Popover>
                     <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className={cn(
-                          "w-[140px] justify-start text-left font-normal",
-                          !dateFrom && "text-muted-foreground"
-                        )}
-                        onClick={clearQuickFilter}
-                      >
+                      <Button variant="outline" className={cn("w-[140px] justify-start text-left font-normal", !dateFrom && "text-muted-foreground")} onClick={clearQuickFilter}>
                         <CalendarIcon className="mr-2 h-4 w-4" />
                         {dateFrom ? format(dateFrom, "dd/MM/yyyy") : "Data inicial"}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={dateFrom}
-                        onSelect={(date) => {
-                          setDateFrom(date);
-                          clearQuickFilter();
-                        }}
-                        initialFocus
-                        className={cn("p-3 pointer-events-auto")}
-                      />
+                      <Calendar mode="single" selected={dateFrom} onSelect={date => {
+                      setDateFrom(date);
+                      clearQuickFilter();
+                    }} initialFocus className={cn("p-3 pointer-events-auto")} />
                     </PopoverContent>
                   </Popover>
 
                   <Popover>
                     <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className={cn(
-                          "w-[140px] justify-start text-left font-normal",
-                          !dateTo && "text-muted-foreground"
-                        )}
-                        onClick={clearQuickFilter}
-                      >
+                      <Button variant="outline" className={cn("w-[140px] justify-start text-left font-normal", !dateTo && "text-muted-foreground")} onClick={clearQuickFilter}>
                         <CalendarIcon className="mr-2 h-4 w-4" />
                         {dateTo ? format(dateTo, "dd/MM/yyyy") : "Data final"}
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={dateTo}
-                        onSelect={(date) => {
-                          setDateTo(date);
-                          clearQuickFilter();
-                        }}
-                        initialFocus
-                        className={cn("p-3 pointer-events-auto")}
-                      />
+                      <Calendar mode="single" selected={dateTo} onSelect={date => {
+                      setDateTo(date);
+                      clearQuickFilter();
+                    }} initialFocus className={cn("p-3 pointer-events-auto")} />
                     </PopoverContent>
                   </Popover>
                 </div>
@@ -209,39 +183,19 @@ const Home = () => {
 
           {/* Metrics Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            <MetricCard
-              title="Entradas no Grupo"
-              value="1285"
-            />
-            <MetricCard
-              title="Saídas do Grupo"
-              value="1285"
-            />
-            <MetricCard
-              title="Cliques no Link"
-              value="105"
-            />
-            <MetricCard
-              title="Número de canais ativos"
-              value="105"
-            />
+            <MetricCard title="Entradas no Grupo" value="1285" />
+            <MetricCard title="Saídas do Grupo" value="1285" />
+            <MetricCard title="Cliques no Link" value="105" />
+            <MetricCard title="Número de canais ativos" value="105" />
           </div>
 
           {/* Charts */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-            <AnalyticsChart 
-              type="single" 
-              dateRange="Quantidade Total de Usuários no Grupo"
-            />
-            <AnalyticsChart 
-              type="multi" 
-              dateRange="Grupo - Entradas e Saídas"
-            />
+            <AnalyticsChart type="single" dateRange="Quantidade Total de Usuários no Grupo" />
+            <AnalyticsChart type="multi" dateRange="Grupo - Entradas e Saídas" />
           </div>
         </main>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Home;
