@@ -1,12 +1,10 @@
-
 import Sidebar from '@/components/Sidebar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
-import { TrendingUp, Users, MousePointer, Eye, Download, Calendar, Filter } from 'lucide-react';
+import { TrendingUp, Users, MousePointer, Eye, Download } from 'lucide-react';
 import { useState } from 'react';
 
 // Mock data for charts
@@ -437,56 +435,6 @@ const Reports = () => {
                       <Line type="monotone" dataKey="clicks" stroke="#10B981" strokeWidth={2} />
                     </LineChart>
                   </ResponsiveContainer>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Channel Performance Table */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base lg:text-lg">Desempenho por Canal</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="overflow-x-auto -mx-4 sm:mx-0">
-                  <div className="min-w-full inline-block align-middle">
-                    <Table className="min-w-[700px]">
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead className="min-w-[120px]">Canal</TableHead>
-                          <TableHead className="min-w-[100px]">Fonte</TableHead>
-                          <TableHead className="min-w-[80px]">Tipo</TableHead>
-                          <TableHead className="min-w-[80px]">Leads</TableHead>
-                          <TableHead className="min-w-[80px]">Cliques</TableHead>
-                          <TableHead className="min-w-[100px]">Conversão</TableHead>
-                          <TableHead className="min-w-[120px]">Custo</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {channelPerformance.map((channel) => (
-                          <TableRow key={channel.id}>
-                            <TableCell className="font-medium">{channel.canal}</TableCell>
-                            <TableCell>
-                              <Badge variant="outline" className="text-xs">{channel.fonte}</Badge>
-                            </TableCell>
-                            <TableCell>
-                              <Badge variant="secondary" className="text-xs">{channel.tipo}</Badge>
-                            </TableCell>
-                            <TableCell className="font-semibold">{channel.leads}</TableCell>
-                            <TableCell>{channel.cliques}</TableCell>
-                            <TableCell>
-                              <Badge 
-                                variant={parseFloat(channel.conversao) > 14 ? "default" : "secondary"}
-                                className="text-xs"
-                              >
-                                {channel.conversao}
-                              </Badge>
-                            </TableCell>
-                            <TableCell className="text-green-600 font-medium">{channel.custo}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
                 </div>
               </CardContent>
             </Card>
