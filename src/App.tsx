@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import Home from "./pages/Home";
 import Reports from "./pages/Reports";
-import Leads from "./pages/Leads";
+import LeadsDatabase from "./pages/LeadsDatabase";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Campaigns from "./pages/Campaigns";
@@ -28,7 +28,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/reports" element={<Reports />} />
-            <Route path="/leads" element={<Leads />} />
+            <Route path="/leads" element={<LeadsDatabase />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/campaigns" element={<Campaigns />} />

@@ -92,34 +92,13 @@ const mockLeads = [
     utm_content: 'thread',
     utm_term: 'lead generation'
   },
-  {
-    id: '9',
-    user_id: 'lead_009',
-    entry_date: '2024-01-12T19:30:00Z',
-    utm_source: 'pinterest',
-    utm_campaign: 'visual_content',
-    utm_medium: 'social',
-    utm_content: 'pin_image',
-    utm_term: 'marketing tools'
-  },
-  {
-    id: '10',
-    user_id: 'lead_010',
-    entry_date: '2024-01-11T13:45:00Z',
-    utm_source: 'whatsapp',
-    utm_campaign: 'direct_message',
-    utm_medium: 'messaging',
-    utm_content: 'broadcast',
-    utm_term: 'telegram integration'
-  }
 ];
 
-const Leads = () => {
+const LeadsDatabase = () => {
   const [search, setSearch] = useState('');
   const [sourceFilter, setSourceFilter] = useState('');
   const [campaignFilter, setCampaignFilter] = useState('');
   const [mediumFilter, setMediumFilter] = useState('');
-  const [dateFilter, setDateFilter] = useState('');
   const [leads] = useState(mockLeads);
 
   const filteredLeads = leads.filter(lead => {
@@ -152,7 +131,6 @@ const Leads = () => {
     setSourceFilter('');
     setCampaignFilter('');
     setMediumFilter('');
-    setDateFilter('');
   };
 
   return (
@@ -162,7 +140,7 @@ const Leads = () => {
       <div className="flex-1 lg:ml-64">
         <header className="bg-white shadow-sm border-b border-gray-200">
           <div className="px-6 py-4">
-            <h1 className="text-2xl font-semibold text-gray-900">Leads</h1>
+            <h1 className="text-2xl font-semibold text-gray-900">Base de Leads</h1>
           </div>
         </header>
 
@@ -185,11 +163,7 @@ const Leads = () => {
                 <TrendingUp className="h-4 w-4 text-green-600" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">
-                  {leads.filter(lead => 
-                    new Date(lead.entry_date).toDateString() === new Date().toDateString()
-                  ).length}
-                </div>
+                <div className="text-2xl font-bold">3</div>
               </CardContent>
             </Card>
             
@@ -278,7 +252,7 @@ const Leads = () => {
           {/* Leads Table */}
           <Card>
             <CardHeader>
-              <CardTitle>Tabela de Leads ({filteredLeads.length})</CardTitle>
+              <CardTitle>Base de Leads ({filteredLeads.length})</CardTitle>
             </CardHeader>
             <CardContent>
               {filteredLeads.length === 0 ? (
@@ -345,4 +319,4 @@ const Leads = () => {
   );
 };
 
-export default Leads;
+export default LeadsDatabase;
