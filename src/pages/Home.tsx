@@ -1,3 +1,4 @@
+
 import { Bell, Download, RefreshCw, Calendar as CalendarIcon, User, LogOut, Settings as SettingsIcon } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useDashboardOverview, useDashboardAnalytics } from '@/hooks/useDashboard';
@@ -16,6 +17,7 @@ import { cn } from '@/lib/utils';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+
 const Home = () => {
   const {
     user,
@@ -36,6 +38,7 @@ const Home = () => {
     data: analytics,
     isLoading: analyticsLoading
   } = useDashboardAnalytics();
+
   const handleQuickFilter = (days: number | string) => {
     const today = new Date();
     today.setHours(23, 59, 59, 999);
@@ -80,16 +83,20 @@ const Home = () => {
         break;
     }
   };
+
   const clearQuickFilter = () => {
     setSelectedQuickFilter("");
   };
+
   const handleRefresh = () => {
     refetchOverview();
   };
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
     navigate('/login');
   };
+
   const getUserInitials = () => {
     if (profile?.name) {
       return profile.name.split(' ').map(n => n[0]).join('').toUpperCase();
@@ -99,13 +106,15 @@ const Home = () => {
     }
     return 'U';
   };
-  return <ProtectedRoute>
+
+  return (
+    <ProtectedRoute>
       <div className="min-h-screen bg-gray-50">
         <div className="flex w-full">
           <Sidebar />
           
           <div className="flex-1 w-full lg:ml-0">
-            <header className="bg-white shadow-sm border-b border-gray-200 px-[38px]">
+            <header className="bg-white shadow-sm border-b border-gray-200">
               <div className="px-4 lg:px-6 py-6">
                 <div className="flex flex-col xl:flex-row gap-4 ml-12 lg:ml-0 min-w-0 relative">
                   {/* Date Filters Row */}
@@ -132,31 +141,45 @@ const Home = () => {
                     <div className="flex gap-2 w-full sm:w-auto">
                       <Popover>
                         <PopoverTrigger asChild>
-                          <Button variant="outline" className={cn("flex-1 sm:w-[140px] justify-start text-left font-normal bg-white border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-colors", !dateFrom && "text-muted-foreground")} onClick={clearQuickFilter}>
+                          <Button 
+                            variant="outline" 
+                            className={cn(
+                              "flex-1 sm:w-[140px] justify-start text-left font-normal bg-white border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-colors", 
+                              !dateFrom && "text-muted-foreground"
+                            )} 
+                            onClick={clearQuickFilter}
+                          >
                             <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
                             {dateFrom ? format(dateFrom, "dd/MM/yyyy") : "Data inicial"}
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0 bg-white border border-gray-200 shadow-lg" align="start">
                           <Calendar mode="single" selected={dateFrom} onSelect={date => {
-                          setDateFrom(date);
-                          clearQuickFilter();
-                        }} initialFocus className={cn("p-3 pointer-events-auto")} />
+                            setDateFrom(date);
+                            clearQuickFilter();
+                          }} initialFocus className={cn("p-3 pointer-events-auto")} />
                         </PopoverContent>
                       </Popover>
 
                       <Popover>
                         <PopoverTrigger asChild>
-                          <Button variant="outline" className={cn("flex-1 sm:w-[140px] justify-start text-left font-normal bg-white border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-colors", !dateTo && "text-muted-foreground")} onClick={clearQuickFilter}>
+                          <Button 
+                            variant="outline" 
+                            className={cn(
+                              "flex-1 sm:w-[140px] justify-start text-left font-normal bg-white border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-colors", 
+                              !dateTo && "text-muted-foreground"
+                            )} 
+                            onClick={clearQuickFilter}
+                          >
                             <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
                             {dateTo ? format(dateTo, "dd/MM/yyyy") : "Data final"}
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0 bg-white border border-gray-200 shadow-lg" align="start">
                           <Calendar mode="single" selected={dateTo} onSelect={date => {
-                          setDateTo(date);
-                          clearQuickFilter();
-                        }} initialFocus className={cn("p-3 pointer-events-auto")} />
+                            setDateTo(date);
+                            clearQuickFilter();
+                          }} initialFocus className={cn("p-3 pointer-events-auto")} />
                         </PopoverContent>
                       </Popover>
                     </div>
@@ -164,13 +187,24 @@ const Home = () => {
                   
                   {/* Action Buttons */}
                   <div className="flex items-center gap-2 pr-12">
-                    <Button variant="outline" size="sm" onClick={handleRefresh} className="bg-white border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-colors">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={handleRefresh}
+                      className="bg-white border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-colors"
+                    >
                       <RefreshCw className="h-4 w-4 text-gray-600" />
                     </Button>
-                    <Button variant="outline" size="sm" className="bg-white border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-colors">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      className="bg-white border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-colors"
+                    >
                       <Bell className="h-4 w-4 text-gray-600" />
                     </Button>
-                    <Button className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-colors w-full sm:w-auto">
+                    <Button 
+                      className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-colors w-full sm:w-auto"
+                    >
                       <Download className="h-4 w-4 mr-2" />
                       Exportar Dados
                     </Button>
@@ -192,8 +226,12 @@ const Home = () => {
                       <DropdownMenuContent className="w-56 bg-white border border-gray-200 shadow-lg" align="end" forceMount>
                         <div className="flex items-center justify-start gap-2 p-2">
                           <div className="flex flex-col space-y-1 leading-none">
-                            {profile?.name && <p className="font-medium text-sm text-gray-900 px-[47px]">{profile.name}</p>}
-                            {user?.email && <p className="w-[200px] truncate text-xs text-gray-500">{user.email}</p>}
+                            {profile?.name && (
+                              <p className="font-medium text-sm text-gray-900">{profile.name}</p>
+                            )}
+                            {user?.email && (
+                              <p className="w-[200px] truncate text-xs text-gray-500">{user.email}</p>
+                            )}
                           </div>
                         </div>
                         <DropdownMenuSeparator className="bg-gray-200" />
@@ -235,6 +273,8 @@ const Home = () => {
           </div>
         </div>
       </div>
-    </ProtectedRoute>;
+    </ProtectedRoute>
+  );
 };
+
 export default Home;
