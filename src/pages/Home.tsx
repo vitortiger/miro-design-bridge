@@ -1,7 +1,7 @@
-
 import { Bell, Download, RefreshCw, Calendar as CalendarIcon, User, LogOut, Settings as SettingsIcon } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useDashboardOverview, useDashboardAnalytics } from '@/hooks/useDashboard';
+import { useTelegramBots } from '@/hooks/useTelegramBots';
 import Sidebar from '@/components/Sidebar';
 import MetricCard from '@/components/MetricCard';
 import AnalyticsChart from '@/components/AnalyticsChart';
@@ -11,6 +11,9 @@ import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { useState } from 'react';
 import { format, subDays, startOfMonth, startOfYear, subYears } from 'date-fns';
 import { cn } from '@/lib/utils';
@@ -38,6 +41,7 @@ const Home = () => {
     data: analytics,
     isLoading: analyticsLoading
   } = useDashboardAnalytics();
+  const { data: bots } = useTelegramBots();
 
   const handleQuickFilter = (days: number | string) => {
     const today = new Date();
@@ -106,7 +110,7 @@ const Home = () => {
     }
     return 'U';
   };
-
+  
   return (
     <ProtectedRoute>
       <div className="min-h-screen bg-gray-50">
@@ -256,19 +260,70 @@ const Home = () => {
             </header>
 
             <main className="p-4 lg:p-6">
-              {/* Metrics Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
-                <MetricCard title="Entradas no Grupo" value="1285" />
-                <MetricCard title="Saídas do Grupo" value="1285" />
-                <MetricCard title="Cliques no Link" value="105" />
-                <MetricCard title="Número de canais ativos" value="105" />
-              </div>
+              <Tabs defaultValue="dashboard" className="w-full">
+                <TabsList className="grid w-full grid-cols-2 max-w-[400px]">
+                  <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+                  <TabsTrigger value="canais">Meus Canais</TabsTrigger>
+                </TabsList>
 
-              {/* Charts */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
-                <AnalyticsChart type="single" dateRange="Quantidade Total de Usuários no Grupo" />
-                <AnalyticsChart type="multi" dateRange="Grupo - Entradas e Saídas" />
-              </div>
+                <TabsContent value="dashboard" className="space-y-6">
+                  {/* Metrics Cards */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6 lg:mb-8">
+                    <MetricCard title="Entradas no Grupo" value="1285" />
+                    <MetricCard title="Saídas do Grupo" value="1285" />
+                    <MetricCard title="Cliques no Link" value="105" />
+                    <MetricCard title="Número de canais ativos" value="105" />
+                  </div>
+
+                  {/* Charts */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+                    <AnalyticsChart type="single" dateRange="Quantidade Total de Usuários no Grupo" />
+                    <AnalyticsChart type="multi" dateRange="Grupo - Entradas e Saídas" />
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="canais" className="space-y-6">
+                  <div className="grid gap-4">
+                    {bots?.map((bot) => (
+                      <Card key={bot.id} className="p-4">
+                        <CardHeader className="pb-3">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <CardTitle className="text-lg">{bot.chat_name}</CardTitle>
+                              <CardDescription className="flex items-center gap-2 mt-1">
+                                <span>{bot.bot_username}</span>
+                                <Badge variant={bot.is_active ? "default" : "secondary"}>
+                                  {bot.is_active ? "Ativo" : "Inativo"}
+                                </Badge>
+                              </CardDescription>
+                            </div>
+                            <Badge variant="outline" className="capitalize">
+                              {bot.chat_type === 'channel' ? 'Canal' : 'Grupo'}
+                            </Badge>
+                          </div>
+                        </CardHeader>
+                        <CardContent className="pt-0">
+                          <div className="text-sm text-gray-600">
+                            <p>Chat ID: {bot.chat_id}</p>
+                            <p>Criado em: {format(new Date(bot.created_at), "dd/MM/yyyy 'às' HH:mm")}</p>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                    
+                    {(!bots || bots.length === 0) && (
+                      <Card className="p-8 text-center">
+                        <CardContent>
+                          <p className="text-gray-500">Nenhum canal configurado ainda.</p>
+                          <p className="text-sm text-gray-400 mt-2">
+                            Configure seus bots do Telegram para começar a monitorar seus canais.
+                          </p>
+                        </CardContent>
+                      </Card>
+                    )}
+                  </div>
+                </TabsContent>
+              </Tabs>
             </main>
           </div>
         </div>
