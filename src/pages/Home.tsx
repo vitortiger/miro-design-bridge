@@ -261,9 +261,8 @@ const Home = () => {
 
             <main className="p-4 lg:p-6">
               <Tabs defaultValue="dashboard" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 max-w-[400px]">
+                <TabsList className="grid w-full grid-cols-1 max-w-[400px]">
                   <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
-                  <TabsTrigger value="canais">Meus Canais</TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="dashboard" className="space-y-6">
@@ -276,51 +275,53 @@ const Home = () => {
                   </div>
 
                   {/* Charts */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 mb-8">
                     <AnalyticsChart type="single" dateRange="Quantidade Total de Usuários no Grupo" />
                     <AnalyticsChart type="multi" dateRange="Grupo - Entradas e Saídas" />
                   </div>
-                </TabsContent>
 
-                <TabsContent value="canais" className="space-y-6">
-                  <div className="grid gap-4">
-                    {bots?.map((bot) => (
-                      <Card key={bot.id} className="p-4">
-                        <CardHeader className="pb-3">
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <CardTitle className="text-lg">{bot.chat_name}</CardTitle>
-                              <CardDescription className="flex items-center gap-2 mt-1">
-                                <span>{bot.bot_username}</span>
-                                <Badge variant={bot.is_active ? "default" : "secondary"}>
-                                  {bot.is_active ? "Ativo" : "Inativo"}
-                                </Badge>
-                              </CardDescription>
+                  {/* Meus Canais Section */}
+                  <div className="space-y-4">
+                    <h2 className="text-xl font-semibold text-gray-900">Meus Canais</h2>
+                    <div className="grid gap-4">
+                      {bots?.map((bot) => (
+                        <Card key={bot.id} className="p-4">
+                          <CardHeader className="pb-3">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <CardTitle className="text-lg">{bot.chat_name}</CardTitle>
+                                <CardDescription className="flex items-center gap-2 mt-1">
+                                  <span>{bot.bot_username}</span>
+                                  <Badge variant={bot.is_active ? "default" : "secondary"}>
+                                    {bot.is_active ? "Ativo" : "Inativo"}
+                                  </Badge>
+                                </CardDescription>
+                              </div>
+                              <Badge variant="outline" className="capitalize">
+                                {bot.chat_type === 'channel' ? 'Canal' : 'Grupo'}
+                              </Badge>
                             </div>
-                            <Badge variant="outline" className="capitalize">
-                              {bot.chat_type === 'channel' ? 'Canal' : 'Grupo'}
-                            </Badge>
-                          </div>
-                        </CardHeader>
-                        <CardContent className="pt-0">
-                          <div className="text-sm text-gray-600">
-                            <p>Chat ID: {bot.chat_id}</p>
-                            <p>Criado em: {format(new Date(bot.created_at), "dd/MM/yyyy 'às' HH:mm")}</p>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                    
-                    {(!bots || bots.length === 0) && (
-                      <Card className="p-8 text-center">
-                        <CardContent>
-                          <p className="text-gray-500">Nenhum canal configurado ainda.</p>
-                          <p className="text-sm text-gray-400 mt-2">
-                            Configure seus bots do Telegram para começar a monitorar seus canais.
-                          </p>
-                        </CardContent>
-                      </Card>
-                    )}
+                          </CardHeader>
+                          <CardContent className="pt-0">
+                            <div className="text-sm text-gray-600">
+                              <p>Chat ID: {bot.chat_id}</p>
+                              <p>Criado em: {format(new Date(bot.created_at), "dd/MM/yyyy 'às' HH:mm")}</p>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                      
+                      {(!bots || bots.length === 0) && (
+                        <Card className="p-8 text-center">
+                          <CardContent>
+                            <p className="text-gray-500">Nenhum canal configurado ainda.</p>
+                            <p className="text-sm text-gray-400 mt-2">
+                              Configure seus bots do Telegram para começar a monitorar seus canais.
+                            </p>
+                          </CardContent>
+                        </Card>
+                      )}
+                    </div>
                   </div>
                 </TabsContent>
               </Tabs>
