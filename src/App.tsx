@@ -14,6 +14,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Campaigns from "./pages/Campaigns";
 import Channels from "./pages/Channels";
+import Tracking from "./pages/Tracking";
 import Settings from "./pages/Settings";
 import Help from "./pages/Help";
 import NotFound from "./pages/NotFound";
@@ -37,6 +38,7 @@ const App = () => (
             <Route path="/register" element={<Register />} />
             <Route path="/campaigns" element={<Campaigns />} />
             <Route path="/channels" element={<Channels />} />
+            <Route path="/tracking" element={<Tracking />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/help" element={<Help />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
